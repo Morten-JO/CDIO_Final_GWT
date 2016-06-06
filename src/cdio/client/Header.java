@@ -14,8 +14,8 @@ public class Header extends Composite {
 		header.setStyleName("headerFont");
 		vPanel.add(header);
 		vPanel.setStyleName("headerStyle");
-		Anchor showPersons = new Anchor("Vis personer");
-		vPanel.add(showPersons);
+
+		
 		
 	}
 }
