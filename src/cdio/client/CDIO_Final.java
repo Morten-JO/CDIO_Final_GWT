@@ -22,7 +22,7 @@ public class CDIO_Final implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		Login page = new Login();
+		 Header page = new Header();
 		RootPanel.get().add(page);
 	}
 }

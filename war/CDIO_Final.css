@@ -3,11 +3,20 @@
 
 /** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+   
+  	font-family: serif; 
+	color: #ffffff;
+	font-size: 45px;
+	text-align: center; 
+	margin: auto;
+	background: #000000;
+	border: solid 7px #ff0000;
+	border-top: solid 7px #ff0000;
+	border-left: solid 7px #ff0000;
+	border-radius: 10px; 
+	width: 60%;
+	height: 70px;
+	margin-top: 45px;
 }
 
 .sendButton {
@@ -87,4 +96,41 @@ body {
 	margin-top: 2mm;
 	margin-bottom: 2mm;
 	color: red;
+}
+
+.headerStyle{
+	margin: auto;
+	background: #000000;
+	border: solid 7px #ff0000;
+	border-top: solid 7px #ff0000;
+	border-left: solid 7px #ff0000;
+	border-radius: 10px; 
+	width: 60%;
+	height: 70px;
+	margin-top: 45px;
+	
+}
+.headerFont {
+	font-family: serif; 
+	color: #ffffff;
+	font-size: 45px;
+	text-align: center ;
+}
+
+nav {
+	line-height: 20px;
+	background-color: #000000;
+	min-height: 400px; 
+	width: 100px;
+	float: left;
+	padding: 5px;
+	
+}
+
+footer {
+	background-color: #0000a0;
+	color: white;
+	clear: both;
+	text-align: center;
+	padding: 5px;
 }
