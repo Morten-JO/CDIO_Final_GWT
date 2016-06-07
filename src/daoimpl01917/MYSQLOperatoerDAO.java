@@ -10,22 +10,25 @@ import java.util.List;
 import connector01917.Connector;
 import daointerfaces01917.DALException;
 import daointerfaces01917.OperatoerDAO;
-import dto01917.OperatoerDTO;
+import dto01917.UserDTO;
 
 public class MYSQLOperatoerDAO implements OperatoerDAO {
 	
-	public OperatoerDTO getOperatoer(int oprId) throws DALException {
+	public UserDTO getOperatoer(int oprId) throws DALException {
 		try {
 			CallableStatement getOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call get_operatoer(?)");
 			getOP.setInt(1, oprId);
 			ResultSet rs = getOP.executeQuery();
 			if (rs.first()){			    	
-				String opr_navn = rs.getString(2);
-			    String opr_ini = rs.getString(3);
-			    String opr_cpr = rs.getString(4);
-			    String opr_password = rs.getString(5);
+				String oprNavn = rs.getString(2);
+			    String ini = rs.getString(3);
+			    String cpr = rs.getString(4);
+			    String password = rs.getString(5);
+			    boolean admin = rs.getBoolean(6);
+			    boolean operatoer = rs.getBoolean(7);
+			    boolean farmaceut = rs.getBoolean(8);
 			    
-			    OperatoerDTO newopr = new OperatoerDTO(opr_navn, opr_ini, opr_cpr, opr_password);
+			    UserDTO newopr = new UserDTO(oprId, oprNavn, ini, cpr, password, admin, operatoer, farmaceut);
 			    newopr.setOprId(oprId);
 			    return newopr;
 			}
@@ -35,7 +38,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 	    return null;
 	}
 	
-	public void createOperatoer(OperatoerDTO opr) throws DALException {  
+	public void createOperatoer(UserDTO opr) throws DALException {  
 		try {
 			int id = 0;
 			CallableStatement createOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_operatoer(?,?,?,?)");
@@ -55,7 +58,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 	
-	public void updateOperatoer(OperatoerDTO opr, int id) throws DALException {
+	public void updateOperatoer(UserDTO opr, int id) throws DALException {
 		try {
 			CallableStatement updateOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_operatoer(?,?,?,?,?)");
 			updateOP.setString(1, opr.getOprNavn());
@@ -69,14 +72,14 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 	
-	public List<OperatoerDTO> getOperatoerList() throws DALException {
-		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
+	public List<UserDTO> getOperatoerList() throws DALException {
+		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM view_operatoer");
 			while (rs.next()) 
 			{
-				OperatoerDTO current = new OperatoerDTO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				UserDTO current = new UserDTO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 				current.setOprId(rs.getInt(1));
 				list.add(current);
 				 

@@ -2,11 +2,11 @@ package daointerfaces01917;
 
 import java.util.List;
 
-import dto01917.OperatoerDTO;
+import dto01917.UserDTO;
 
 public interface OperatoerDAO {
-	OperatoerDTO getOperatoer(int oprId) throws DALException;
-	List<OperatoerDTO> getOperatoerList() throws DALException;
-	void createOperatoer(OperatoerDTO opr) throws DALException;
-	void updateOperatoer(OperatoerDTO opr, int id) throws DALException;
+	UserDTO getOperatoer(int oprId) throws DALException;
+	List<UserDTO> getOperatoerList() throws DALException;
+	void createOperatoer(UserDTO opr) throws DALException;
+	void updateOperatoer(UserDTO opr, int id) throws DALException;
 }
