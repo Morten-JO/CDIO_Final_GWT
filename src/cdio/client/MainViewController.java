@@ -1,4 +1,5 @@
 package cdio.client;
+import cdio.client.service.*;
 
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -14,9 +15,10 @@ public class MainViewController extends Composite {
 	private Content content;
 	private VerticalPanel vPanel;
 	private HorizontalPanel hPanel;
+	private ServiceClientImpl service;
 	
-	public MainViewController(){
-		
+	public MainViewController(ServiceClientImpl service){
+		this.service = service;
 		vPanel = new VerticalPanel();
 		initWidget(vPanel);
 		hPanel = new HorizontalPanel();
@@ -40,7 +42,7 @@ public class MainViewController extends Composite {
 
 	public void showPersons() {
 		
-		this.content.addContent(new Login());
+		//this.content.addContent(new Login(th));
 		this.header.setText("Login");
 		
 	}

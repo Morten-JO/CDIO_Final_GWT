@@ -14,12 +14,17 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import cdio.client.service.ServiceClientImpl;
+import cdio.server.ServiceImpl;
+
 public class Login extends Composite{
 	private VerticalPanel vPanel = new VerticalPanel();
 	private TextBox username;
 	private PasswordTextBox pass;
+	private ServiceClientImpl service;
 
-	public Login(){
+	public Login(ServiceClientImpl service){
+		this.service = service;
 		initWidget(this.vPanel);
 		vPanel.setStyleName("LoginBox");
 		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -47,7 +52,7 @@ public class Login extends Composite{
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get().clear();
-				RootPanel.get().add(new MainViewController());
+				RootPanel.get().add(new MainViewController(service));
 				
 			}
 		});

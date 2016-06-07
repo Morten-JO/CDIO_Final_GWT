@@ -29,6 +29,38 @@ public class DataController {
 		
 		
 	}
+
+	public OperatoerDAO getOprDAO() {
+		return oprDAO;
+	}
+
+	public ProduktBatchDAO getPBDAO() {
+		return PBDAO;
+	}
+
+	public ProduktBatchKompDAO getPBKompDAO() {
+		return PBKompDAO;
+	}
+
+	public ReceptDAO getRecDAO() {
+		return RecDAO;
+	}
+
+	public ReceptKompDAO getRecKompDAO() {
+		return RecKompDAO;
+	}
+
+	public RollerDAO getRollerDAO() {
+		return RollerDAO;
+	}
+
+	public RaavareBatchDAO getRBDAO() {
+		return RBDAO;
+	}
+
+	public RaavareDAO getRaavareDAO() {
+		return RaavareDAO;
+	}
 	
 
 }
