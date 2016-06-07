@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 public class ServiceClientImpl {
 
 	
-	private ServiceAsync service;
+	public ServiceAsync service;
 		
 	public ServiceClientImpl(String url){
 		

@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cdio.shared.UserDTO;
 import connector01917.Connector;
 import daointerfaces01917.DALException;
 import daointerfaces01917.OperatoerDAO;
-import dto01917.UserDTO;
 
 public class MYSQLOperatoerDAO implements OperatoerDAO {
 	
@@ -42,7 +42,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		try {
 			int id = 0;
 			CallableStatement createOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_operatoer(?,?,?,?)");
-			createOP.setString(1, opr.getOprNavn());
+			createOP.setString(1, opr.getNavn());
 			createOP.setString(2, opr.getIni());
 			createOP.setString(3, opr.getCpr());
 			createOP.setString(4, opr.getPassword());
@@ -61,7 +61,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 	public void updateOperatoer(UserDTO opr, int id) throws DALException {
 		try {
 			CallableStatement updateOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_operatoer(?,?,?,?,?)");
-			updateOP.setString(1, opr.getOprNavn());
+			updateOP.setString(1, opr.getNavn());
 			updateOP.setString(2, opr.getIni());
 			updateOP.setString(3, opr.getCpr());
 			updateOP.setString(4, opr.getPassword());
@@ -72,14 +72,14 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 	
-	public List<UserDTO> getOperatoerList() throws DALException {
+	public UserDTO[] getOperatoerList() throws DALException {
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM view_operatoer");
 			while (rs.next()) 
 			{
-				UserDTO current = new UserDTO(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+				UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getBoolean(7), rs.getBoolean(8));
 				current.setOprId(rs.getInt(1));
 				list.add(current);
 				 
@@ -87,6 +87,6 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		} catch (SQLException e) {
 			throw new DALException(e); 
 		}
-		return list;
+		return (UserDTO[]) list.toArray();
 	}
 }

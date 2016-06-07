@@ -15,8 +15,8 @@ public class CDIO_Final implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		ServiceClientImpl client = new ServiceClientImpl(GWT.getModuleBaseURL()+ "cdioservice");
-		 Login page = new Login();
+		final ServiceClientImpl client = new ServiceClientImpl(GWT.getModuleBaseURL()+ "cdioservice");
+		 Login page = new Login(client);
 		RootPanel.get().add(page);
 	}
 }

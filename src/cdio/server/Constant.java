@@ -1,4 +1,4 @@
-package connector01917;
+package cdio.server;
 
 public abstract class Constant
 {

@@ -1,4 +1,4 @@
-package daointerfaces01917;
+package cdio.shared;
 
 import cdio.shared.UserDTO;
 

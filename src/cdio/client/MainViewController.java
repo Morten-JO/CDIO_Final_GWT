@@ -17,6 +17,14 @@ public class MainViewController extends Composite {
 	private HorizontalPanel hPanel;
 	private ServiceClientImpl service;
 	
+	public Content getContent() {
+		return content;
+	}
+
+	public ServiceClientImpl getService() {
+		return service;
+	}
+
 	public MainViewController(ServiceClientImpl service){
 		this.service = service;
 		vPanel = new VerticalPanel();
@@ -29,7 +37,7 @@ public class MainViewController extends Composite {
 		
 		menuView = new Menu(this);
 	
-		content = new Content();
+		content = new Content(this.service);
 		
 		vPanel.add(header);
 		hPanel.add(menuView);
@@ -42,8 +50,17 @@ public class MainViewController extends Composite {
 
 	public void showPersons() {
 		
-		//this.content.addContent(new Login(th));
-		this.header.setText("Login");
+		this.header.setText("Personer i systemet");
+		this.content.addContent(new ShowPersons(this.service));
+		
+		
+	}
+	
+	public void showTest() {
+		
+		this.header.setText("Test");
+		this.content.addContent(new Raavare(this.service));
+		
 		
 	}
 }

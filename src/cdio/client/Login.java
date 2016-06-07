@@ -2,7 +2,6 @@ package cdio.client;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -12,10 +11,8 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 import cdio.client.service.ServiceClientImpl;
-import cdio.server.ServiceImpl;
 
 public class Login extends Composite{
 	private VerticalPanel vPanel = new VerticalPanel();
@@ -49,10 +46,12 @@ public class Login extends Composite{
 		Button login = new Button("Log ind");
 		login.addClickHandler(new ClickHandler() {
 			
+		
+
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get().clear();
-				RootPanel.get().add(new MainViewController(service));
+				RootPanel.get().add(new MainViewController(Login.this.service));
 				
 			}
 		});

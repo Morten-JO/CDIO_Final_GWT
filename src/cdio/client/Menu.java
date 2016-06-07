@@ -15,8 +15,9 @@ public Menu (final MainViewController mvc) {
 	vPanel.setStyleName("Menu");
 	Anchor showPersons = new Anchor("Vis/Ret personer");
 	
+	
 	vPanel.add(showPersons);
-	Anchor showPersons1 = new Anchor("");
+	Anchor showPersons1 = new Anchor("plebias");
 	Anchor showPersons2 = new Anchor("Vis personer2");
 	Anchor showPersons3 = new Anchor("Vis personer2");
 	Anchor showPersons4 = new Anchor("Vis personer2");
@@ -24,7 +25,7 @@ public Menu (final MainViewController mvc) {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-		mvc.showPersons();
+		mvc.showTest();
 			
 		}
 	});

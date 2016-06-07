@@ -1,17 +1,18 @@
 package cdio.client.service;
-import daointerfaces01917.*;
-import dto01917.UserDTO;
-
-import java.util.List;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+
+import cdio.shared.RaavareDTO;
+import cdio.shared.UserDTO;
+
 
 
 @RemoteServiceRelativePath("cdioservice")
 public interface Service extends RemoteService {
 
-	List<UserDTO> getPersons();
+public	UserDTO[] getPersons();
+
+public RaavareDTO getRaavare(int id);
 
 	
 	

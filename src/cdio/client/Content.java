@@ -2,25 +2,36 @@ package cdio.client;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
+
+import cdio.client.service.ServiceClientImpl;
 
 
 public class Content extends Composite  {
-	private HorizontalPanel hPanel;
+	private HorizontalPanel vPanel;
+	private Label lbl;
 	
-	public Content(){
-		hPanel = new HorizontalPanel();
-		initWidget(hPanel);
-		hPanel.setStyleName("Content");
+	public Content(ServiceClientImpl client){
+		vPanel = new HorizontalPanel();
+		initWidget(vPanel);
+//		lbl = new Label("Jensen er lazy prowgrammer");
+//		lbl.setStyleName("Header-Text");
+		
+		vPanel.setStyleName("Content");
+		
 	}
 	
 	public void clearPanel(){
-		this.hPanel.clear();
+		this.vPanel.clear();
 		
 	}
 	
 	public void addContent(Composite comp){
-		this.hPanel.clear();
-		this.hPanel.add(comp);
+		this.vPanel.clear();
+	
+		this.vPanel.add(comp);
+		
 		
 	}
 }

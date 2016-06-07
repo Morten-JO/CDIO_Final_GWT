@@ -1,7 +1,8 @@
 package cdio.server;
-import daoimpl01917.*;
-import daointerfaces01917.*;
-import connector01917.*;
+//import daoimpl01917.*;
+//import daointerfaces01917.*;
+
+import cdio.shared.*;
 
 public class DataController {
 	
@@ -11,24 +12,25 @@ public class DataController {
 	private ReceptDAO RecDAO;
 	private ReceptKompDAO RecKompDAO;
 	private RollerDAO RollerDAO;
-	private RaavareBatchDAO RBDAO;
+//	private RaavareBatchDAO RBDAO;
 	private RaavareDAO RaavareDAO;
 	
+	
 	public DataController(){
-		Connector conn = Connector.getInstance();
-		
-		oprDAO = new MYSQLOperatoerDAO();
-		PBDAO = new MYSQLProduktBatchDAO();
-		PBKompDAO = new MYSQLProduktBatchKompDAO();
-		RecDAO = new MYSQLReceptDAO();
-		RecKompDAO = new MYSQLReceptKompDAO();
-		RollerDAO = new MYSQLRollerDAO();
-		RBDAO = new MYSQLRaavareBatchDAO();
+			
+//		oprDAO = new MYSQLOperatoerDAO();
+//		PBDAO = new MYSQLProduktBatchDAO();
+//		PBKompDAO = new MYSQLProduktBatchKompDAO();
+//		RecDAO = new MYSQLReceptDAO();
+//		RecKompDAO = new MYSQLReceptKompDAO();
+//		RollerDAO = new MYSQLRollerDAO();
+//		RBDAO = new MYSQLRaavareBatchDAO();
 		RaavareDAO = new MYSQLRaavareDAO();
 		
 		
 		
 	}
+
 
 	public OperatoerDAO getOprDAO() {
 		return oprDAO;
@@ -54,9 +56,9 @@ public class DataController {
 		return RollerDAO;
 	}
 
-	public RaavareBatchDAO getRBDAO() {
-		return RBDAO;
-	}
+//	public RaavareBatchDAO getRBDAO() {
+//		return RBDAO;
+//	}
 
 	public RaavareDAO getRaavareDAO() {
 		return RaavareDAO;
