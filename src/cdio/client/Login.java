@@ -47,7 +47,7 @@ public class Login extends Composite{
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get().clear();
-				RootPanel.get().add(new MainView());
+				RootPanel.get().add(new MainViewController());
 				
 			}
 		});

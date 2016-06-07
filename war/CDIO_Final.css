@@ -10,6 +10,15 @@ h1 {
   text-align: center;
 }
 
+html {
+	width: 1024px;
+ margin-left: auto;
+ margin-right: auto;
+ margin-top: 5px;
+ horizontal-alignment: center;
+
+}
+
 .sendButton {
   display: block;
   font-size: 16pt;
@@ -83,4 +92,57 @@ body {
     background-image: url("images/bg.jpg")!important ;
 }
 
+.Header-Text {
+	
+	font-size: 40px;
+	text-align: center;
+	color: white;
+	
+}
+
+.Header {
+	background-color: black;
+	height: 120px;
+	padding: 30px;
+	width: 1024px;
+	margin: auto;
+	
+}
+
+.Footer {
+	padding: 15px;
+	height: 50px;
+	float: bottom;
+	width: 1024px;
+	clear: both;
+	background-color: blue;
+	
+	
+	}
+	
+	
+.Footer-Text {
+	text-align: center;
+	color: cyan;
+	
+	
+	}
+	
+.Menu {
+	line-height: 20px;
+	min-height: 400px;
+	width: 160px;
+	float: left;
+	padding: 10px;
+	background-color: green;
+}
+
+.Content {
+	width: 864px;
+	padding: 10px;
+	float: left;
+	background-color: red;
+	min-height: 400px;
+	
+}
 

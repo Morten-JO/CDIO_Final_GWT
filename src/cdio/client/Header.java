@@ -6,14 +6,15 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Header extends Composite {
-	private VerticalPanel vPanel = new VerticalPanel();
+	
 	
 	public Header(){
-		initWidget(this.vPanel);
+		VerticalPanel vPanel = new VerticalPanel();
+		initWidget(vPanel);
 		Label header = new Label("Headertext");
-		header.setStyleName("headerFont");
+		header.setStyleName("Header-Text");
 		vPanel.add(header);
-		vPanel.setStyleName("headerStyle");
+		vPanel.setStyleName("Header");
 
 		
 		
