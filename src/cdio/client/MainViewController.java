@@ -1,7 +1,9 @@
 package cdio.client;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class MainViewController extends Composite {
@@ -19,14 +21,13 @@ public class MainViewController extends Composite {
 		initWidget(vPanel);
 		hPanel = new HorizontalPanel();
 		header = new Header();
-		//header.setStyleName("Header");
+		
 		
 		footer = new Footer();
-		//footer.setStyleName("Footer");
-		menuView = new Menu();
-		//menuView.setStyleName("Menu");
+		
+		menuView = new Menu(this);
+	
 		content = new Content();
-		//content.setStyleName("Content");
 		
 		vPanel.add(header);
 		hPanel.add(menuView);
@@ -36,4 +37,11 @@ public class MainViewController extends Composite {
 		
 		
 }
+
+	public void showPersons() {
+		
+		this.content.addContent(new Login());
+		this.header.setText("Login");
+		
+	}
 }

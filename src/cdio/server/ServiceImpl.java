@@ -6,4 +6,5 @@ import cdio.client.service.Service;
 
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 
+	
 }
