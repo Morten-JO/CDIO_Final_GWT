@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class MainViewController extends Composite {
@@ -15,6 +16,7 @@ public class MainViewController extends Composite {
 	private Content content;
 	private VerticalPanel vPanel;
 	private HorizontalPanel hPanel;
+	private ScrollPanel scroll;
 	private ServiceClientImpl service;
 	
 	public Content getContent() {
@@ -28,6 +30,7 @@ public class MainViewController extends Composite {
 	public MainViewController(ServiceClientImpl service){
 		this.service = service;
 		vPanel = new VerticalPanel();
+		
 		initWidget(vPanel);
 		hPanel = new HorizontalPanel();
 		header = new Header();
@@ -38,10 +41,14 @@ public class MainViewController extends Composite {
 		menuView = new Menu(this);
 	
 		content = new Content(this.service);
+		scroll = new ScrollPanel();
+		scroll.add(content);
+		scroll.setSize("864px", "400px");
+		//scroll.setStyleName("ScrollPanel");
 		
 		vPanel.add(header);
 		hPanel.add(menuView);
-		hPanel.add(content);
+		hPanel.add(scroll);
 		vPanel.add(hPanel);
 		vPanel.add(footer);
 		

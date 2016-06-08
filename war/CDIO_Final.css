@@ -19,6 +19,17 @@ html {
 
 }
 
+.FlexTable {
+ border-top: thin solid #444444;
+ border-left: thin solid #444444;
+ border-right: thin solid #111111;
+ border-bottom: thin solid #111111;
+ table-layout: auto;
+ width: 400px; 
+ margin-top: 7mm;
+ line-height: 50px;
+ 
+}
 .sendButton {
   display: block;
   font-size: 16pt;
@@ -144,6 +155,14 @@ body {
 	background-color: red;
 	min-height: 400px;
 	
+}
+
+.ScrollPanel{
+	min-width: 700px;
+	padding: 10px;
+	float: left;
+	background-color: red;
+	min-height: 375px;
 }
 
 .gwt-Anchor:link {color:#FFFFFF;}

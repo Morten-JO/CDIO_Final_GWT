@@ -1,6 +1,9 @@
 package cdio.client;
+import java.sql.ResultSet;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -18,10 +21,10 @@ public class Login extends Composite{
 	private VerticalPanel vPanel = new VerticalPanel();
 	private TextBox username;
 	private PasswordTextBox pass;
-	private ServiceClientImpl service;
+	private ServiceClientImpl client;
 
 	public Login(ServiceClientImpl service){
-		this.service = service;
+		client = service;
 		initWidget(this.vPanel);
 		vPanel.setStyleName("LoginBox");
 		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -50,9 +53,27 @@ public class Login extends Composite{
 
 			@Override
 			public void onClick(ClickEvent event) {
-				RootPanel.get().clear();
-				RootPanel.get().add(new MainViewController(Login.this.service));
 				
+				client.service.checkLogin(Integer.parseInt(username.getText()), pass.getText(), new AsyncCallback<String>() {
+					
+					@Override
+					public void onSuccess(String result) {
+						RootPanel.get().clear();
+						RootPanel.get().add(new MainViewController(client));
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						username.setText("Mar er grim");
+						
+					}
+				});
+				
+			;
+				
+				
+			
 			}
 		});
 			
@@ -64,5 +85,7 @@ public class Login extends Composite{
 		vPanel.add(passPanel);
 		vPanel.add(login);
 	}
+	
+	
 
 }

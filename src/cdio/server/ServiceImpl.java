@@ -1,13 +1,13 @@
 package cdio.server;
 
+import java.util.List;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import cdio.client.Raavare;
 import cdio.client.service.Service;
-import cdio.client.service.ServiceClientImpl;
+import cdio.server.DAOinterfaces.DALException;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
-import cdio.shared.DALException;
 
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
@@ -16,9 +16,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	 */
 	private static final long serialVersionUID = -2491989177309231572L;
 	private DataController controller;
+	private TokenHandler token;
 	
 	public ServiceImpl() {
 		controller = new DataController();
+		token = new TokenHandler();
 	}
 
 //	@Override
@@ -44,9 +46,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public RaavareDTO getRaavare(int id) {
 		
 		try {
-			
 			return this.controller.getRaavareDAO().getRaavare(1);
-		} catch (DALException e) {
+		} catch (cdio.server.DAOinterfaces.DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -55,8 +56,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public UserDTO[] getPersons() {
-		// TODO Auto-generated method stub
+	public List<UserDTO> getPersons() {
+		try {
+			return this.controller.getOprDAO().getUserList();
+		} catch (cdio.server.DAOinterfaces.DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -64,6 +70,30 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public String number(String s) {
 		// TODO Auto-generated method stub
 		return s + "Jensen";
+	}
+
+	@Override
+	public String checkLogin(int id, String password) {
+		String token = null;
+		UserDTO current = null;
+		try {
+			current = this.controller.getOprDAO().getOperatoer(id);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (current != null){
+			if (current.getPassword().equals(password))
+			{
+				if(current.getRolle().equals("admin")||current.getRolle().equals("vaerkfoerer")||current.getRolle().equals("farmaceut"))
+			token = this.token.createToken(Integer.toString(id));
+			return token;
+			}
+		}
+		
+		
+		return "Bruger ikke fundet";
 	}
 }
 

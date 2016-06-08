@@ -14,6 +14,7 @@ public class Content extends Composite  {
 	
 	public Content(ServiceClientImpl client){
 		vPanel = new HorizontalPanel();
+		
 		initWidget(vPanel);
 //		lbl = new Label("Jensen er lazy prowgrammer");
 //		lbl.setStyleName("Header-Text");

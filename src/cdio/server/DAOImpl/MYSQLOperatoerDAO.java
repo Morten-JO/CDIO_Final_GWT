@@ -24,11 +24,9 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 			    String ini = rs.getString(3);
 			    String cpr = rs.getString(4);
 			    String password = rs.getString(5);
-			    boolean admin = rs.getBoolean(6);
-			    boolean operatoer = rs.getBoolean(7);
-			    boolean farmaceut = rs.getBoolean(8);
+			    String rolle = rs.getString(6);
 			    
-			    UserDTO newopr = new UserDTO(oprId, oprNavn, ini, cpr, password, admin, operatoer, farmaceut);
+			   UserDTO newopr = new UserDTO(oprId, oprNavn, ini, cpr, password, rolle);
 			    newopr.setOprId(oprId);
 			    return newopr;
 			}
@@ -72,14 +70,14 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 	
-	public UserDTO[] getOperatoerList() throws DALException {
+	public List<UserDTO> getUserList() throws DALException {
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM operatoer");
 			while (rs.next()) 
 			{
-				UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getBoolean(7), rs.getBoolean(8));
+				UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 				current.setOprId(rs.getInt(1));
 				list.add(current);
 				 
@@ -87,6 +85,13 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		} catch (SQLException e) {
 			throw new DALException(e); 
 		}
-		return (UserDTO[]) list.toArray();
+		return list;
 	}
+
+
+
+
+
+
+	
 }

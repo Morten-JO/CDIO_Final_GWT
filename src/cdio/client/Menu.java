@@ -25,7 +25,7 @@ public Menu (final MainViewController mvc) {
 		
 		@Override
 		public void onClick(ClickEvent event) {
-		mvc.showTest();
+		mvc.showPersons();
 			
 		}
 	});

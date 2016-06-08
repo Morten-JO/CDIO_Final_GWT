@@ -19,22 +19,20 @@ public class UserDTO implements Serializable {
 	/** Operatoer password min. 7 max. 8 karakterer */
 	private String password;
 
-	private boolean admin, operatoer, farmaceut;
+	private String rolle;
 	
 	public UserDTO(){
 		
 	}
 
-	public UserDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean operatoer, boolean farmaceut)
+	public UserDTO(int oprId, String oprNavn, String ini, String cpr, String password, String rolle)
 	{
 		this.oprId = oprId;
 		this.navn = oprNavn;
 		this.ini = ini;
 		this.cpr = cpr;
 		this.password = password;
-		this.admin = admin;
-		this.operatoer = operatoer;
-		this.farmaceut = farmaceut;
+		this.rolle = rolle;
 	}
 
 	public UserDTO(UserDTO opr)
@@ -44,9 +42,15 @@ public class UserDTO implements Serializable {
 		this.ini = opr.getIni();
 		this.cpr = opr.getCpr();
 		this.password = opr.getPassword();
-		this.admin = opr.isAdmin();
-		this.operatoer = opr.isOperatoer();
-		this.farmaceut = opr.isFarmaceut();
+		this.rolle = opr.getRolle();
+	}
+
+	public String getRolle() {
+		return rolle;
+	}
+
+	public void setRolle(String rolle) {
+		this.rolle = rolle;
 	}
 
 	public String getNavn() {
@@ -57,29 +61,29 @@ public class UserDTO implements Serializable {
 		this.navn = navn;
 	}
 
-	public boolean isAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
-	public boolean isOperatoer() {
-		return operatoer;
-	}
-
-	public void setOperatoer(boolean operatoer) {
-		this.operatoer = operatoer;
-	}
-
-	public boolean isFarmaceut() {
-		return farmaceut;
-	}
-
-	public void setFarmaceut(boolean farmaceut) {
-		this.farmaceut = farmaceut;
-	}
+//	public boolean isAdmin() {
+//		return admin;
+//	}
+//
+//	public void setAdmin(boolean admin) {
+//		this.admin = admin;
+//	}
+//
+//	public boolean isOperatoer() {
+//		return operatoer;
+//	}
+//
+//	public void setOperatoer(boolean operatoer) {
+//		this.operatoer = operatoer;
+//	}
+//
+//	public boolean isFarmaceut() {
+//		return farmaceut;
+//	}
+//
+//	public void setFarmaceut(boolean farmaceut) {
+//		this.farmaceut = farmaceut;
+//	}
 
 	public int getOprId() { 
 		return oprId; 
