@@ -22,7 +22,7 @@ public class Raavare extends Composite{
 			
 			@Override
 			public void onSuccess(RaavareDTO result) {
-				lbl = new Label(""+ result.getRaavareNavn());
+				lbl = new Label(result.toString());
 				vPanel.add(lbl);
 				
 			}
