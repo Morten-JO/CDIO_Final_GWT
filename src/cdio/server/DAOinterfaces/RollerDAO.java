@@ -1,8 +1,8 @@
-package daointerfaces01917;
+package cdio.server.DAOinterfaces;
 
 import java.util.List;
 
-import dto01917.RollerDTO;
+import cdio.server.DTO.RollerDTO;
 
 public interface RollerDAO {
 

@@ -1,4 +1,4 @@
-package daoimpl01917;
+package cdio.server.DAOImpl;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.Connector;
+import cdio.server.DAOinterfaces.DALException;
+import cdio.server.DAOinterfaces.OperatoerDAO;
 import cdio.shared.UserDTO;
-import daointerfaces01917.DALException;
-import daointerfaces01917.OperatoerDAO;
 
 public class MYSQLOperatoerDAO implements OperatoerDAO {
 	

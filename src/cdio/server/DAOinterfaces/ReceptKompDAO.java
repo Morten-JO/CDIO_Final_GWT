@@ -1,8 +1,8 @@
-package daointerfaces01917;
+package cdio.server.DAOinterfaces;
 
 import java.util.List;
 
-import dto01917.ReceptKompDTO;
+import cdio.server.DTO.ReceptKompDTO;
 
 public interface ReceptKompDAO {
 	ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws DALException;

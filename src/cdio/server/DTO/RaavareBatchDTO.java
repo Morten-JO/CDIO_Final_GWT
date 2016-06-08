@@ -1,4 +1,4 @@
-package dto01917;
+package cdio.server.DTO;
 
 public class RaavareBatchDTO {
 	int rbId; // i omraadet 1-99999999

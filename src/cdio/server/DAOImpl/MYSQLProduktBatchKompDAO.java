@@ -1,15 +1,14 @@
-package daoimpl01917;
+package cdio.server.DAOImpl;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import daointerfaces01917.DALException;
-import daointerfaces01917.ProduktBatchKompDAO;
-import dto01917.ProduktBatchKompDTO;
 import cdio.server.Connector;
+import cdio.server.DAOinterfaces.DALException;
+import cdio.server.DAOinterfaces.ProduktBatchKompDAO;
+import cdio.server.DTO.ProduktBatchKompDTO;
 public class MYSQLProduktBatchKompDAO implements ProduktBatchKompDAO {
 	
 	@Override

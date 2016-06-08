@@ -1,4 +1,4 @@
-package dto01917;
+package cdio.server.DTO;
 
 public class ReceptKompDTO {
 	int receptId; // auto genereres fra 1..n
