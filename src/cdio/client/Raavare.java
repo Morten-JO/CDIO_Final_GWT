@@ -36,6 +36,23 @@ public class Raavare extends Composite{
 			}
 		});
 		
+//		client.service.number("jensen", new AsyncCallback<String>() {
+//			
+//			@Override
+//			public void onSuccess(String result) {
+//				lbl = new Label(result);
+//				vPanel.add(lbl);
+//				
+//			}
+//			
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				lbl = new Label("tosse");
+//				vPanel.add(lbl);
+//				
+//			}
+//		});
+		
 	}
 	
 	public void setlbl (String s){

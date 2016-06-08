@@ -14,6 +14,6 @@ public	UserDTO[] getPersons();
 
 public RaavareDTO getRaavare(int id);
 
-	
+public String number(String s);
 	
 }

@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connector01917.Connector;
+
 import daointerfaces01917.DALException;
 import daointerfaces01917.RollerDAO;
 import dto01917.RollerDTO;
-
+import cdio.server.Connector;
 public class MYSQLRollerDAO implements RollerDAO{
 
 	@Override

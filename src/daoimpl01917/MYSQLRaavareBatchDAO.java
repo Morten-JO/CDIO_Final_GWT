@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connector01917.Connector;
+
 import daointerfaces01917.DALException;
 import daointerfaces01917.RaavareBatchDAO;
 import dto01917.RaavareBatchDTO;
-
+import cdio.server.Connector;
 public class MYSQLRaavareBatchDAO implements RaavareBatchDAO{
 
 	@Override

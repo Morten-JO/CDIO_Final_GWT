@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connector01917.Connector;
+
 import daointerfaces01917.DALException;
 import daointerfaces01917.ReceptKompDAO;
 import dto01917.ReceptKompDTO;
-
+import cdio.server.Connector;
 public class MYSQLReceptKompDAO implements ReceptKompDAO {
 
 	@Override

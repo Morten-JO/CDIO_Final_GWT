@@ -12,4 +12,5 @@ public interface ServiceAsync {
 	
 	void getPersons(AsyncCallback<UserDTO[]> callback);
 	void getRaavare(int id, AsyncCallback<RaavareDTO> callback);
+	void number(String s, AsyncCallback<String> callback);
 }

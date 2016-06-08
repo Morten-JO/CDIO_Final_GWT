@@ -11,6 +11,10 @@ import cdio.shared.DALException;
 
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2491989177309231572L;
 	private DataController controller;
 	
 	public ServiceImpl() {
@@ -40,7 +44,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public RaavareDTO getRaavare(int id) {
 		
 		try {
-			System.out.println("JEnsen er den bedste");
+			
 			return this.controller.getRaavareDAO().getRaavare(1);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
@@ -54,6 +58,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public UserDTO[] getPersons() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String number(String s) {
+		// TODO Auto-generated method stub
+		return s + "Jensen";
 	}
 }
 

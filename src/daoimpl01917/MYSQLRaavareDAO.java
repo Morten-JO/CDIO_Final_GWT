@@ -5,10 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connector01917.Connector;
+import cdio.server.Connector;
+import cdio.shared.RaavareDTO;
 import daointerfaces01917.DALException;
 import daointerfaces01917.RaavareDAO;
-import dto01917.RaavareDTO;
+
 
 public class MYSQLRaavareDAO implements RaavareDAO{
 	

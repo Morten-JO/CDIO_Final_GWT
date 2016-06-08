@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connector01917.Connector;
+
 import daointerfaces01917.DALException;
 import daointerfaces01917.ReceptDAO;
 import dto01917.ReceptDTO;
-
+import cdio.server.Connector;
 public class MYSQLReceptDAO implements ReceptDAO{
 	
 	@Override
