@@ -2,6 +2,8 @@ package cdio.server;
 
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.lookup.ReductionResult;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio.client.service.Service;
@@ -67,33 +69,22 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public String number(String s) {
-		// TODO Auto-generated method stub
-		return s + "Jensen";
-	}
-
-	@Override
 	public String checkLogin(int id, String password) {
 		String token = null;
 		UserDTO current = null;
 		try {
 			current = this.controller.getOprDAO().getOperatoer(id);
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if (current != null){
-			if (current.getPassword().equals(password))
-			{
+		//System.out.println(current);
+		if (current != null && current.getPassword().equals(password)){
 				if(current.getRolle().equals("admin")||current.getRolle().equals("vaerkfoerer")||current.getRolle().equals("farmaceut"))
-			token = this.token.createToken(Integer.toString(id));
+					token = this.token.createToken(Integer.toString(id));
 			return token;
-			}
+		}else{
+			return "Login not authorized!";
 		}
-		
-		
-		return "Bruger ikke fundet";
 	}
 }
 

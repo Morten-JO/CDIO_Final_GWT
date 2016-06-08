@@ -22,6 +22,7 @@ public class Login extends Composite{
 	private TextBox username;
 	private PasswordTextBox pass;
 	private ServiceClientImpl client;
+	private Label statusLogin;
 
 	public Login(ServiceClientImpl service){
 		client = service;
@@ -46,6 +47,8 @@ public class Login extends Composite{
 		passPanel.add(lock_icon);
 		passPanel.add(pass);
 		
+		statusLogin = new Label(" ");
+		
 		Button login = new Button("Log ind");
 		login.addClickHandler(new ClickHandler() {
 			
@@ -58,14 +61,18 @@ public class Login extends Composite{
 					
 					@Override
 					public void onSuccess(String result) {
-						RootPanel.get().clear();
-						RootPanel.get().add(new MainViewController(client));
+						if(result.equals("Login not authorized!"))
+							statusLogin.setText(result);
+						else{
+							RootPanel.get().clear();
+							RootPanel.get().add(new MainViewController(client));
+						}
 						
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						username.setText("Mar er grim");
+						statusLogin.setText("connection failure");
 						
 					}
 				});
@@ -83,6 +90,7 @@ public class Login extends Composite{
 		
 		vPanel.add(hPanel);
 		vPanel.add(passPanel);
+		vPanel.add(statusLogin);
 		vPanel.add(login);
 	}
 	

@@ -28,6 +28,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 			    
 			   UserDTO newopr = new UserDTO(oprId, oprNavn, ini, cpr, password, rolle);
 			    newopr.setOprId(oprId);
+			    System.out.println("newopr: " +newopr);
 			    return newopr;
 			}
 	    } catch (SQLException e) {
