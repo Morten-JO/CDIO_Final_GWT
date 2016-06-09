@@ -16,4 +16,5 @@ public interface ServiceAsync {
 	void getRaavare(int id, AsyncCallback<RaavareDTO> callback);
 	//void number(String s, AsyncCallback<String> callback);
 	void checkLogin(int id, String password, AsyncCallback<String> callback);
+	void getRole(String token, AsyncCallback<String> callback);
 }

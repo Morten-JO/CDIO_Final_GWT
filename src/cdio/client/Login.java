@@ -48,8 +48,19 @@ public class Login extends Composite{
 		passPanel.add(pass);
 		
 		statusLogin = new Label(" ");
+	
+		//predetermined
+		username.setText("2");
+		pass.setText("atoJ21v");
 		
 		Button login = new Button("Log ind");
+		login.setPixelSize(100, 30);
+		login.setStyleName("loginbtn");
+		
+		vPanel.add(hPanel);
+		vPanel.add(passPanel);
+		vPanel.add(statusLogin);
+		vPanel.add(login);
 		login.addClickHandler(new ClickHandler() {
 			
 		
@@ -65,7 +76,7 @@ public class Login extends Composite{
 							statusLogin.setText(result);
 						else{
 							RootPanel.get().clear();
-							RootPanel.get().add(new MainViewController(client));
+							RootPanel.get().add(new MainViewController(client, result));
 						}
 						
 					}
@@ -85,13 +96,7 @@ public class Login extends Composite{
 		});
 			
 		
-		login.setPixelSize(100, 30);
-		login.setStyleName("loginbtn");
-		
-		vPanel.add(hPanel);
-		vPanel.add(passPanel);
-		vPanel.add(statusLogin);
-		vPanel.add(login);
+	
 	}
 	
 	

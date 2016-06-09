@@ -18,29 +18,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	 */
 	private static final long serialVersionUID = -2491989177309231572L;
 	private DataController controller;
-	private TokenHandler token;
+	private TokenHandler tokenHandler;
 	
 	public ServiceImpl() {
 		controller = new DataController();
-		token = new TokenHandler();
+		tokenHandler = new TokenHandler();
 	}
 
-//	@Override
-//	public UserDTO[] getPersons() {
-//
-//		
-//		try {
-//			return this.controller.getOprDAO().getOperatoerList();
-//		} catch (DALException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
-//		
-//		
-//
-//	
-//}
+
 
 	
 	
@@ -80,11 +65,27 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		//System.out.println(current);
 		if (current != null && current.getPassword().equals(password)){
 				if(current.getRolle().equals("admin")||current.getRolle().equals("vaerkfoerer")||current.getRolle().equals("farmaceut"))
-					token = this.token.createToken(Integer.toString(id));
+					token = tokenHandler.createToken(Integer.toString(id));
 			return token;
 		}else{
 			return "Login not authorized!";
 		}
+	}
+
+	@Override
+	public String getRole(String token) {
+		
+		try {
+			String r = tokenHandler.getUserID(token);
+			String role = controller.getOprDAO().getUserRole(tokenHandler.getUserID(token));
+			System.out.println("hulubulu---------"+role);
+			return role;
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return null;
 	}
 }
 

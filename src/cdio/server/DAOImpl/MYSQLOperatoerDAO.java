@@ -28,7 +28,6 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 			    
 			   UserDTO newopr = new UserDTO(oprId, oprNavn, ini, cpr, password, rolle);
 			    newopr.setOprId(oprId);
-			    System.out.println("newopr: " +newopr);
 			    return newopr;
 			}
 	    } catch (SQLException e) {
@@ -88,6 +87,26 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		}
 		return list;
 	}
+
+	@Override
+	public String getUserRole(String token) throws DALException {
+		String role = null;
+		try {
+			System.out.println(token);
+			ResultSet rs =  Connector.getInstance().doQuery("SELECT rolle FROM operatoer WHERE oprId = " + token+";");
+			System.out.println("jensen");
+			rs.next();
+			role = rs.getString(1);
+			System.out.println("rolle" + role);
+			return role;
+		} catch (Exception e) {
+			System.out.println("datafail");
+		}
+		System.out.println("her er vi");
+		return role;
+	}
+	
+	
 
 
 

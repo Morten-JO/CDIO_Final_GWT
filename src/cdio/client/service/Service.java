@@ -21,6 +21,9 @@ public String checkLogin(int id, String password);
 
 public RaavareDTO getRaavare(int id);
 
-//public String number(String s);
+
+public String getRole(String token);
+
+
 	
 }
