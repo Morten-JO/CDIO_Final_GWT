@@ -76,7 +76,7 @@ public class MainViewController extends Composite {
 	public void showRaavBa() {
 		
 		this.header.setText("Raavarebatch");
-		this.content.addContent(new Raavarebatch(client));
+		this.content.addContent(new Raavarebatch(client,token));
 		
 		
 	}

@@ -24,7 +24,7 @@ public interface Service extends RemoteService {
 	public List<RaavareBatchDTO> getRaavareBatches();
 	public List<ProduktBatchDTO> getPB(String token) ;
 	public List<ReceptDTO> getRecept(String token);
-
+	public void updateRB(String token, RaavareBatchDTO RaavareBatch);
 
 	
 }

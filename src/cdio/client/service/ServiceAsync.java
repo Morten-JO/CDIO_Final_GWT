@@ -23,4 +23,5 @@ public interface ServiceAsync {
 	void getRaavareBatches(AsyncCallback<List<RaavareBatchDTO>> asyncCallback);
 	void getPB(String token, AsyncCallback<List<ProduktBatchDTO>> callback);
 	void getRecept(String token, AsyncCallback<List<ReceptDTO>> callback);
+	void updateRB(String token, RaavareBatchDTO RaavareBatch, AsyncCallback<Void> callback);
 }
