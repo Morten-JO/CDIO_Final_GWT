@@ -84,7 +84,7 @@ public class MainViewController extends Composite {
 public void showProBa() {
 		
 		this.header.setText("Produktbatch");
-		this.content.addContent(new Produktbatch(client));
+		this.content.addContent(new Produktbatch(client,token));
 		
 		
 	}
@@ -92,7 +92,7 @@ public void showProBa() {
 public void showRecepter() {
 	
 	this.header.setText("Recepter");
-	this.content.addContent(new Recept(client));
+	this.content.addContent(new Recept(client,token));
 	
 	
 }
@@ -100,7 +100,7 @@ public void showRecepter() {
 public void showRaavarer() {
 	
 	this.header.setText("Raavarer");
-	this.content.addContent(new Raavare(client));
+	this.content.addContent(new Raavare(client,token));
 	
 	
 }
