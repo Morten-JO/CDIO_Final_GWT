@@ -3,8 +3,10 @@ package cdio.server;
 //import daointerfaces01917.*;
 
 import cdio.server.DAOImpl.MYSQLOperatoerDAO;
+import cdio.server.DAOImpl.MYSQLProduktBatchDAO;
 import cdio.server.DAOImpl.MYSQLRaavareBatchDAO;
 import cdio.server.DAOImpl.MYSQLRaavareDAO;
+import cdio.server.DAOImpl.MYSQLReceptDAO;
 import cdio.server.DAOinterfaces.OperatoerDAO;
 import cdio.server.DAOinterfaces.ProduktBatchDAO;
 import cdio.server.DAOinterfaces.ProduktBatchKompDAO;
@@ -30,9 +32,9 @@ public class DataController {
 	public DataController(){
 			
 		oprDAO = new MYSQLOperatoerDAO();
-//		PBDAO = new MYSQLProduktBatchDAO();
+		PBDAO = new MYSQLProduktBatchDAO();
 //		PBKompDAO = new MYSQLProduktBatchKompDAO();
-//		RecDAO = new MYSQLReceptDAO();
+		RecDAO = new MYSQLReceptDAO();
 //		RecKompDAO = new MYSQLReceptKompDAO();
 //		RollerDAO = new MYSQLRollerDAO();
 		RBDAO = new MYSQLRaavareBatchDAO();

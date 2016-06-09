@@ -35,7 +35,7 @@ public class MYSQLReceptDAO implements ReceptDAO{
 		List<ReceptDTO> list = new ArrayList<ReceptDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM view_recept");
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM recept");
 			while (rs.next()) 
 			{
 				ReceptDTO current = new ReceptDTO(rs.getString(2));
