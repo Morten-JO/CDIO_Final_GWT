@@ -62,19 +62,7 @@ public class Raavarebatch extends Composite  {
 
 			});
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+	
 		    vPanel.add(flex);
 		   // vPanel.setStyleName("Content");
 		

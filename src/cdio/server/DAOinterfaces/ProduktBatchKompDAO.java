@@ -2,7 +2,7 @@ package cdio.server.DAOinterfaces;
 
 import java.util.List;
 
-import cdio.server.DTO.ProduktBatchKompDTO;
+import cdio.shared.ProduktBatchKompDTO;
 
 public interface ProduktBatchKompDAO {
 	ProduktBatchKompDTO getProduktBatchKomp(int pbId, int rbId) throws DALException;

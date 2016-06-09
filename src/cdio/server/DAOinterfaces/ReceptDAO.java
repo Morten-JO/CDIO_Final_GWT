@@ -3,7 +3,7 @@ package cdio.server.DAOinterfaces;
 import java.sql.ResultSet;
 import java.util.List;
 
-import cdio.server.DTO.ReceptDTO;
+import cdio.shared.ReceptDTO;
 
 public interface ReceptDAO {
 	ReceptDTO getRecept(int receptId) throws DALException;

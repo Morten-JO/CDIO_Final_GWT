@@ -2,8 +2,6 @@ package cdio.server;
 
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.lookup.ReductionResult;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio.client.service.Service;
@@ -95,7 +93,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<RaavareBatchDTO> getRaavareBatches() {
-		List<RaavareBatchDTO> list = controller.getRBDAO().getRaavareBatchList();
+		try {
+			return controller.getRBDAO().getRaavareBatchList();
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

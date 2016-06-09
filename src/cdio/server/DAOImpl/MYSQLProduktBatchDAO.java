@@ -8,7 +8,8 @@ import java.util.List;
 import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.ProduktBatchDAO;
-import cdio.server.DTO.ProduktBatchDTO;
+import cdio.shared.ProduktBatchDTO;
+
 public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 
 	@Override

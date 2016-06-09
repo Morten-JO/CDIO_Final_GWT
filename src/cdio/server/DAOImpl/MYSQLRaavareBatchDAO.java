@@ -9,7 +9,7 @@ import java.util.List;
 import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.RaavareBatchDAO;
-import cdio.server.DTO.RaavareBatchDTO;
+import cdio.shared.RaavareBatchDTO;
 
 public class MYSQLRaavareBatchDAO implements RaavareBatchDAO{
 

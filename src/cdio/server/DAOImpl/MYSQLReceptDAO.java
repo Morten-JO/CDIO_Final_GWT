@@ -8,7 +8,7 @@ import java.util.List;
 import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.ReceptDAO;
-import cdio.server.DTO.ReceptDTO;
+import cdio.shared.ReceptDTO;
 public class MYSQLReceptDAO implements ReceptDAO{
 	
 	@Override

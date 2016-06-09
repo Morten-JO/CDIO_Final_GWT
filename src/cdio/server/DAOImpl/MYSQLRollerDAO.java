@@ -9,7 +9,7 @@ import java.util.List;
 import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.RollerDAO;
-import cdio.server.DTO.RollerDTO;
+import cdio.shared.RollerDTO;
 public class MYSQLRollerDAO implements RollerDAO{
 
 	@Override

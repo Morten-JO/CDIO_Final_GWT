@@ -9,7 +9,7 @@ import java.util.List;
 import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.ReceptKompDAO;
-import cdio.server.DTO.ReceptKompDTO;
+import cdio.shared.ReceptKompDTO;
 public class MYSQLReceptKompDAO implements ReceptKompDAO {
 
 	@Override
