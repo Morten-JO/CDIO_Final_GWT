@@ -79,7 +79,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 		//System.out.println(current);
 		if (current != null && current.getPassword().equals(password)){
-				if(current.getRolle().equals("admin")||current.getRolle().equals("vaerkfoerer")||current.getRolle().equals("farmaceut"))
+				if(current.getRolle().equals("admin")||current.getRolle().equals("værkfører")||current.getRolle().equals("farmaceut"))
 					token = this.token.createToken(Integer.toString(id));
 			return token;
 		}else{

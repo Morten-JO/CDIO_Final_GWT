@@ -15,7 +15,7 @@ public class MYSQLRollerDAO implements RollerDAO{
 	@Override
 	public RollerDTO getRolle(int oprId) throws DALException {
 		try {
-			CallableStatement getOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call get_roller(?)");
+			CallableStatement getOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call get_rolle(?)");
 			getOP.setInt(1, oprId);
 			ResultSet rs = getOP.executeQuery();
 			if (rs.first()){		
