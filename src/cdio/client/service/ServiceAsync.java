@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
@@ -17,4 +18,5 @@ public interface ServiceAsync {
 	//void number(String s, AsyncCallback<String> callback);
 	void checkLogin(int id, String password, AsyncCallback<String> callback);
 	void getRole(String token, AsyncCallback<String> callback);
+	void getRaavareBatches(AsyncCallback<List<RaavareBatchDTO>> asyncCallback);
 }

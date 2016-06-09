@@ -50,8 +50,8 @@ public class Login extends Composite{
 		statusLogin = new Label(" ");
 	
 		//predetermined
-		username.setText("2");
-		pass.setText("atoJ21v");
+		username.setText("4");
+		pass.setText("admin");
 		
 		Button login = new Button("Log ind");
 		login.setPixelSize(100, 30);

@@ -10,6 +10,7 @@ import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.RaavareBatchDAO;
 import cdio.server.DTO.RaavareBatchDTO;
+
 public class MYSQLRaavareBatchDAO implements RaavareBatchDAO{
 
 	@Override
@@ -34,7 +35,7 @@ public class MYSQLRaavareBatchDAO implements RaavareBatchDAO{
 		List<RaavareBatchDTO> list = new ArrayList<RaavareBatchDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM view_raavarebatch");
+			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM raavarebatch");
 			while (rs.next()) 
 			{
 				RaavareBatchDTO current = new RaavareBatchDTO(rs.getInt(1), rs.getInt(2), rs.getDouble(3));

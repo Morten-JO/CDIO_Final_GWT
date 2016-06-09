@@ -11,4 +11,5 @@ public interface OperatoerDAO {
 	List<UserDTO> getUserList() throws DALException;
 	void createOperatoer(UserDTO opr) throws DALException;
 	void updateOperatoer(UserDTO opr, int id) throws DALException;
+	String getUserRole(String token) throws DALException;
 }

@@ -8,6 +8,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio.client.service.Service;
 import cdio.server.DAOinterfaces.DALException;
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
@@ -85,6 +86,16 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			e.printStackTrace();
 			
 		}
+		return null;
+	}
+
+
+
+
+
+	@Override
+	public List<RaavareBatchDTO> getRaavareBatches() {
+		List<RaavareBatchDTO> list = controller.getRBDAO().getRaavareBatchList();
 		return null;
 	}
 }

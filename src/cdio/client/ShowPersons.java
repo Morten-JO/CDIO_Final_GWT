@@ -68,6 +68,20 @@ public class ShowPersons extends Composite {
 			}
 
 		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	    vPanel.add(flex);
 	   // vPanel.setStyleName("Content");
 	
