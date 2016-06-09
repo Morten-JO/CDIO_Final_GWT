@@ -12,6 +12,11 @@ public class RaavareBatchDTO implements Serializable{
 	int raavareId; // i omraadet 1-99999999
 	double maengde; // kan vaere negativ
 
+	
+	public RaavareBatchDTO(){
+		
+	}
+	
 	public RaavareBatchDTO(int rbId, int raavareId, double maengde) {
 		this.rbId = rbId;
 		this.raavareId = raavareId;
