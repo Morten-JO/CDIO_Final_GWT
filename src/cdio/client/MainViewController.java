@@ -75,7 +75,7 @@ public class MainViewController extends Composite {
 
 	public void showRaavBa() {
 		
-		this.header.setText("Raavarebatch");
+		this.header.setText("Råvarebatch");
 		this.content.addContent(new Raavarebatch(client,token));
 		
 		
@@ -99,7 +99,7 @@ public void showRecepter() {
 
 public void showRaavarer() {
 	
-	this.header.setText("Raavarer");
+	this.header.setText("Råvarer");
 	this.content.addContent(new Raavare(client,token));
 	
 	
@@ -115,7 +115,7 @@ public void opretBruger() {
 	
 	public void redigerBruger() {
 		
-		this.header.setText("Rediger Bruger");
+		this.header.setText("Brugerliste");
 		this.content.addContent(new ShowPersons(client, token));
 		
 		

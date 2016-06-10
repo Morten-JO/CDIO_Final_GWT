@@ -11,7 +11,7 @@ public class Header extends Composite {
 	public Header(){
 		VerticalPanel vPanel = new VerticalPanel();
 		initWidget(vPanel);
-		header = new Label("Headertext");
+		header = new Label("");
 		header.setStyleName("Header-Text");
 		vPanel.add(header);
 		vPanel.setStyleName("Header");

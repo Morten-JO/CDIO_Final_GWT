@@ -66,12 +66,12 @@ public class ShowPersons extends Composite {
 			@Override
 			public void onSuccess(List<UserDTO> result) {
 
-				flex.setText(0, 0, "oprId");
+				flex.setText(0, 0, "Operator ID");
 				flex.setText(0, 1, "Navn");
-				flex.setText(0, 2, "ini");
+				flex.setText(0, 2, "Initialer");
 				flex.setText(0, 3, "CPR");
-				flex.setText(0, 4, "password");
-				flex.setText(0, 5, "rolle");
+				flex.setText(0, 4, "Password");
+				flex.setText(0, 5, "Rolle");
 
 				for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 

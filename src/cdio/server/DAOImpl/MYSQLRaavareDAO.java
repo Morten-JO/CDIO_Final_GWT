@@ -53,28 +53,27 @@ public class MYSQLRaavareDAO implements RaavareDAO{
 	@Override
 	public void createRaavare(RaavareDTO raavare) throws DALException {
 		try {
-			int id = 0;
-		    CallableStatement createRaavare = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_raavare(?,?)");
-		    createRaavare.setString(1, raavare.getRaavareNavn());
-		    createRaavare.setString(2, raavare.getLeverandoer());
-		    createRaavare.execute();
-		    ResultSet rs = Connector.getInstance().doQuery("select max(raavareId) from view_raavare;");
-		    if (rs.first()){   
-		    	id =rs.getInt(1);		
-		    }
-			raavare.setRaavareId(id);
+			
+			Connector.getInstance().doQuery("SELECT add_raavare("
+												+raavare.getRaavareId()+",'"
+												+raavare.getRaavareNavn()+"','"
+												+raavare.getLeverandoer()+"')");
+			
 		   } catch (Exception e) {
-			   e.printStackTrace();
 			   System.err.println("Could not create Raavare, check if the database is running!");
+			   e.printStackTrace();
 		   }
 	}
 
 	@Override
 	public void updateRaavare(RaavareDTO raavare) throws DALException {
 		try {
-			Connector.getInstance().doUpdate(
-					"UPDATE raavare SET  raavareNavn= '" + raavare.getRaavareNavn() + "', leverandoer = '"
-							+ raavare.getLeverandoer() + "' WHERE raavareId = " + raavare.getRaavareId());
+			Connector.getInstance().doQuery(
+										"SELECT update_raavare("+
+											raavare.getRaavareId()+",'"+
+											raavare.getRaavareNavn()+"','"+
+											raavare.getLeverandoer()+"')");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
