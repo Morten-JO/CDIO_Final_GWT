@@ -38,43 +38,57 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 	
 	public void createOperatoer(UserDTO opr) throws DALException {  
 		try {
-			int id = 0;
-			CallableStatement createOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_operatoer(?,?,?,?)");
-			createOP.setString(1, opr.getNavn());
-			createOP.setString(2, opr.getIni());
-			createOP.setString(3, opr.getCpr());
-			createOP.setString(4, opr.getPassword());
-			createOP.execute();   
-			ResultSet rs = Connector.getInstance().doQuery("select max(opr_id) from operatoer;");
-			if (rs.first()){
-				id = rs.getInt(1);
-				opr.setOprId(id);
-			}
+			CallableStatement createOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_operatoer(?,?,?,?,?,?)");
+			createOP.setInt(1, opr.getOprId());
+			createOP.setString(2, opr.getNavn());
+			createOP.setString(3, opr.getIni());
+			createOP.setString(4, opr.getCpr());
+			createOP.setString(5, opr.getPassword());
+			createOP.setString(6, opr.getRolle());
+			createOP.execute();
+			
+//			int id = 0;
+//			ResultSet rs = Connector.getInstance().doQuery("select max(opr_id) from operatoer;");
+//			if (rs.first()){
+//				id = rs.getInt(1);
+//				opr.setOprId(id);
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("Could not create operatoer, check if the database is running!");
+			System.err.println("Could not create operatoer! The operator ID is proably taken!");
 		}
 	}
 	
 	public void updateOperatoer(UserDTO opr, int id) throws DALException {
 		try {
-			CallableStatement updateOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_operatoer(?,?,?,?,?)");
+			CallableStatement updateOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_operatoer(?,?,?,?,?,?)");
 			updateOP.setString(1, opr.getNavn());
 			updateOP.setString(2, opr.getIni());
 			updateOP.setString(3, opr.getCpr());
 			updateOP.setString(4, opr.getPassword());
-			updateOP.setInt(5, id);
+			updateOP.setString(5, opr.getRolle());
+			updateOP.setInt(6, id);
 			updateOP.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public List<UserDTO> getUserList() throws DALException {
+	/**
+	 * 
+	 */
+	public List<UserDTO> getUserList(UserDTO opr) throws DALException {
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM operatoer");
+			ResultSet rs;
+			
+			if(opr.getRolle().equals("admin")){
+				rs = Connector.getInstance().doQuery("SELECT * FROM operatoer");
+			}
+			else{
+				rs = Connector.getInstance().doQuery("SELECT * FROM view_operatoer");
+			}
 			while (rs.next()) 
 			{
 				UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
@@ -105,6 +119,8 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		System.out.println("her er vi");
 		return role;
 	}
+
+
 	
 	
 

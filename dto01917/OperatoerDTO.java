@@ -21,12 +21,15 @@ public class OperatoerDTO {
 	String cpr;
 	/** Operatoer password min. 7 max. 8 karakterer */
 	String password;
+	String rolle;
 
-	public OperatoerDTO(String oprNavn, String ini, String cpr, String password) {
+	public OperatoerDTO(String oprNavn, String ini, String cpr, String password, String rolle) {
 		this.oprNavn = oprNavn;
 		this.ini = ini;
 		this.cpr = cpr;
 		this.password = password;
+		this.rolle = rolle;
+		
 	}
 
 	public OperatoerDTO(OperatoerDTO opr) {
@@ -34,9 +37,18 @@ public class OperatoerDTO {
 		this.ini = opr.getIni();
 		this.cpr = opr.getCpr();
 		this.password = opr.getPassword();
+		this.rolle = opr.getRolle();
 	}
 
 
+	public int getOprId() {
+		return oprId;
+	}
+
+	public void setOprId(int oprId) {
+		this.oprId = oprId;
+	}
+	
 	public String getOprNavn() {
 		return oprNavn;
 	}
@@ -70,14 +82,17 @@ public class OperatoerDTO {
 	}
 
 	public String toString() {
-		return oprId + "\t" + oprNavn + "\t" + ini + "\t" + cpr + "\t" + password;
+		return oprId + "\t" + oprNavn + "\t" + ini + "\t" + cpr + "\t" + password + "\t" + rolle;
 	}
 
-	public int getOprId() {
-		return oprId;
+	public void setRolle(String rolle){
+		this.rolle = rolle;
 	}
-
-	public void setOprId(int oprId) {
-		this.oprId = oprId;
+	
+	public String getRolle(){
+		return rolle;
 	}
+	
+	
+	
 }

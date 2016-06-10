@@ -3,22 +3,16 @@ package dto01917;
 public class RollerDTO {
 
 	private int opr_id;
-	private boolean administrator;
-	private boolean farmaceut;
-	private boolean vaerkfoerer;
+	private String rolle;
 	
-	public RollerDTO(int opr_id, boolean administrator, boolean farmaceut, boolean vaerkfoerer){
+	public RollerDTO(int opr_id, String	Rolle){
 		this.opr_id = opr_id;
-		this.administrator = administrator;
-		this.farmaceut = farmaceut;
-		this.vaerkfoerer = vaerkfoerer;
+		this.rolle = Rolle;
 	}
 	
-	public RollerDTO(RollerDTO rolle){
-		this.opr_id = rolle.getOpr_id();
-		this.administrator = rolle.isAdministrator();
-		this.farmaceut = rolle.isFarmaceut();
-		this.vaerkfoerer = rolle.isVaerkfoerer();
+	public RollerDTO(RollerDTO Rolle){
+		this.opr_id = Rolle.getOpr_id();
+		this.rolle = Rolle.getRolle();
 	}
 
 	public int getOpr_id() {

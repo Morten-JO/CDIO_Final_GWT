@@ -20,6 +20,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	private static final long serialVersionUID = -2491989177309231572L;
 	private DataController controller;
 	private TokenHandler tokenHandler;
+			UserDTO current = null;
 	
 	public ServiceImpl() {
 		controller = new DataController();
@@ -48,7 +49,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public List<UserDTO> getPersons() {
 		try {
-			return this.controller.getOprDAO().getUserList();
+			return this.controller.getOprDAO().getUserList(current);
 		} catch (cdio.server.DAOinterfaces.DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,7 +60,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public String checkLogin(int id, String password) {
 		String token = null;
-		UserDTO current = null;
 		try {
 			current = this.controller.getOprDAO().getOperatoer(id);
 		} catch (DALException e) {
