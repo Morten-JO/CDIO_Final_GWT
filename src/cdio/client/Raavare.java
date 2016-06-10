@@ -236,7 +236,9 @@ public class Raavare extends Composite{
 			flex.setWidget(eventRowIndex, 3, ok);
 
 		else
+			  
 			flex.setText(eventRowIndex, 3, "ok");
+		
 
 	}
 }

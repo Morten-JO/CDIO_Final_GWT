@@ -59,7 +59,12 @@ public class FieldVerifier {
 	//}
 	
 	
-		
+	public static boolean isValidIni(String Ini){
+		if (Ini.length() == 2 && Ini.matches("[a-zA-Z]+")){
+				return true;
+		}
+		else return false;
+	}
 	
 	
 	public static boolean notSpecialChar(String name){
@@ -72,5 +77,23 @@ public class FieldVerifier {
 		}
 		return true;
 	}
+	public static boolean isValidCpr (String cpr){
+		
+		
+		if(cpr.length()>10){
+			return false;
+		}
+		if(!cpr.matches("\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")){
+			return false;
+		}
+		
+		return true;
+	}
 	
+	public static boolean isVaildPassword (String password){
+		if (password.length() == 0){
+			return false;
+		}
+		else  return true;
+	}
 }

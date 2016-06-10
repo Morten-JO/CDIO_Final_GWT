@@ -235,6 +235,25 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 	}
 	}
+
+
+
+
+
+	@Override
+	public void createUser(String token, UserDTO user) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+			try {
+				controller.getOprDAO().createOperatoer(user);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+		
+	}
 	}
 
 

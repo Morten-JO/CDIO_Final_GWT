@@ -108,7 +108,7 @@ public void showRaavarer() {
 public void opretBruger() {
 	
 	this.header.setText("Opret Bruger");
-	this.content.addContent(new OpretBruger(client));
+	this.content.addContent(new OpretBruger(client,token));
 	
 	
 }

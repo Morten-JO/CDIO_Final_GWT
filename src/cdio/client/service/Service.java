@@ -29,6 +29,7 @@ public interface Service extends RemoteService {
 	void updateRecept(String token, ReceptDTO rB);
 	void updateRaavare(String token, RaavareDTO raavare);
 	void updateUser(String token, UserDTO user);
+	void createUser(String token, UserDTO user);
 	
 
 
