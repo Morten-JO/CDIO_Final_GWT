@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FieldVerifier {
+	
 	public static boolean isValidMaengde(String value){
 		try{
 			Double.parseDouble(value);
@@ -14,17 +15,20 @@ public class FieldVerifier {
 		}
 	return false;
 	}
-	public static boolean isValidName( String name){
-		
+	
+	
+	public static boolean isValidName(String name){
+		System.out.println("jensen -----" + name.length());
 		if(!notSpecialChar(name)){
 			return false;
 		}
 		if (name.length() == 0){
 			return false;
 		}
-		if (name.length()>=20){
+		if (name.length()<=20){
 			return true;
 		}
+
 		return false;
 	}
 	

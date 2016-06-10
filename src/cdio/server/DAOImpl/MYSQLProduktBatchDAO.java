@@ -2,6 +2,7 @@ package cdio.server.DAOImpl;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 			if (rs.first()){
 				int pb_recept = rs.getInt(2);
 				int pb_status = rs.getInt(3);
-				String startTid = rs.getString(4);
-				String slutTid = rs.getString(5);
+				Timestamp startTid = rs.getTimestamp(4);
+				Timestamp slutTid = rs.getTimestamp(5);
 				ProduktBatchDTO newpb = new ProduktBatchDTO(pbId, pb_recept, pb_status, startTid, slutTid);
 				newpb.setPbId(pbId);
 				return newpb;
@@ -41,7 +42,7 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM produktbatch");
 			while (rs.next()) 
 			{
-				ProduktBatchDTO current = new ProduktBatchDTO(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+				ProduktBatchDTO current = new ProduktBatchDTO(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getTimestamp(4), rs.getTimestamp(5));
 				current.setPbId(rs.getInt(1));
 				list.add(current);
 			}
@@ -73,7 +74,7 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 	public void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
 		try {
 			Connector.getInstance().doUpdate(
-					"UPDATE produktbatch SET  status = " + produktbatch.getStatus() + "  WHERE pbId = " +
+					"UPDATE produktbatch SET  status = " + produktbatch.getStatus() + ", receptId = " + produktbatch.getReceptId() + "   WHERE pbId = " +
 					produktbatch.getPbId());
 
 		} catch (SQLException e) {

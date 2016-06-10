@@ -17,14 +17,20 @@ import cdio.shared.UserDTO;
 @RemoteServiceRelativePath("cdioservice")
 public interface Service extends RemoteService {
 
-	public List<UserDTO> getPersons();
+	public List<UserDTO> getPersons(String token);
 	public String checkLogin(int id, String password);
 	public List<RaavareDTO> getRaavare(String token);
 	public String getRole(String token);
 	public List<RaavareBatchDTO> getRaavareBatches();
-	public List<ProduktBatchDTO> getPB(String token) ;
+	public List<ProduktBatchDTO> getPB(String token) ;	
+	void updateRB(String token, RaavareBatchDTO RaavareBatch);
+	void updatePB(String token, ProduktBatchDTO rB);
 	public List<ReceptDTO> getRecept(String token);
-	public void updateRB(String token, RaavareBatchDTO RaavareBatch);
+	void updateRecept(String token, ReceptDTO rB);
+	void updateRaavare(String token, RaavareDTO raavare);
+	void updateUser(String token, UserDTO user);
+	
+
 
 	
 }

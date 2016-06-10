@@ -8,8 +8,8 @@ import cdio.shared.UserDTO;
 public interface OperatoerDAO {
 	
 	UserDTO getOperatoer(int oprId) throws DALException;
-	List<UserDTO> getUserList(UserDTO opr) throws DALException;
+	List<UserDTO> getUserList(String token) throws DALException;
 	void createOperatoer(UserDTO opr) throws DALException;
-	void updateOperatoer(UserDTO opr, int id) throws DALException;
+	void updateOperatoer(UserDTO user) throws DALException;
 	String getUserRole(String token) throws DALException;
 }

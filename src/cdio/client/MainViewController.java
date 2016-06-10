@@ -116,7 +116,7 @@ public void opretBruger() {
 	public void redigerBruger() {
 		
 		this.header.setText("Rediger Bruger");
-		this.content.addContent(new ShowPersons(client));
+		this.content.addContent(new ShowPersons(client, token));
 		
 		
 	}

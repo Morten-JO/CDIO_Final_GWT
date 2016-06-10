@@ -25,7 +25,8 @@ public class ReceptDTO implements Serializable {
 		
 	}
 	
-	public ReceptDTO(String receptNavn) {
+	public ReceptDTO(int id, String receptNavn) {
+		this.receptId = id;
 		this.receptNavn = receptNavn;
 	}
 

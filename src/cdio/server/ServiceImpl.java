@@ -20,7 +20,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	private static final long serialVersionUID = -2491989177309231572L;
 	private DataController controller;
 	private TokenHandler tokenHandler;
-			UserDTO current = null;
 	
 	public ServiceImpl() {
 		controller = new DataController();
@@ -47,12 +46,16 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public List<UserDTO> getPersons() {
+	public List<UserDTO> getPersons(String token) {
+		System.out.println("Service rolle" + token);
+		if( getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
 		try {
-			return this.controller.getOprDAO().getUserList(current);
+			return this.controller.getOprDAO().getUserList(getRole(token));
 		} catch (cdio.server.DAOinterfaces.DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 		return null;
 	}
@@ -60,6 +63,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public String checkLogin(int id, String password) {
 		String token = null;
+		UserDTO current = null;
 		try {
 			current = this.controller.getOprDAO().getOperatoer(id);
 		} catch (DALException e) {
@@ -81,7 +85,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		try {
 			String r = tokenHandler.getUserID(token);
 			String role = controller.getOprDAO().getUserRole(tokenHandler.getUserID(token));
-			System.out.println("hulubulu---------"+role);
+			
 			return role;
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
@@ -163,5 +167,74 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 	}
 }
-}
+
+
+
+
+
+	@Override
+	public void updatePB(String token, ProduktBatchDTO PB) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+			try {
+				controller.getPBDAO().updateProduktBatch(PB);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+		
+	}
+
+	@Override
+	public void updateRecept(String token, ReceptDTO rB) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+			try {
+				controller.getRecDAO().updateRecept(rB);;
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+		
+	}
+
+
+	@Override
+	public void updateRaavare(String token, RaavareDTO raavare) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+			try {
+				controller.getRaavareDAO().updateRaavare(raavare);;
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+		
+	}
+
+
+
+
+
+	@Override
+	public void updateUser(String token, UserDTO user) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+			try {
+				controller.getOprDAO().updateOperatoer(user);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+	}
+	}
+
 

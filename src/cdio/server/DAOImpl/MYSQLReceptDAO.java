@@ -19,7 +19,7 @@ public class MYSQLReceptDAO implements ReceptDAO{
 			ResultSet rs = getRecept.executeQuery();
 			if (rs.first()){			    	
 				String recept_navn = rs.getString(2);
-				ReceptDTO newRec = new ReceptDTO(recept_navn);
+				ReceptDTO newRec = new ReceptDTO(receptId, recept_navn);
 				newRec.setReceptId(receptId);
 				return newRec;
 			}
@@ -38,7 +38,7 @@ public class MYSQLReceptDAO implements ReceptDAO{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM recept");
 			while (rs.next()) 
 			{
-				ReceptDTO current = new ReceptDTO(rs.getString(2));
+				ReceptDTO current = new ReceptDTO(rs.getInt(1), rs.getString(2));
 				current.setReceptId(rs.getInt(1));
 				list.add(current);
 			}

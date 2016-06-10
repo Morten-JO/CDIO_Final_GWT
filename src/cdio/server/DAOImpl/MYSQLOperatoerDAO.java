@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
+
 import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.OperatoerDAO;
@@ -59,7 +61,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		}
 	}
 	
-	public void updateOperatoer(UserDTO opr, int id) throws DALException {
+	public void updateOperatoer(UserDTO opr) throws DALException {
 		try {
 			CallableStatement updateOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_operatoer(?,?,?,?,?,?)");
 			updateOP.setString(1, opr.getNavn());
@@ -67,7 +69,7 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 			updateOP.setString(3, opr.getCpr());
 			updateOP.setString(4, opr.getPassword());
 			updateOP.setString(5, opr.getRolle());
-			updateOP.setInt(6, id);
+			updateOP.setInt(6, opr.getOprId());
 			updateOP.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -77,13 +79,14 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 	/**
 	 * 
 	 */
-	public List<UserDTO> getUserList(UserDTO opr) throws DALException {
+	public List<UserDTO> getUserList(String token) throws DALException {
+		System.out.println(token);
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
 			ResultSet rs;
 			
-			if(opr.getRolle().equals("admin")){
+			if(token.equals("admin")){
 				rs = Connector.getInstance().doQuery("SELECT * FROM operatoer");
 			}
 			else{
