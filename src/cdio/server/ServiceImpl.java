@@ -254,6 +254,24 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 		
 	}
+
+
+
+
+
+	@Override
+	public void createRB(String token, RaavareBatchDTO raavarebatch) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+			try {
+				controller.getRBDAO().createRaavareBatch(raavarebatch);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+	}
 	}
 
 

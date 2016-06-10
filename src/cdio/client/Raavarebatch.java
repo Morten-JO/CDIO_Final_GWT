@@ -6,29 +6,45 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import cdio.shared.FieldVerifier;
 
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.RaavareDTO;
-
+import cdio.shared.UserDTO;
 import cdio.shared.RaavareBatchDTO;
 
 public class Raavarebatch extends Composite {
 
 	private FlexTable flex;
 	private VerticalPanel vPanel;
+	private HorizontalPanel hPanel;
 	private String token;
 	private ServiceClientImpl client;
-
+	
+	TextBox AddRbId;
+	ListBox AddRaavareId;
+	TextBox AddMaengde;
+	
+	Button create ;
+	
 	TextBox rbIdTxt;
 	TextBox raavareIdTxt;
 	TextBox maengdeTxt;
+	
+	boolean RbIdVaild = false; 
+	//boolean raavareId = false;
+	boolean maengde = false;
 
 	boolean rbIdValid = true;
 	boolean raavareIdValid = true;
@@ -41,12 +57,153 @@ public class Raavarebatch extends Composite {
 	public Raavarebatch(ServiceClientImpl client, String token) {
 		flex = new FlexTable();
 		vPanel = new VerticalPanel();
+		hPanel = new HorizontalPanel();
 		flex.setStyleName("FlexTable");
 		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
+		
+		AddRbId = new TextBox();
+		AddRaavareId = new ListBox();
+		client.service.getRaavare(token,new AsyncCallback<List<RaavareDTO>>(){
 
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(List<RaavareDTO> result) {
+				// TODO Auto-generated method stub
+				for (int i = 0; i < result.size(); i++) {
+					AddRaavareId.addItem(Integer.toString(result.get(i).getRaavareId()));
+				}
+			}
+
+		});
+		
+		AddMaengde = new TextBox();
+		Label RbId = new Label("RbId : ");
+		Label Raavare = new Label("RaavareId : ");
+		Label Maengde = new Label("Maengde : ");
+		create = new Button("Create");
+		create.setEnabled(false);
+		hPanel.add(RbId);
+		hPanel.add(AddRbId);
+		hPanel.add(Raavare);
+		hPanel.add(AddRaavareId);
+		hPanel.add(Maengde);
+		hPanel.add(AddMaengde);
+		hPanel.add(create);
+		vPanel.add(hPanel);
+		
+		AddRbId.addKeyUpHandler(new KeyUpHandler(){
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				Raavarebatch.this.client.service.getRaavareBatches(new AsyncCallback<List<RaavareBatchDTO>>(){
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(List<RaavareBatchDTO> result) {
+						boolean idExists = false;
+						try{
+							Integer.parseInt(AddRbId.getText());
+							for(int i = 0; i < result.size(); i++){
+								if(result.get(i).getRbId() == Integer.parseInt(AddRbId.getText())){
+									idExists = true;
+									
+								}
+							}
+							if(!idExists){
+								AddRbId.removeStyleName("gwt-TextBox-invalidEntry");
+								rbIdValid = true;
+								//failOprIDLbl.setText("");
+							}
+							else{
+								AddRbId.setStyleName("gwt-TextBox-invalidEntry");
+								RbIdVaild = false;
+								//failOprIDLbl.setText("Optaget id!");
+							}
+						} catch(NumberFormatException e){
+							AddRbId.setStyleName("gwt-TextBox-invalidEntry");
+							rbIdValid = false;
+							//failOprIDLbl.setText("Optaget id!");
+						}
+						
+					}
+					
+				});
+				if (!FieldVerifier.isValidRbId(AddRbId.getText())) {
+					AddRbId.setStyleName("gwt-TextBox-invalidEntry");
+					RbIdVaild = false;
+				} else {
+					AddRbId.removeStyleName("gwt-TextBox-invalidEntry");
+					RbIdVaild = true;
+				}
+				checkFormValid_Create();
+			}
+
+		});
+				
+		
+		//raavareId_KeyHandler(AddRaavareId);
+		AddMaengde.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (!FieldVerifier.isValidMaengde(AddMaengde.getText())) {
+					AddMaengde.setStyleName("gwt-TextBox-invalidEntry");
+					maengde = false;
+				} else {
+					AddMaengde.removeStyleName("gwt-TextBox-invalidEntry");
+					maengde = true;
+				}
+				checkFormValid_Create();
+				
+				
+			}
+
+		});
+		
+		create.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				int rbId = Integer.parseInt(AddRbId.getText());
+				int raavareId = Integer.parseInt(AddRaavareId.getSelectedItemText());
+				double maengde = Double.parseDouble(AddMaengde.getText());
+				
+				
+				RaavareBatchDTO RB = new RaavareBatchDTO(rbId, raavareId, maengde);
+				Raavarebatch.this.client.service.createRB(Raavarebatch.this.token, RB, new AsyncCallback<Void>(){
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Server fejl!" + caught.getMessage());
+							
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							Window.alert("Raavarebatch er nu gemt");
+							AddRbId.setText("");
+							AddMaengde.setText("");
+							checkFormValid();
+							create.setEnabled(false);
+							Window.Location.reload();
+						}
+
+					});
+				}
+			});
+		
+		
+		
+		
 		client.service.getRaavareBatches(new AsyncCallback<List<RaavareBatchDTO>>() {
 
 			@Override
@@ -187,20 +344,19 @@ public class Raavarebatch extends Composite {
 
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
-
-					if (!FieldVerifier.isValidRbId(rbIdTxt.getText())) {
-						rbIdTxt.setStyleName("gwt-TextBox-invalidEntry");
-						rbIdValid = false;
+					if (!FieldVerifier.isValidRbId(raavareIdTxt.getText())) {
+						raavareIdTxt.setStyleName("gwt-TextBox-invalidEntry");
+						raavareIdValid = false;
 					} else {
-						rbIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
-						rbIdValid = true;
+						raavareIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						raavareIdValid = true;
 					}
+					checkFormValid_Create();
 					checkFormValid();
-					;
+					
 				}
 
 			});
-
 			raavareIdTxt.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override
@@ -212,12 +368,12 @@ public class Raavarebatch extends Composite {
 						raavareIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
 						raavareIdValid = true;
 					}
-					checkFormValid();
-					;
+						checkFormValid();
+					
 				}
 
 			});
-
+			
 			maengdeTxt.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override
@@ -229,24 +385,37 @@ public class Raavarebatch extends Composite {
 						maengdeTxt.removeStyleName("gwt-TextBox-invalidEntry");
 						maengdeValid = true;
 					}
+					checkFormValid_Create();
 					checkFormValid();
-					;
+					
 				}
 
 			});
-
+			
 			flex.setWidget(eventRowIndex, 3, ok);
 			flex.setWidget(eventRowIndex, 4, cancel);
 		}
+
+		
 	}
 
+
+	
+	private void checkFormValid_Create() {
+		if (RbIdVaild && maengde){
+			create.setEnabled(true);
+		}
+		else create.setEnabled(false);
+			
+		}
 	private void checkFormValid() {
 		if (rbIdValid && raavareIdValid && maengdeValid)
 
 			flex.setWidget(eventRowIndex, 3, ok);
 
-		else
+		else if (!(eventRowIndex == 0)){
 			flex.setText(eventRowIndex, 3, "ok");
+		}
 
 	}
 }
