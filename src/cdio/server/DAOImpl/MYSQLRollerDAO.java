@@ -19,11 +19,8 @@ public class MYSQLRollerDAO implements RollerDAO{
 			getOP.setInt(1, oprId);
 			ResultSet rs = getOP.executeQuery();
 			if (rs.first()){		
-				boolean administrator = rs.getBoolean(2);
-			    boolean farmaceut = rs.getBoolean(3);
-			    boolean vaerkfoerer = rs.getBoolean(4);
-			    
-			    RollerDTO newrolle = new RollerDTO(oprId, administrator, farmaceut, vaerkfoerer);
+				String rolle = rs.getString(1);
+			    RollerDTO newrolle = new RollerDTO(oprId, rolle);
 			    return newrolle;
 			}
 	    } catch (SQLException e) {
@@ -40,7 +37,7 @@ public class MYSQLRollerDAO implements RollerDAO{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM view_roller");
 			while (rs.next()) 
 			{
-				RollerDTO current = new RollerDTO(rs.getInt(1), rs.getBoolean(2), rs.getBoolean(3), rs.getBoolean(4));
+				RollerDTO current = new RollerDTO(rs.getInt(1), rs.getString(3));
 				list.add(current);
 				 
 			}
@@ -53,11 +50,9 @@ public class MYSQLRollerDAO implements RollerDAO{
 	@Override
 	public void createRolle(RollerDTO rolle) throws DALException {
 		try {
-			CallableStatement createRolle = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_roller(?,?,?,?)");
+			CallableStatement createRolle = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_roller(?,?)");
 			createRolle.setInt(1, rolle.getOpr_id());
-			createRolle.setBoolean(2, rolle.isAdministrator());
-			createRolle.setBoolean(3, rolle.isFarmaceut());
-			createRolle.setBoolean(4, rolle.isVaerkfoerer());
+			createRolle.setString(2, rolle.getRolle());
 			createRolle.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,13 +61,11 @@ public class MYSQLRollerDAO implements RollerDAO{
 	}
 
 	@Override
-	public void updateRolle(RollerDTO opr, boolean administrator, boolean farmaceut, boolean vaerkfoerer) {
+	public void updateRolle(RollerDTO opr, String rolle) {
 		try {
-			CallableStatement updateRolle = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_roller(?,?,?,?)");
+			CallableStatement updateRolle = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call update_roller(?,?)");
 			updateRolle.setInt(1, opr.getOpr_id());
-			updateRolle.setBoolean(2, administrator);
-			updateRolle.setBoolean(3, farmaceut);
-			updateRolle.setBoolean(4, vaerkfoerer);
+			updateRolle.setString(2, rolle);
 			updateRolle.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
