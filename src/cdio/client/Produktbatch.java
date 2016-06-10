@@ -32,19 +32,19 @@ public class Produktbatch extends Composite {
 
 		@Override
 		public void onSuccess(List<ProduktBatchDTO> result) {
-			flex.setText(0, 0, "pbId");
-			flex.setText(0, 1, "receptId");
-			flex.setText(0, 2, "status");
-			flex.setText(0, 3, "startTidspunkt");
-			flex.setText(0, 4, "slutTidspunkt");
+			flex.setText(0, 0, "Produktbatch ID");
+			flex.setText(0, 1, "Recept ID");
+			flex.setText(0, 2, "Status");
+			flex.setText(0, 3, "Start\n tidspunkt");
+			flex.setText(0, 4, "Slut\n tidspunkt");
 
 		    for(int i = 0; i < result.size(); i++){
 		    	
 		    		flex.setText(i+1, 0, ""+ result.get(i).getPbId());
 		    		flex.setText(i+1, 1, ""+ result.get(i).getReceptId());
 		    		flex.setText(i+1, 2, ""+ result.get(i).getStatus());
-		    	//	flex.setText(i+1, 3, ""+result.get(i).getStartidspunkt());
-		    	//	flex.setText(i+1, 3, ""+result.get(i).getSluttidspunkt());
+		    		flex.setText(i+1, 3, ""+result.get(i).getStartidspunkt());
+		    		flex.setText(i+1, 3, ""+result.get(i).getSluttidspunkt());
 		    }
 		    
 		    flex.setStyleName("FlexTable");

@@ -18,10 +18,12 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 			CallableStatement getPB = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call get_produktbatch(?)");
 			getPB.setInt(1, pbId);
 			ResultSet rs = getPB.executeQuery();
-			if (rs.first()){			    	
-				int pb_status = rs.getInt(2);
-				int pb_recept = rs.getInt(3);
-				ProduktBatchDTO newpb = new ProduktBatchDTO(pb_status, pb_recept);
+			if (rs.first()){
+				int pb_recept = rs.getInt(2);
+				int pb_status = rs.getInt(3);
+				String startTid = rs.getString(4);
+				String slutTid = rs.getString(5);
+				ProduktBatchDTO newpb = new ProduktBatchDTO(pbId, pb_recept, pb_status, startTid, slutTid);
 				newpb.setPbId(pbId);
 				return newpb;
 			}
@@ -39,7 +41,7 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM produktbatch");
 			while (rs.next()) 
 			{
-				ProduktBatchDTO current = new ProduktBatchDTO(rs.getInt(2), rs.getInt(3));
+				ProduktBatchDTO current = new ProduktBatchDTO(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
 				current.setPbId(rs.getInt(1));
 				list.add(current);
 			}
