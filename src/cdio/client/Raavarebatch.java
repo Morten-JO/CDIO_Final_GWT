@@ -41,6 +41,8 @@ public class Raavarebatch extends Composite {
 	public Raavarebatch(ServiceClientImpl client, String token) {
 		flex = new FlexTable();
 		vPanel = new VerticalPanel();
+		flex.setStyleName("FlexTable");
+		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
@@ -64,6 +66,9 @@ public class Raavarebatch extends Composite {
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRbId());
 					flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareId());
 					flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getMaengde());
+					flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
 					Anchor edit = new Anchor("edit");
 					flex.setWidget(rowIndex + 1, 3, edit);
 

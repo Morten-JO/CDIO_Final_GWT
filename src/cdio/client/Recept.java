@@ -44,7 +44,10 @@ public class Recept extends Composite {
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
-
+		
+		flex.addStyleName("FlexTable");
+		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
+		
 		client.service.getRecept(token, new AsyncCallback<List<ReceptDTO>>() {
 
 			@Override
@@ -63,6 +66,9 @@ public class Recept extends Composite {
 
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getReceptId());
 					flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptNavn());
+					
+					flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
 					
 					Anchor edit = new Anchor("edit");
 					flex.setWidget(rowIndex + 1, 2, edit);
