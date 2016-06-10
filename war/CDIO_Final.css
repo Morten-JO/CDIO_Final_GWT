@@ -190,4 +190,11 @@ body {
 .gwt-Anchor:active {color:#FF0000;}
 .gwt-Anchor:
 
+.FailOktext{
+	color: red;
+}
 
+/* dependant style for text boxes */
+.gwt-TextBox-invalidEntry {
+	border-color: red;
+}
