@@ -34,7 +34,14 @@ public class UserDTO implements Serializable {
 		this.password = password;
 		this.rolle = rolle;
 	}
-
+	
+	public UserDTO(int oprId, String oprNavn, String ini,String rolle)
+	{
+		this.oprId = oprId;
+		this.navn = oprNavn;
+		this.ini = ini;
+		this.rolle = rolle;
+	}
 	public UserDTO(UserDTO opr)
 	{
 		this.oprId = opr.getOprId();

@@ -113,7 +113,7 @@ public void opretBruger() {
 	
 }
 	
-	public void redigerBruger() {
+	public void visBruger() {
 		
 		this.header.setText("Brugerliste");
 		this.content.addContent(new ShowPersons(client, token));

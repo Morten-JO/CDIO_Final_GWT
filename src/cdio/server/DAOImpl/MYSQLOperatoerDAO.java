@@ -95,9 +95,9 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 				}
 			}
 			else{
-				rs = Connector.getInstance().doQuery("SELECT * FROM view operatoer");
+				rs = Connector.getInstance().doQuery("SELECT * FROM view_operatoer;");
 				while (rs.next()) {
-					UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), "*skjult*", "*skjult*", rs.getString(6));
+					UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(6));
 					current.setOprId(rs.getInt(1));
 					list.add(current); 
 				}
