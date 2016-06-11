@@ -88,7 +88,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				mvc.redigerBruger();
+				mvc.visBruger();
 
 			}
 			
