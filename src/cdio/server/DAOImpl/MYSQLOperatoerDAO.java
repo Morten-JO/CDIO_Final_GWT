@@ -84,9 +84,10 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		List<UserDTO> list = new ArrayList<UserDTO>();
 		try
 		{
-			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM operatoer");
+			ResultSet rs;
 			
 			if(token.equals("admin")){
+				rs = Connector.getInstance().doQuery("SELECT * FROM operatoer");
 				while (rs.next()) {
 					UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 					current.setOprId(rs.getInt(1));
@@ -94,8 +95,9 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 				}
 			}
 			else{
+				rs = Connector.getInstance().doQuery("SELECT * FROM view operatoer");
 				while (rs.next()) {
-					UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), "**********", "***********", rs.getString(6));
+					UserDTO current = new UserDTO(rs.getInt(1), rs.getString(2), rs.getString(3), "*skjult*", "*skjult*", rs.getString(6));
 					current.setOprId(rs.getInt(1));
 					list.add(current); 
 				}

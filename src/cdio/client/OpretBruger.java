@@ -1,7 +1,6 @@
 package cdio.client;
 
 import java.util.List;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -26,7 +25,8 @@ public class OpretBruger extends Composite {
 	VerticalPanel addPanel;
 	
 	String[] content = {"ID","Navn","Initial","CPR","Password","Rolle"};
-	String[] roller = {"Admin", "Farmaceut", "Værkfører", "Operatør"};
+	String[] rolle = {"Admin", "Farmaceut" , "Værkfører", "Operatør"}; // denne bruges til visning på hjemmesiden 
+	String[] roller = {"admin", "farmaceut", "vaerkfoerer", "operatoer"}; // denne bruges til sql statement
 	
 	HorizontalPanel[] hPanel = new HorizontalPanel[content.length];
 	Label[] labels = new Label[content.length];
@@ -41,7 +41,7 @@ public class OpretBruger extends Composite {
 	boolean iniVaild = false;
 	boolean cprVaild = false;
 	boolean passwordVaild = false;
-	boolean RadioButton = false;
+	boolean radioButtonPressed = false;
 	private final ServiceClientImpl client;
 	private final String token;
 	
@@ -52,8 +52,7 @@ public class OpretBruger extends Composite {
 		addPanel.setHeight("120px");	
 		initWidget(this.addPanel);
 		
-		
-		
+		// opretter vandret paneler til og tilføjer indhold i dem
 		for(int i = 0; i < content.length ; i++){
 			hPanel[i] = new HorizontalPanel();
 			hPanel[i].setStyleName("StyleLabel");
@@ -72,17 +71,16 @@ public class OpretBruger extends Composite {
 			fejlLabels[i].setStyleName("labelAddView");
 			hPanel[i].add(fejlLabels[i]);
 			
-			
 			if( i == (content.length-1)){
 				for(int j = 0; j < roller.length ; j++){
-					radioButton[j] = new RadioButton("rolle", roller[j]);
+					radioButton[j] = new RadioButton("rolle", rolle[j]);
 					hPanel[i].add(radioButton[j]);
 				}
 			}
 		}
 
 		
-		save = new Button("Tilføj");
+		save = new Button("Gem");
 		save.setEnabled(false);
 		
 		save.addClickHandler(new ClickHandler() {
@@ -113,11 +111,11 @@ public class OpretBruger extends Composite {
 
 					@Override
 					public void onSuccess(Void result) {
-						Window.alert("Personen er nu gemt");
+						Window.alert("Operatør er nu oprettet!");
+						
 						for(TextBox box : txtbox){
 							box.setText("");
 						}
-						
 						for(RadioButton rb : radioButton){
 							rb.setValue(false);
 						}
@@ -282,7 +280,12 @@ public class OpretBruger extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (nameValid && oprIDVaild && iniVaild && cprVaild && passwordVaild && RadioButton )
+		if (	nameValid && 
+				oprIDVaild && 
+				iniVaild && 
+				cprVaild && 
+				passwordVaild && 
+				radioButtonPressed )
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);
@@ -290,21 +293,16 @@ public class OpretBruger extends Composite {
 	}
 	
 	private class RBClickHandler implements ClickHandler{
-
 		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			
+		public void onClick(ClickEvent event) {	
 			if( radioButton[0].getValue() || 
 					radioButton[1].getValue() || 
 					radioButton[2].getValue() || 
-					radioButton[3].getValue()){
-				
-				RadioButton = true; 
+					radioButton[3].getValue()){			
+				radioButtonPressed = true; 
 				checkFormValid();
 			}
-		}
-		
+		}	
 	}
 		
 	}
