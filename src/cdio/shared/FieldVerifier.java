@@ -41,7 +41,7 @@ public class FieldVerifier {
 		        return false;
 		    }
 		    // only got here if we didn't return false
-		    if ( Integer.parseInt(id)>0 && Integer.parseInt(id)<=127){
+		    if ( Integer.parseInt(id)>0 && Integer.parseInt(id)<=99999999){
 		 	return true;
 		}
 	 return false;
@@ -60,7 +60,7 @@ public class FieldVerifier {
 	
 	
 	public static boolean isValidIni(String Ini){
-		if (Ini.length() == 2 && Ini.matches("[a-zA-Z]+")){
+		if (Ini.length() > 1 && Ini.length() < 5 && Ini.matches("[a-zA-Z]+")){
 				return true;
 		}
 		else return false;
@@ -91,9 +91,9 @@ public class FieldVerifier {
 	}
 	
 	public static boolean isVaildPassword (String password){
-		if (password.length() == 0){
-			return false;
+		if (password.length() > 4 && password.length() < 9){			
+			return true;
 		}
-		else  return true;
+		else  return false;
 	}
 }

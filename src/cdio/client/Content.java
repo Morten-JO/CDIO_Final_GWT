@@ -16,8 +16,8 @@ public class Content extends Composite  {
 		vPanel = new HorizontalPanel();
 		
 		initWidget(vPanel);
-//		lbl = new Label("Jensen er lazy prowgrammer");
-//		lbl.setStyleName("Header-Text");
+		lbl = new Label("Jensen er lazy prowgrammer");
+		lbl.setStyleName("Header-Text");
 		
 		vPanel.setStyleName("Content");
 		

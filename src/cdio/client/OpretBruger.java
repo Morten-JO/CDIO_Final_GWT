@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -25,30 +24,15 @@ import cdio.shared.UserDTO;
 
 public class OpretBruger extends Composite {
 	VerticalPanel addPanel;
-
-	// controls
-	Label nameLbl;
-	Label oprIDLbl;
-	Label iniLbl;
-	Label cprLbl;
-	Label passwordLbl;
 	
-	Label failNameLbl;
-	Label failOprIDLbl;
-	Label failIniLbl;
-	Label failCprLbl;
-	Label failPasswordLbl;
-	Label failRolle;
+	String[] content = {"ID","Navn","Initial","CPR","Password","Rolle"};
+	String[] roller = {"Admin", "Farmaceut", "Værkfører", "Operatør"};
 	
-	RadioButton adminRB;
-	RadioButton OperatoerRB;
-	RadioButton farmaceutRB;
-	RadioButton vaerkfoererRB;
-	TextBox nameTxt;
-	TextBox oprIDTxt;
-	TextBox iniTxt;
-	TextBox cprTxt;
-	PasswordTextBox passwordTxt;
+	HorizontalPanel[] hPanel = new HorizontalPanel[content.length];
+	Label[] labels = new Label[content.length];
+	Label[] fejlLabels = new Label[content.length];
+	TextBox[] txtbox = new TextBox[content.length-1];  //denne liste er én mindre end resten
+	RadioButton[] radioButton = new RadioButton[roller.length];  //på grund af det her :D
 	
 	Button save ;
 
@@ -67,92 +51,38 @@ public class OpretBruger extends Composite {
 		this.token = token;
 		addPanel.setHeight("120px");	
 		initWidget(this.addPanel);
+		
+		
+		
+		for(int i = 0; i < content.length ; i++){
+			hPanel[i] = new HorizontalPanel();
+			hPanel[i].setStyleName("StyleLabel");
+			
+			labels[i] = new Label(content[i]);
+			labels[i].setWidth("80px");
+			hPanel[i].add(labels[i]);
+			
+			if(i < content.length-1){
+				txtbox[i] = new TextBox();
+				txtbox[i].setPixelSize(176, 13);
+				hPanel[i].add(txtbox[i]);
+			}
+			
+			fejlLabels[i] = new Label("");
+			fejlLabels[i].setStyleName("labelAddView");
+			hPanel[i].add(fejlLabels[i]);
+			
+			
+			if( i == (content.length-1)){
+				for(int j = 0; j < roller.length ; j++){
+					radioButton[j] = new RadioButton("rolle", roller[j]);
+					hPanel[i].add(radioButton[j]);
+				}
+			}
+		}
 
-		HorizontalPanel namePanel = new HorizontalPanel();
-		namePanel.setStyleName("styleHP");
-		HorizontalPanel oprIDPanel = new HorizontalPanel();
-		oprIDPanel.setStyleName("styleLabel");
-		HorizontalPanel iniPanel = new HorizontalPanel();
-		iniPanel.setStyleName("styleLabel");
-		HorizontalPanel cprPanel = new HorizontalPanel();
-		cprPanel.setStyleName("styleLabel");
-		HorizontalPanel passwordPanel = new HorizontalPanel();
-		passwordPanel.setStyleName("styleLabel");
-		//FlowPanel RBpanel = new FlowPanel();
-		HorizontalPanel RBpanel = new HorizontalPanel();
-		RBpanel.setStyleName("styleLabel");
-
-		nameLbl = new Label("Navn:");
-		nameLbl.setWidth("80px");
-		nameTxt = new TextBox();
-		nameTxt.setHeight("1em");
-		failNameLbl = new Label("");
-		failNameLbl.setStyleName("labelAddView");
-		namePanel.add(nameLbl);
-		namePanel.add(nameTxt);
-		namePanel.add(failNameLbl);
-
-
-		oprIDLbl = new Label("OprID :");
-		oprIDLbl.setWidth("80px");
-		oprIDTxt = new TextBox();
-		oprIDTxt.setHeight("1em");
-		failOprIDLbl = new Label("");
-		failOprIDLbl.setStyleName("labelAddView");
-		oprIDPanel.add(oprIDLbl);
-		oprIDPanel.add(oprIDTxt);
-		oprIDPanel.add(failOprIDLbl);
 		
-		iniLbl = new Label("Ini:");
-		iniLbl.setWidth("80px");
-		iniTxt = new TextBox();
-		iniTxt.setHeight("1em");
-		failIniLbl = new Label("");
-		failIniLbl.setStyleName("labelAddView");
-		iniPanel.add(iniLbl);
-		iniPanel.add(iniTxt);
-		iniPanel.add(failIniLbl);
-		
-		cprLbl = new Label("CPR:");
-		cprLbl.setWidth("80px");
-		cprTxt = new TextBox();
-		cprTxt.setHeight("1em");
-		failCprLbl = new Label("");
-		failCprLbl.setStyleName("labelAddView");
-		cprPanel.add(cprLbl);
-		cprPanel.add(cprTxt);
-		cprPanel.add(failCprLbl);
-		
-		passwordLbl = new Label("Password:");
-		passwordLbl.setWidth("80px");
-		passwordTxt = new PasswordTextBox();
-		passwordTxt.setPixelSize(176, 13);
-		passwordTxt.setHeight("1em");
-		failPasswordLbl = new Label("");
-		failPasswordLbl.setStyleName("labelAddView1");
-		passwordPanel.add(passwordLbl);
-		passwordPanel.add(passwordTxt);
-		passwordPanel.add(failPasswordLbl);
-		
-		adminRB = new RadioButton("rolle", "Admin");
-		OperatoerRB = new RadioButton("rolle", "Operatoer");
-		farmaceutRB = new RadioButton("rolle", "Farmaceut");
-		vaerkfoererRB = new RadioButton("rolle","Vaerkfoerer");
-		Label l = new Label ("Rolle :");
-		l.setWidth("80px");
-		l.setStyleName("styleTest");
-		failRolle = new Label("");
-		RBpanel.add(l);
-		RBpanel.add(adminRB);
-		RBpanel.add(OperatoerRB);
-		RBpanel.add(farmaceutRB);
-		RBpanel.add(vaerkfoererRB);
-		RBpanel.add(failRolle);
-		
-	
-		
-		// use unicode escape sequence \u00F8 for '�'
-		save = new Button("Tilf\u00F8j");
+		save = new Button("Tilføj");
 		save.setEnabled(false);
 		
 		save.addClickHandler(new ClickHandler() {
@@ -160,19 +90,18 @@ public class OpretBruger extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				String rolle = null;
-				if (adminRB.getValue()){
-				rolle = "admin";
+				for(int i = 0 ; i < roller.length ; i++){
+					if(radioButton[i].getValue())
+						rolle = roller[i];
 				}
-				if(farmaceutRB.getValue()){
-					rolle = "farmaceut";
-				}
-				if (vaerkfoererRB.getValue()){
-					rolle = "vaerkfoerer";
-				}
-				if(OperatoerRB.getValue()){
-					rolle = "operatoer";
-				}
-				UserDTO newUser = new UserDTO(Integer.parseInt(oprIDTxt.getText()),nameTxt.getText(),iniTxt.getText(),cprTxt.getText(),passwordTxt.getText(),rolle);
+			
+				UserDTO newUser = new UserDTO(
+									Integer.parseInt(txtbox[0].getText()),
+									txtbox[1].getText(),
+									txtbox[2].getText(),
+									txtbox[3].getText(),
+									txtbox[4].getText(),
+									rolle);
 				
 				OpretBruger.this.client.service.createUser(OpretBruger.this.token, newUser, new AsyncCallback<Void>() {
 
@@ -185,15 +114,13 @@ public class OpretBruger extends Composite {
 					@Override
 					public void onSuccess(Void result) {
 						Window.alert("Personen er nu gemt");
-						oprIDTxt.setText("");
-						nameTxt.setText("");
-						iniTxt.setText("");
-						cprTxt.setText("");
-						passwordTxt.setText("");
-						vaerkfoererRB.setValue(false);
-						adminRB.setValue(false);
-						OperatoerRB.setValue(false);
-						farmaceutRB.setValue(false);
+						for(TextBox box : txtbox){
+							box.setText("");
+						}
+						
+						for(RadioButton rb : radioButton){
+							rb.setValue(false);
+						}
 						checkFormValid();
 						save.setEnabled(false);
 					}
@@ -201,58 +128,8 @@ public class OpretBruger extends Composite {
 				});
 			}
 		});
-			
 		
-		
-
-		// register event handlers
-		nameTxt.addKeyUpHandler(new KeyUpHandler(){
-
-			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				OpretBruger.this.client.service.getPersons(OpretBruger.this.token, new AsyncCallback<List<UserDTO>>() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
-
-					@Override
-					public void onSuccess(List<UserDTO> result) {
-						boolean alreadyExists = false;
-						for(int i = 0; i < result.size(); i++){
-							if(result.get(i).getNavn().equals(nameTxt.getText())){
-								alreadyExists = true;
-								failNameLbl.setText("");
-							}
-						}
-						if(!alreadyExists){
-							if (!FieldVerifier.isValidName(nameTxt.getText())) {
-								nameTxt.setStyleName("gwt-TextBox-invalidEntry");
-								nameValid = false;
-								failNameLbl.setText("D\u00E5rligt navn!");
-							}
-							else{
-								nameTxt.removeStyleName("gwt-TextBox-invalidEntry");
-								nameValid = true;
-								failNameLbl.setText("");
-							}
-						}
-						else{
-							nameTxt.setStyleName("gwt-TextBox-invalidEntry");
-							nameValid = false;
-							failNameLbl.setText("D\u00E5rligt navn!");
-						}
-					}
-				});
-				
-				checkFormValid();
-			}
-
-		});
-					
-					
-
-		
-		oprIDTxt.addKeyUpHandler(new KeyUpHandler(){
+		txtbox[0].addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
@@ -265,27 +142,26 @@ public class OpretBruger extends Composite {
 					public void onSuccess(List<UserDTO> result) {
 						boolean idExists = false;
 						try{
-							Integer.parseInt(oprIDTxt.getText());
+							Integer.parseInt(txtbox[0].getText());
 							for(int i = 0; i < result.size(); i++){
-								if(result.get(i).getOprId() == Integer.parseInt(oprIDTxt.getText())){
-									idExists = true;
-									
+								if(result.get(i).getOprId() == Integer.parseInt(txtbox[0].getText())){
+									idExists = true;	
 								}
 							}
 							if(!idExists){
-								oprIDTxt.removeStyleName("gwt-TextBox-invalidEntry");
+								txtbox[0].removeStyleName("gwt-TextBox-invalidEntry");
 								oprIDVaild = true;
-								failOprIDLbl.setText("");
+								fejlLabels[0].setText("");
 							}
 							else{
-								oprIDTxt.setStyleName("gwt-TextBox-invalidEntry");
+								txtbox[0].setStyleName("gwt-TextBox-invalidEntry");
 								oprIDVaild = false;
-								failOprIDLbl.setText("Optaget id!");
+								fejlLabels[0].setText("\tOptaget id!");
 							}
 						} catch(NumberFormatException e){
-							oprIDTxt.setStyleName("gwt-TextBox-invalidEntry");
+							txtbox[0].setStyleName("gwt-TextBox-invalidEntry");
 							oprIDVaild = false;
-							failOprIDLbl.setText("Optaget id!");
+							fejlLabels[0].setText("\tOptaget id!");
 						}
 						
 					}
@@ -295,78 +171,110 @@ public class OpretBruger extends Composite {
 			}
 
 		});
+		
+		
+
+		// register event handlers
+		txtbox[1].addKeyUpHandler(new KeyUpHandler(){
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				OpretBruger.this.client.service.getPersons(OpretBruger.this.token, new AsyncCallback<List<UserDTO>>() {
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(List<UserDTO> result) {
+							if (!FieldVerifier.isValidName(txtbox[1].getText())) {
+								txtbox[1].setStyleName("gwt-TextBox-invalidEntry");
+								nameValid = false;
+								fejlLabels[1].setText("\tDårligt navn!");
+							}
+							else{
+								txtbox[1].removeStyleName("gwt-TextBox-invalidEntry");
+								nameValid = true;
+								fejlLabels[1].setText("");
+							}
+					}
+				});
+				
+				checkFormValid();
+			}
+
+		});
+
+		
+		
 					
 					
 
 		
-		iniTxt.addKeyUpHandler(new KeyUpHandler(){
+		txtbox[2].addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if (!FieldVerifier.isValidIni(iniTxt.getText())) {
-					iniTxt.setStyleName("gwt-TextBox-invalidEntry");
+				if (!FieldVerifier.isValidIni(txtbox[2].getText())) {
+					txtbox[2].setStyleName("gwt-TextBox-invalidEntry");
 					iniVaild = false;
-					failIniLbl.setText("D\u00E5rligt ini, max 2 bogstaver!");
+					fejlLabels[2].setText("\tFejl, Initialer skal være mellem 2 og 4 bogstaver!");
 				}
 				else {
-					iniTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					txtbox[2].removeStyleName("gwt-TextBox-invalidEntry");
 					iniVaild = true;
-					failIniLbl.setText("");
+					fejlLabels[2].setText("");
 				}
 				checkFormValid();
 			}
 
 		});
 		
-		cprTxt.addKeyUpHandler(new KeyUpHandler(){
+		txtbox[3].addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if (!FieldVerifier.isValidCpr(cprTxt.getText())) {
-					cprTxt.setStyleName("gwt-TextBox-invalidEntry");
+				if (!FieldVerifier.isValidCpr(txtbox[3].getText())) {
+					txtbox[3].setStyleName("gwt-TextBox-invalidEntry");
 					cprVaild = false;
-					failCprLbl.setText("D\u00E5rligt cpr skriv i formen xxxxxxxxxx!");
+					fejlLabels[3].setText("\tFejl! CPR skal være i formen ddmmyyxxxx!");
 				}
 				else {
-					cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					txtbox[3].removeStyleName("gwt-TextBox-invalidEntry");
 					cprVaild = true;
-					failCprLbl.setText("");
+					fejlLabels[3].setText("");
 				}
 				checkFormValid();
 			}
 
 		});
 		
-		passwordTxt.addKeyUpHandler(new KeyUpHandler(){
+		txtbox[4].addKeyUpHandler(new KeyUpHandler(){
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 		
-				if (!FieldVerifier.isVaildPassword(passwordTxt.getText())) {
-					passwordTxt.setStyleName("gwt-TextBox-invalidEntry");
+				if (!FieldVerifier.isVaildPassword(txtbox[4].getText())) {
+					txtbox[4].setStyleName("gwt-TextBox-invalidEntry");
 					passwordVaild = false;
-					failPasswordLbl.setText("D\u00E5rligt password!");
+					fejlLabels[4].setText("\tPassword længden skal være mellem 5 og 8 tegn!");
 				}
 				else {
-					passwordTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					txtbox[4].removeStyleName("gwt-TextBox-invalidEntry");
 					passwordVaild = true;
-					failPasswordLbl.setText("");
+					fejlLabels[4].setText("");
 				}
 				checkFormValid();
 			}
 
 		});
+			
+		for(RadioButton rb : radioButton){
+			rb.addClickHandler(new RBClickHandler());
+		}
 		
-		adminRB.addClickHandler(new RBClickHandler ());
-		OperatoerRB.addClickHandler(new RBClickHandler ());
-		farmaceutRB.addClickHandler(new RBClickHandler ());
-		vaerkfoererRB.addClickHandler(new RBClickHandler ());
-		addPanel.add(namePanel);
-		addPanel.add(oprIDPanel);
-		addPanel.add(iniPanel);
-		addPanel.add(cprPanel);
-		addPanel.add(passwordPanel);
-		addPanel.add(RBpanel);
+		for(int i=0; i < content.length; i++){
+			addPanel.add(hPanel[i]);
+		}
 		addPanel.add(save);
 		//addPanel.setCellHorizontalAlignment(save, HasHorizontalAlignment.ALIGN_CENTER);
 
@@ -387,7 +295,11 @@ public class OpretBruger extends Composite {
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
 			
-			if( adminRB.getValue()|| OperatoerRB.getValue() || farmaceutRB.getValue()|| vaerkfoererRB.getValue()){
+			if( radioButton[0].getValue() || 
+					radioButton[1].getValue() || 
+					radioButton[2].getValue() || 
+					radioButton[3].getValue()){
+				
 				RadioButton = true; 
 				checkFormValid();
 			}
