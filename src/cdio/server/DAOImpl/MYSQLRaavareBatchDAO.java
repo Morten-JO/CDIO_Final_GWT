@@ -68,37 +68,25 @@ public class MYSQLRaavareBatchDAO implements RaavareBatchDAO{
 
 	@Override
 	public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
-		try {
-		    CallableStatement createOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_raavarebatch(?,?,?)");
-		    createOP.setInt(1, raavarebatch.getRaavareId());
-		    createOP.setDouble(2, raavarebatch.getMaengde());
-		    createOP.setInt(3, 0);
-		    createOP.execute();
-		    
-		    if (createOP.getInt(3) == 1){
-		    	int id = 0;
-			    ResultSet rs = Connector.getInstance().doQuery("select max(rbId) from view_raavarebatch;");
-				if (rs.first()){   
-					id =rs.getInt(1);		
-				}
-				raavarebatch.setRbId(id);
-		    }
-		    else {
-		    	System.err.println("Return value of 'createRaavareBatch' was a error value");
-		    }
+		try {	
+			Connector.getInstance().doQuery(
+					"SELECT add_raavarebatch('"+raavarebatch.getRbId()+"','"+
+												raavarebatch.getRaavareId()+"','"+
+												raavarebatch.getMaengde()+"');");
+			
 		}
 		catch (SQLException e) {
-		    System.err.println("Cannot create raavarebatch, check weather or not the referenced receptId exists");
+		    System.err.println("Cannot create raavarebatch, check weather or not the referenced raavareId exists"+e);
 		}
 	}
 
 	@Override
 	public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
 		try {
-			Connector.getInstance().doUpdate(
-					"UPDATE raavarebatch SET  raavareId = " + raavarebatch.getRaavareId() + ", maengde =  " + raavarebatch.getMaengde() + 
-					" WHERE rbId = " + raavarebatch.getRbId()
-			);
+			Connector.getInstance().doUpdate( 
+					"SELECT update_raavarebatch('"+	raavarebatch.getRbId()+ "','"+
+													raavarebatch.getRaavareId() + "','"+
+													raavarebatch.getMaengde() + "');");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
