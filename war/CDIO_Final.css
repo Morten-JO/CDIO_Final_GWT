@@ -197,4 +197,25 @@ body {
 /* dependant style for text boxes */
 .gwt-TextBox-invalidEntry {
 	border-color: red;
+	margin-left: 4mm;
+	margin-right: 4mm;
+	font-size: 12px;
 }
+
+.TextBox-style{
+	
+	margin-left: 4mm;
+	margin-right: 4mm;
+	font-size: 12px;
+	
+}
+
+.Font-RB{
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 1mm;
+	margin-bottom: 5mm;
+	
+}
+
+

@@ -58,6 +58,8 @@ public class Raavarebatch extends Composite {
 		flex = new FlexTable();
 		vPanel = new VerticalPanel();
 		hPanel = new HorizontalPanel();
+		Label oprtRB = new Label("Opret Raavarebatch :");
+		oprtRB.setStyleName("Font-RB");
 		flex.setStyleName("FlexTable");
 		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
 		initWidget(vPanel);
@@ -65,7 +67,10 @@ public class Raavarebatch extends Composite {
 		this.client = client;
 		
 		AddRbId = new TextBox();
+		AddRbId.setStyleName("TextBox-style");
 		AddRaavareId = new ListBox();
+		AddRaavareId.setHeight("20px");
+		AddRaavareId.setStyleName("TextBox-style");
 		client.service.getRaavare(token,new AsyncCallback<List<RaavareDTO>>(){
 
 			@Override
@@ -85,11 +90,14 @@ public class Raavarebatch extends Composite {
 		});
 		
 		AddMaengde = new TextBox();
+		AddMaengde.setStyleName("TextBox-style");
 		Label RbId = new Label("RbId : ");
 		Label Raavare = new Label("RaavareId : ");
 		Label Maengde = new Label("Maengde : ");
 		create = new Button("Create");
+		//create.setStyleName("createbtn");
 		create.setEnabled(false);
+		vPanel.add(oprtRB);
 		hPanel.add(RbId);
 		hPanel.add(AddRbId);
 		hPanel.add(Raavare);
