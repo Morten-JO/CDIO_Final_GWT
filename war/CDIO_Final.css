@@ -35,6 +35,20 @@ width: 1024px;
 	
 	
 }
+
+.FlexTable-Dialog {
+	border-top: thin solid #444444;
+	border-left: thin solid #444444;
+	border-right: thin solid #111111;
+	border-bottom: thin solid #111111;
+	table-layout: auto;
+	width: 300px; 
+	margin-top: 7mm;
+	border-color:black;
+	text-align: center;
+	
+	
+}
 .FlexTable-Cell {
   
   border-width: 1px 1px 1px 1px;

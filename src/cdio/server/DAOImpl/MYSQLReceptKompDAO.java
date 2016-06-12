@@ -40,7 +40,7 @@ public class MYSQLReceptKompDAO implements ReceptKompDAO {
 		List<ReceptKompDTO> list = new ArrayList<ReceptKompDTO>();
 		try {
 			ResultSet rs = Connector.getInstance()
-					.doQuery("SELECT * FROM view_receptkomponent where receptId = " + receptId);
+					.doQuery("SELECT * FROM receptkomponent where receptId = " + receptId);
 			while (rs.next()) {
 				ReceptKompDTO current = new ReceptKompDTO(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDouble(4));
 
@@ -97,4 +97,38 @@ public class MYSQLReceptKompDAO implements ReceptKompDAO {
 			e.printStackTrace();
 		}		
 	}
-}
+	
+	@Override
+	public List<String> getReceptRaavarer(int id){
+		List<String> list = new ArrayList<>();
+		ResultSet rs = null;
+		try {
+			rs = Connector.getInstance().doQuery("SELECT raavareNavn FROM receptkomponent natural join raavare where receptId = " + id + ";");
+			while (rs.next()){
+				
+				list.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+		
+		}
+		return list;
+	}
+	
+	@Override
+	public int getRaavareIdFromName(String name){
+		int id = 0;
+		ResultSet rs = null;
+		try {
+			rs = Connector.getInstance().doQuery("SELECT raavareId FROM receptkomponent natural join raavare where raavareNavn = '" + name + "';");
+		if (rs.next()){
+			id = rs.getInt(1);
+			return id;
+		}
+		} catch (SQLException e) {
+		
+		}
+		return id;
+	}
+		
+		
+	}

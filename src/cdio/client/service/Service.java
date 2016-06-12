@@ -1,5 +1,6 @@
 package cdio.client.service;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -10,6 +11,7 @@ import cdio.shared.ProduktBatchDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
+import cdio.shared.ReceptKompDTO;
 import cdio.shared.UserDTO;
 
 
@@ -34,6 +36,9 @@ public interface Service extends RemoteService {
 	void createPB(String token, ProduktBatchDTO produktbatch);
 	void createRecept(String token, ReceptDTO recept);
 	boolean checkRecept(String token, String receptNavn);
+	List<String> getRaavIRec(int recId);
+	void createReceptKomponent(String token, ReceptKompDTO receptKomp);
+	int getRaavareFromName(String name);
 	
 
 

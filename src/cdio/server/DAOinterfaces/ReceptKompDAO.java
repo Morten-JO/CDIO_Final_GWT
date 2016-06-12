@@ -1,5 +1,6 @@
 package cdio.server.DAOinterfaces;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import cdio.shared.ReceptKompDTO;
@@ -10,4 +11,6 @@ public interface ReceptKompDAO {
 	List<ReceptKompDTO> getReceptKompList() throws DALException;
 	void createReceptKomp(ReceptKompDTO receptkomponent) throws DALException;
 	void updateReceptKomp(ReceptKompDTO receptkomponent) throws DALException;
+	List<String> getReceptRaavarer(int id);
+	int getRaavareIdFromName(String name);
 }

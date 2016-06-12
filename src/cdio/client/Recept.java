@@ -1,6 +1,10 @@
 package cdio.client;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
+
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -11,18 +15,23 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.sun.java.swing.plaf.windows.resources.windows;
 
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareBatchDTO;
+import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
+import cdio.shared.ReceptKompDTO;
 import sun.print.resources.serviceui;
 import cdio.shared.ReceptDTO;
 
@@ -38,6 +47,9 @@ public class Recept extends Composite {
 	TextBox recNameTxt;
 	TextBox addRecIdTxt;
 	TextBox addRecNameTxt;
+	
+	
+	DialogBox recKomp;
 	
 	
 	boolean addRecIdValid = false;
@@ -169,7 +181,7 @@ public class Recept extends Composite {
 		});
 		
 		create.addClickHandler(new ClickHandler() {
-
+				
 			@Override
 			public void onClick(ClickEvent event) {
 				int recId = Integer.parseInt(addRecIdTxt.getText());
@@ -227,10 +239,12 @@ public class Recept extends Composite {
 					
 					
 					Anchor edit = new Anchor("edit");
+					Anchor addRecKomp = new Anchor("Tilføj Komponent");
+					flex.setWidget(rowIndex + 1, 4, addRecKomp);
 					flex.setWidget(rowIndex + 1, 2, edit);
 
 					edit.addClickHandler(new EditHandler());
-					
+					addRecKomp.addClickHandler(new KomponentHandler());
 				}
 
 				// flex.setStyleName("FlexTable");
@@ -402,4 +416,223 @@ public class Recept extends Composite {
 			
 		}
 	
+	private class KomponentHandler implements ClickHandler {
+
+		private ListBox addlist;
+		private FlexTable raavarer;
+		private boolean validNetto = false;
+		private boolean validTolerance = false;
+		private Button addKomp;
+		TextBox nettoTxt;
+		TextBox toleranceTxt;
+		private int column;
+		Iterator<Widget> flexIterator;
+		
+		@Override
+		public void onClick(ClickEvent event) {
+			column = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			
+			recKomp = new DialogBox();
+			recKomp.setStyleName("Content");
+			
+			raavarer = new FlexTable();
+			flexIterator = raavarer.iterator();
+			raavarer.setText(0, 0, "Raavarer i recepten");
+			raavarer.setStyleName("FlexTable-Dialog");
+			
+			HorizontalPanel kompPanel = new HorizontalPanel();
+			VerticalPanel verKompPanel = new VerticalPanel();
+		
+		
+			
+			Label Navn = new Label("Raavarer i recepten     ");
+			
+			Label netto = new Label("NomNetto");
+			Label tolerance = new Label("Tolerance");
+			
+			nettoTxt = new TextBox();
+			toleranceTxt = new TextBox();
+			nettoTxt.setStyleName("TextBox-style");
+			toleranceTxt.setStyleName("TextBox-style");
+			
+			nettoTxt.addKeyUpHandler(new KeyUpHandler() {
+
+				@Override
+				public void onKeyUp(KeyUpEvent event) {
+
+					if (!FieldVerifier.isValidRbId(nettoTxt.getText())) {
+						nettoTxt.setStyleName("gwt-TextBox-invalidEntry");
+						validNetto = false;
+					} else {
+						nettoTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						validNetto = true;
+					}
+					checkFormValidKomp();
+					;
+				}
+
+			});
+			
+			toleranceTxt.addKeyUpHandler(new KeyUpHandler() {
+
+				@Override
+				public void onKeyUp(KeyUpEvent event) {
+
+					if (!FieldVerifier.isValidRbId(toleranceTxt.getText())) {
+						toleranceTxt.setStyleName("gwt-TextBox-invalidEntry");
+						validTolerance = false;
+					} else {
+						toleranceTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						validTolerance = true;
+					}
+					checkFormValidKomp();
+					;
+				}
+
+			});
+			
+			addKomp = new Button("Tilføj denne komponent");
+			addKomp.setEnabled(false);
+			addKomp.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+				//	client.service.createReceptKomponent(token, new ReceptKompDTO(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0), raavareId, nomNetto, tolerance), callback);
+					client.service.getRaavareFromName(addlist.getSelectedItemText(), new AsyncCallback<Integer>() {
+						
+						@Override
+						public void onSuccess(Integer result) {
+							Window.alert("recid" + result);
+							client.service.createReceptKomponent(token, new ReceptKompDTO(Integer.parseInt(flex.getText(column, 0)), result,
+							Double.parseDouble(nettoTxt.getText()),  Double.parseDouble(toleranceTxt.getText())), new AsyncCallback<Void>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onSuccess(Void result) {
+									// TODO Auto-generated method stub
+									
+								}
+							});
+							
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("nope");
+							
+						}
+					});
+					Window.Location.reload();
+				}
+			});
+			
+			Button close = new Button("close window");
+			
+			close.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					recKomp.hide();
+					
+				}
+			});
+			
+			
+			addlist = new ListBox();
+
+			
+			//Window.alert("clicked:   " + flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			client.service.getRaavIRec(Integer.parseInt(flex.getText(column, 0)), new AsyncCallback<List<String>>() {
+				
+				
+				@Override
+				public void onSuccess(List<String> result) {
+					//Window.alert(result.get(1));
+					try {
+						for (int i = 0; i < result.size(); i++) {
+							raavarer.setText(i, 0, result.get(i));
+						
+						}
+						Window.alert("raavaize " + raavarer.getText(4, 0));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+//					Add elements to list
+					client.service.getRaavare(token, new AsyncCallback<List<RaavareDTO>>(){
+
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Fejl raav");
+							
+						}
+
+						@Override
+						public void onSuccess(List<RaavareDTO> result) {
+							
+							for (int i = 0; i < result.size(); i++) {
+								boolean addable = true;
+								Window.alert("what is this" +flexIterator.next().getElement() + " and " + flexIterator.hasNext());
+								while (flexIterator.hasNext()) {
+									Window.alert("what is this" +flexIterator.next().getElement() + " and " + flexIterator);
+									if (result.get(i).getRaavareNavn().equals(raavarer.getText(1, 0))){
+											addable = false;
+									}
+								}
+								if (addable)
+								addlist.addItem(result.get(i).getRaavareNavn());
+								
+							}
+						}
+
+					});
+					
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					Window.alert("Fejl raavirec");
+					
+				}
+			});
+			
+
+
+			
+
+			
+			kompPanel.add(Navn);
+			
+			verKompPanel.add(kompPanel);
+			verKompPanel.add(raavarer);
+			verKompPanel.add(netto);
+			verKompPanel.add(nettoTxt);
+			verKompPanel.add(tolerance);
+			verKompPanel.add(toleranceTxt);
+			
+			verKompPanel.add(addlist);
+			verKompPanel.add(addKomp);
+			
+			verKompPanel.add(close);
+			recKomp.add(verKompPanel);
+			recKomp.show();
+			
+			
+		}
+		private void checkFormValidKomp() {
+			if (validNetto && validTolerance)
+
+				addKomp.setEnabled(true);
+
+			else
+				addKomp.setEnabled(false);
+
+		}
+	}
 }
