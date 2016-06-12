@@ -16,6 +16,16 @@ public class FieldVerifier {
 	return false;
 	}
 	
+	public static boolean isValidStatus(String value){
+		int status = Integer.parseInt(value);
+					
+				if(status <= 2 && status >= 0)	{
+					return true;	
+				}
+
+			return false;
+	}
+	
 	
 	public static boolean isValidName(String name){
 		System.out.println("jensen -----" + name.length());

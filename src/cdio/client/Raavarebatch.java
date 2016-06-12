@@ -71,6 +71,8 @@ public class Raavarebatch extends Composite {
 		AddRaavareId = new ListBox();
 		AddRaavareId.setHeight("20px");
 		AddRaavareId.setStyleName("TextBox-style");
+		
+		
 		client.service.getRaavare(token,new AsyncCallback<List<RaavareDTO>>(){
 
 			@Override
@@ -416,6 +418,8 @@ public class Raavarebatch extends Composite {
 		else create.setEnabled(false);
 			
 		}
+	
+	
 	private void checkFormValid() {
 		if (rbIdValid && raavareIdValid && maengdeValid)
 

@@ -30,6 +30,7 @@ public interface ServiceAsync {
 	void updateUser(String token, UserDTO user, AsyncCallback<Void> asyncCallback);
 	void createUser(String token, UserDTO user, AsyncCallback<Void> callback);
 	void createRB(String token, RaavareBatchDTO raavarebatch, AsyncCallback<Void> callback);
+	void createPB(String token, ProduktBatchDTO produktbatch, AsyncCallback<Void> callback);
 
 
 

@@ -7,10 +7,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -18,6 +23,9 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.RaavareBatchDTO;
+import cdio.shared.RaavareDTO;
+import cdio.shared.ReceptDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchDTO;
 
@@ -25,16 +33,30 @@ public class Produktbatch extends Composite {
 
 	private FlexTable flex;
 	private VerticalPanel vPanel;
+	private HorizontalPanel hPanel;
 	private String token;
 	private ServiceClientImpl client;
-
+	
+	TextBox AddPbId;
+	ListBox AddReceptId;
+	
+	
 	TextBox pbIdTxt;
 	TextBox receptIdTxt;
 	TextBox statusTxt;
-
+	
+	
+	Button create ;
+	
+	boolean addPbValid = false;
+	boolean statusValid = false;
 	boolean rbIdValid = true;
-	boolean raavareIdValid = true;
-	boolean maengdeValid = true;
+	boolean receptIdValid = true;
+
+
+
+
+	
 
 	int eventRowIndex;
 	Anchor ok;
@@ -45,10 +67,141 @@ public class Produktbatch extends Composite {
 		flex.setStyleName("FlexTable");
 		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
 		vPanel = new VerticalPanel();
+		hPanel = new HorizontalPanel();
+		Label oprtPB = new Label("Opret Produktbatch :");
+		oprtPB.setStyleName("Font-RB");
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
+		
+		AddPbId = new TextBox();
+		AddPbId.setStyleName("TextBox-style");
+		AddReceptId = new ListBox();
+		AddReceptId.setHeight("20px");
+		AddReceptId.setStyleName("TextBox-style");
+		
+		
+		client.service.getRecept(token, new AsyncCallback<List<ReceptDTO>>() {
+			
+			@Override
+			public void onSuccess(List<ReceptDTO> result) {
+				for (int i = 0; i < result.size(); i++) {
+					
+					AddReceptId.addItem(Integer.toString(result.get(i).getReceptId()));
+				}
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+			
+					
+				
+			}
+		});
+		
+	
+		Label PbId = new Label("PbId : ");
+		Label Recept = new Label("ReceptId : ");
+		
+		create = new Button("Create");
+		//create.setStyleName("createbtn");
+		create.setEnabled(false);
+		
+		vPanel.add(oprtPB);
+		hPanel.add(PbId);
+		hPanel.add(AddPbId);
+		hPanel.add(Recept);
+		hPanel.add(AddReceptId);
+	
+		hPanel.add(create);
+		vPanel.add(hPanel);
+		
+		//Check add functionality for field. Reason: validation
+		AddPbId.addKeyUpHandler(new KeyUpHandler(){
 
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				Produktbatch.this.client.service.getPB(Produktbatch.this.token, new AsyncCallback<List<ProduktBatchDTO>>(){
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(List<ProduktBatchDTO> result) {
+						boolean idExists = false;
+						try{
+							Integer.parseInt(AddPbId.getText());
+							for(int i = 0; i < result.size(); i++){
+								if(result.get(i).getPbId() == Integer.parseInt(AddPbId.getText())){
+									idExists = true;
+									
+								}
+							}
+							if(!idExists){
+								AddPbId.removeStyleName("gwt-TextBox-invalidEntry");
+								addPbValid = true;
+								//failOprIDLbl.setText("");
+							}
+							else{
+								AddPbId.setStyleName("gwt-TextBox-invalidEntry");
+								addPbValid = false;
+								//failOprIDLbl.setText("Optaget id!");
+							}
+						} catch(NumberFormatException e){
+							AddPbId.setStyleName("gwt-TextBox-invalidEntry");
+							addPbValid = false;
+							//failOprIDLbl.setText("Optaget id!");
+						}
+						
+					}
+					
+				});
+				if (!FieldVerifier.isValidRbId(AddPbId.getText())) {
+					AddPbId.setStyleName("gwt-TextBox-invalidEntry");
+					addPbValid = false;
+				} else {
+					AddPbId.removeStyleName("gwt-TextBox-invalidEntry");
+					addPbValid = true;
+				}
+				checkFormValid_Create();
+			}
+
+		});
+
+
+		
+		create.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				int pbId = Integer.parseInt(AddPbId.getText());
+				int receptId = Integer.parseInt(AddReceptId.getSelectedItemText());
+				
+				
+				
+				ProduktBatchDTO RB = new ProduktBatchDTO(pbId, receptId, 0, null, null);
+				Produktbatch.this.client.service.createPB(Produktbatch.this.token, RB, new AsyncCallback<Void>(){
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Server fejl!" + caught.getMessage());
+							
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							Window.alert("Produktbatchbatch er nu gemt");
+							AddPbId.setText("");
+							
+							checkFormValid();
+							create.setEnabled(false);
+							Window.Location.reload();
+						}
+
+					});
+				}
+			});
+		
 		client.service.getPB(token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
 			@Override
@@ -90,6 +243,8 @@ public class Produktbatch extends Composite {
 			}
 
 		});
+		
+		
 		vPanel.add(flex);
 		// create textboxs
 		pbIdTxt = new TextBox();
@@ -217,10 +372,10 @@ public class Produktbatch extends Composite {
 				public void onKeyUp(KeyUpEvent event) {
 					if (!FieldVerifier.isValidRbId(receptIdTxt.getText())) {
 						receptIdTxt.setStyleName("gwt-TextBox-invalidEntry");
-						raavareIdValid = false;
+						receptIdValid = false;
 					} else {
 						receptIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
-						raavareIdValid = true;
+						receptIdValid = true;
 					}
 					checkFormValid();
 					;
@@ -232,12 +387,12 @@ public class Produktbatch extends Composite {
 
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
-					if (!FieldVerifier.isValidMaengde(statusTxt.getText())) {
+					if (!FieldVerifier.isValidStatus(statusTxt.getText())) {
 						statusTxt.setStyleName("gwt-TextBox-invalidEntry");
-						maengdeValid = false;
+						statusValid = false;
 					} else {
 						statusTxt.removeStyleName("gwt-TextBox-invalidEntry");
-						maengdeValid = true;
+						statusValid = true;
 					}
 					checkFormValid();
 					;
@@ -252,7 +407,7 @@ public class Produktbatch extends Composite {
 	
 	
 	private void checkFormValid() {
-		if (rbIdValid && raavareIdValid && maengdeValid)
+		if (rbIdValid && statusValid && receptIdValid)
 
 			flex.setWidget(eventRowIndex, 5, ok);
 
@@ -260,5 +415,13 @@ public class Produktbatch extends Composite {
 			flex.setText(eventRowIndex, 5, "ok");
 
 	}
+	
+	private void checkFormValid_Create() {
+		if (addPbValid && receptIdValid){
+			create.setEnabled(true);
+		}
+		else create.setEnabled(false);
+			
+		}
 
 }

@@ -1,5 +1,6 @@
 package cdio.server;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -47,7 +48,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<UserDTO> getPersons(String token) {
-		System.out.println("Service rolle" + token);
+		
 		if( getRole(token).equalsIgnoreCase("farmaceut")
 				|| getRole(token).equalsIgnoreCase("admin")){
 		try {
@@ -269,6 +270,26 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
+	}
+	}
+	
+	
+	@Override
+	public void createPB(String token, ProduktBatchDTO produktbatch) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+		
+				try {
+					controller.getPBDAO().createProduktBatch(produktbatch);
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
 		
 	}
 	}

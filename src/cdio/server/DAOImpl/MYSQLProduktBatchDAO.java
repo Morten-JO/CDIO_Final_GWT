@@ -19,6 +19,7 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 			CallableStatement getPB = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call get_produktbatch(?)");
 			getPB.setInt(1, pbId);
 			ResultSet rs = getPB.executeQuery();
+			
 			if (rs.first()){
 				int pb_recept = rs.getInt(2);
 				int pb_status = rs.getInt(3);
@@ -60,11 +61,6 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 		    createOP.setInt(2, produktbatch.getReceptId());
 		    createOP.execute();
 		    
-		    ResultSet rs = Connector.getInstance().doQuery("select max(pbId) from produktbatch;");
-			if (rs.first()){
-				int id = rs.getInt(1);
-				produktbatch.setPbId(id);
-			}
 		} catch (SQLException e) {
 		    System.err.println("Could not create produktbatch, check if the database is running!");
 		}
