@@ -40,10 +40,11 @@ public class Recept extends Composite {
 	TextBox addRecNameTxt;
 	
 	
-	boolean addRecIdValid = true;
-	boolean addRecNavnValid = true;
-	boolean recIdValid = true;
-	boolean recNavnValid = true;
+	boolean addRecIdValid = false;
+	boolean addRecNavnValid = false;
+	
+	boolean recIdValid = false;
+	boolean recNavnValid = false;
 	
 
 	Button create ;
@@ -134,16 +135,32 @@ public class Recept extends Composite {
 		});
 		
 		addRecNameTxt.addKeyUpHandler(new KeyUpHandler() {
-
+			
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if (!FieldVerifier.isValidName(addRecNameTxt.getText())) {
-					addRecNameTxt.setStyleName("gwt-TextBox-invalidEntry");
-					addRecNavnValid = false;
-				} else {
-					addRecNameTxt.removeStyleName("gwt-TextBox-invalidEntry");
-					addRecNavnValid = true;
-				}
+				Recept.this.client.service.checkRecept(Recept.this.token, addRecNameTxt.getText(), new AsyncCallback<Boolean>() {
+					
+					@Override
+					public void onSuccess(Boolean result) {
+							boolean recExists = result;
+						
+						if (!FieldVerifier.isValidName(addRecNameTxt.getText()) || recExists) {
+							addRecNameTxt.setStyleName("gwt-TextBox-invalidEntry");
+							addRecNavnValid = false;
+						} else {
+							addRecNameTxt.removeStyleName("gwt-TextBox-invalidEntry");
+							addRecNavnValid = true;
+						}
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+
 				checkFormValid_Create();
 				
 				

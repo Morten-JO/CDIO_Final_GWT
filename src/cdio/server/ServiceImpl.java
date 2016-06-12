@@ -1,8 +1,10 @@
 package cdio.server;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import cdio.client.service.Service;
@@ -309,6 +311,33 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 	}
 	}
+	
+	@Override
+	public boolean checkRecept(String token, String receptNavn){
+		boolean exists = false;
+		
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+			|| getRole(token).equalsIgnoreCase("admin")){
+			
+			try {
+				ResultSet rs = controller.getRecDAO().checkRecept(receptNavn);
+				
+				if (rs.isFirst()){
+					
+					exists = true;
+					return exists;
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		
+		
+		
+		
+	}
+	
+		return exists;
 	}
 
-
+}

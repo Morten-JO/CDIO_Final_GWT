@@ -11,4 +11,5 @@ public interface ReceptDAO {
 	void createRecept(ReceptDTO recept) throws DALException;
 	void updateRecept(ReceptDTO recept) throws DALException;
 	ResultSet getFullRecept(String navn);
+	ResultSet checkRecept(String navn);
 }

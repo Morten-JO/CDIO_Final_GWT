@@ -32,6 +32,7 @@ public interface ServiceAsync {
 	void createRB(String token, RaavareBatchDTO raavarebatch, AsyncCallback<Void> callback);
 	void createPB(String token, ProduktBatchDTO produktbatch, AsyncCallback<Void> callback);
 	void createRecept(String token, ReceptDTO recept, AsyncCallback<Void> callback);
+	void checkRecept(String token, String receptNavn, AsyncCallback<Boolean> callback);
 
 
 
