@@ -128,20 +128,23 @@ body {
 	
 	font-size: 40px;
 	text-align: center;
-	color: #0000ff;
+	color: #ff0000;
 	text-shadow: 2px 0 0 #000000, -2px 0 0 #000000, 0 2px 0 #000000, 0 -2px 0 #000000, 1px 1px #000000, -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000;
 	
 }
 
 .Header {
-	background-color:  #ffffff;
+	
+	background: linear-gradient(to right, #004080 , #0080c0,#ffffff);
 	height: 120px;
 	padding: 30px;
 	width: 1024px;
 	margin: auto;
 	padding: 10px;
 	border-radius: 100px 100px 0px 0px;
-	border: solid 2px #000000;
+	border-bottom: solid 2px #000000;
+	border-top: solid 7px #000000;
+	
 	
 }
 
@@ -151,10 +154,12 @@ body {
 	float: bottom;
 	width: 1024px;
 	clear: both;
-	background-color: #014dfe;
-	border-radius: 0px 0px 100px 100px;
-	border: solid 2px #000000;
 	
+	background: linear-gradient(to right, #004080 , #0080c0,#ffffff);
+	border-radius: 0px 0px 100px 100px;
+	
+	border-bottom: solid 7px #000000;
+	border-top: solid 2px #000000;
 	
 	
 	}
@@ -198,11 +203,11 @@ body {
 	min-height: 375px;
 }
 
-.gwt-Anchor:link {color:#000000;}
-.gwt-Anchor:visited {color:#00FF00;}
-.gwt-Anchor:hover {color:#00ff00;}
+.gwt-Anchor:link {color:#000000;font-weight: bold; }
+.gwt-Anchor:visited {color:#ff0000;}
+.gwt-Anchor:hover {color:#ff0000;}
 .gwt-Anchor:active {color:#FF0000;}
-.gwt-Anchor:
+
 
 .FailOktext{
 	color: red;
@@ -214,6 +219,8 @@ body {
 	margin-left: 4mm;
 	margin-right: 4mm;
 	font-size: 12px;
+	height: 25px;
+	width: 185px;
 }
 
 .TextBox-style{
