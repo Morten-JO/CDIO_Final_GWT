@@ -32,6 +32,7 @@ public interface Service extends RemoteService {
 	void createUser(String token, UserDTO user);
 	void createRB(String token,RaavareBatchDTO raavarebatch);
 	void createPB(String token, ProduktBatchDTO produktbatch);
+	void createRecept(String token, ReceptDTO recept);
 	
 
 

@@ -293,6 +293,22 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 	}
 	}
+	
+	@Override
+	public void createRecept(String token, ReceptDTO recept) {
+		if( getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")){
+		
+				try {
+					controller.getRecDAO().createRecept(recept);
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+		
+	}
+	}
 	}
 
 

@@ -9,14 +9,19 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.sun.java.swing.plaf.windows.resources.windows;
 
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.ReceptDTO;
 import sun.print.resources.serviceui;
 import cdio.shared.ReceptDTO;
@@ -25,18 +30,23 @@ public class Recept extends Composite {
 
 	private FlexTable flex;
 	private VerticalPanel vPanel;
+	private HorizontalPanel hPanel;
 	private String token;
 	private ServiceClientImpl client;
 
 	TextBox recIdTxt;
 	TextBox recNameTxt;
+	TextBox addRecIdTxt;
+	TextBox addRecNameTxt;
 	
-
+	
+	boolean addRecIdValid = true;
+	boolean addRecNavnValid = true;
 	boolean recIdValid = true;
 	boolean recNavnValid = true;
 	
-	boolean vaerkfoerer, admin, farmaceut;
-	
+
+	Button create ;
 
 	int eventRowIndex;
 	Anchor ok;
@@ -45,9 +55,132 @@ public class Recept extends Composite {
 	public Recept(ServiceClientImpl client, String token) {
 		flex = new FlexTable();
 		vPanel = new VerticalPanel();
+		hPanel = new HorizontalPanel();
+		Label oprtRec = new Label("Opret Recept: ");
+		oprtRec.setStyleName("Font-RB");
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
+		
+		addRecIdTxt = new TextBox();
+		addRecIdTxt.setStyleName("TextBox-style");
+		addRecNameTxt = new TextBox();
+		addRecNameTxt.setHeight("20px");
+		addRecNameTxt.setStyleName("TextBox-style");
+		
+		Label RecId = new Label("ReceptID : ");
+		Label Recept = new Label("ReceptNavn : ");
+		create = new Button("Create");
+		//create.setStyleName("createbtn");
+		create.setEnabled(false);
+		vPanel.add(oprtRec);
+		hPanel.add(RecId);
+		hPanel.add(addRecIdTxt);
+		hPanel.add(Recept);
+		hPanel.add(addRecNameTxt);
+
+		hPanel.add(create);
+		vPanel.add(hPanel);
+		
+		addRecIdTxt.addKeyUpHandler(new KeyUpHandler(){
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>(){
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+
+					@Override
+					public void onSuccess(List<ReceptDTO> result) {
+						boolean idExists = false;
+						try{
+							Integer.parseInt(addRecIdTxt.getText());
+							for(int i = 0; i < result.size(); i++){
+								if(result.get(i).getReceptId() == Integer.parseInt(addRecIdTxt.getText())){
+									idExists = true;
+									
+								}
+							}
+							if(!idExists){
+								addRecIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
+								addRecIdValid = true;
+								//failOprIDLbl.setText("");
+							}
+							else{
+								addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
+								addRecIdValid = false;
+								//failOprIDLbl.setText("Optaget id!");
+							}
+						} catch(NumberFormatException e){
+							addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
+							addRecIdValid = false;
+							//failOprIDLbl.setText("Optaget id!");
+						}
+						
+					}
+					
+				});
+				if (!FieldVerifier.isValidRbId(addRecIdTxt.getText())) {
+					addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
+					addRecIdValid = false;
+				} else {
+					addRecIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					addRecIdValid = true;
+				}
+				checkFormValid_Create();
+			}
+
+		});
+		
+		addRecNameTxt.addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (!FieldVerifier.isValidName(addRecNameTxt.getText())) {
+					addRecNameTxt.setStyleName("gwt-TextBox-invalidEntry");
+					addRecNavnValid = false;
+				} else {
+					addRecNameTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					addRecNavnValid = true;
+				}
+				checkFormValid_Create();
+				
+				
+			}
+
+		});
+		
+		create.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				int recId = Integer.parseInt(addRecIdTxt.getText());
+				String recName = addRecNameTxt.getText();
+				
+				
+				
+				ReceptDTO RB = new ReceptDTO(recId, recName);
+				Recept.this.client.service.createRecept(Recept.this.token, RB, new AsyncCallback<Void>(){
+						@Override
+						public void onFailure(Throwable caught) {
+							Window.alert("Server fejl!" + caught.getMessage());
+							
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							Window.alert("Recept er nu gemt");
+							addRecIdTxt.setText("");
+							addRecNameTxt.setText("");
+							checkFormValid();
+							create.setEnabled(false);
+							Window.Location.reload();
+						}
+
+					});
+				}
+			});
 		
 		flex.addStyleName("FlexTable");
 		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
@@ -242,4 +375,14 @@ public class Recept extends Composite {
 			flex.setText(eventRowIndex, 2, "ok");
 
 	}
+	
+	
+	private void checkFormValid_Create() {
+		if (addRecIdValid && addRecNavnValid){
+			create.setEnabled(true);
+		}
+		else create.setEnabled(false);
+			
+		}
+	
 }

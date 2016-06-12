@@ -53,13 +53,12 @@ public class MYSQLReceptDAO implements ReceptDAO{
 	public void createRecept(ReceptDTO recept) throws DALException {
 		try {
 			int id = 0;
-		    CallableStatement createRecept = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_recept(?)");
-			createRecept.setString(1, recept.getReceptNavn());	   
+		    CallableStatement createRecept = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_recept(?,?)");
+			createRecept.setString(2, recept.getReceptNavn());
+			createRecept.setString(1, "" + recept.getReceptId());
+			
 			createRecept.execute();  
-			ResultSet rs = Connector.getInstance().doQuery("select max(receptId) from view_recept;");
-			if (rs.first()){   
-				id = rs.getInt(1);		
-			}
+
 			recept.setReceptId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
