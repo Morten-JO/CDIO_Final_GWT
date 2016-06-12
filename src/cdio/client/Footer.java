@@ -11,7 +11,7 @@ public class Footer extends Composite{
 		
 		VerticalPanel footerPanel = new VerticalPanel();
 		initWidget(footerPanel);
-		Label footerLbl = new Label("Gruppe 24 gg");
+		Label footerLbl = new Label("© Copyright Gruppe 24");
 		footerPanel.add(footerLbl);
 		footerLbl.setStyleName("Footer-Text");
 		footerPanel.setStyleName("Footer");
