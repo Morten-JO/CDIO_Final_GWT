@@ -124,7 +124,7 @@ public class PrintProduktBatch extends Composite{
 												vPanel.add(productionStatus);
 												vPanel.add(productionStartedDate);
 												vPanel.add(productionEndDate);
-												Window.alert(vPanel.asWidget().getElement().getInnerHTML());
+												
 												print(vPanel.asWidget().getElement().getInnerHTML());
 											}
 										}
