@@ -316,11 +316,11 @@ public class ShowPersons extends Composite {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
 
-					if (!FieldVerifier.isValidName(oprNavnTxt.getText())) {
+					if (!FieldVerifier.isValidCpr(cprTxt.getText())) {
 						cprTxt.setStyleName("gwt-TextBox-invalidEntry");
 						cprValid = false;
 					} else {
-						oprNavnTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
 						cprValid = true;
 					}
 					checkFormValid();
@@ -333,7 +333,7 @@ public class ShowPersons extends Composite {
 
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
-					if (!FieldVerifier.isValidName(iniTxt.getText())) {
+					if (!FieldVerifier.isVaildPassword(passTxt.getText())) {
 						passTxt.setStyleName("gwt-TextBox-invalidEntry");
 						passValid = false;
 					} else {
