@@ -140,6 +140,22 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		
 	}
 
+	@Override
+	public String getName(int id) throws DALException {
+		String name = null ;
+		try {
+			ResultSet rs = Connector.getInstance().doQuery("select oprNavn from operatoer where oprId="+id+";");
+			rs.next();
+			name = rs.getString(1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return name;
+	}
+	}
+
 
 	
 	
@@ -150,4 +166,3 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 
 
 	
-}

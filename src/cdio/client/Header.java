@@ -7,18 +7,23 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Header extends Composite {
 	private Label header;
-	
-	public Header(){
+	private Label rolle;
+	public Header(String navn){
 		VerticalPanel vPanel = new VerticalPanel();
 		initWidget(vPanel);
-		header = new Label("");
+		header = new Label("Welcome");
+		this.rolle = new Label("Logget ind som: "+navn);
 		header.setStyleName("Header-Text");
+		this.rolle.setStyleName("Header-Text-rolle");
 		vPanel.add(header);
+		vPanel.add(this.rolle);
 		vPanel.setStyleName("Header");
 
 		
 		
 	}
+
+	
 
 	public void setText(String string) {
 		
