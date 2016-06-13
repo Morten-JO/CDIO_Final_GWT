@@ -431,7 +431,6 @@ public class Recept extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			column = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
-			
 			recKomp = new DialogBox();
 			recKomp.setStyleName("Content");
 			

@@ -39,6 +39,7 @@ public interface Service extends RemoteService {
 	List<String> getRaavIRec(int recId);
 	void createReceptKomponent(String token, ReceptKompDTO receptKomp);
 	int getRaavareFromName(String name);
+	void deleteUser(String token,int id);
 	
 
 
