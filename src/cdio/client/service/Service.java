@@ -45,5 +45,6 @@ public interface Service extends RemoteService {
 	public List<ReceptKompDTO> getReceptKompsFromReceptID(int id, String token);
 	public RaavareDTO getRaavareFromID(int id, String token);
 	public String getUserName(String token);
+	void createRA(String token,RaavareDTO raavare);
 	
 }
