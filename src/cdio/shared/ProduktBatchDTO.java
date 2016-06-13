@@ -1,6 +1,8 @@
 package cdio.shared;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class ProduktBatchDTO implements Serializable {
@@ -11,14 +13,14 @@ public class ProduktBatchDTO implements Serializable {
 	int pbId; // i omraadet 1-99999999
 	int status; // 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
 	int receptId;
-	Timestamp startTidspunkt;
-	Timestamp slutTidspunkt;
+	String startTidspunkt;
+	String slutTidspunkt;
 	
 	public ProduktBatchDTO(){
 		
 	}
 
-	public ProduktBatchDTO(int produktbatchID, int receptId, int status, Timestamp startTid, Timestamp slutTid) {
+	public ProduktBatchDTO(int produktbatchID, int receptId, int status, String startTid, String slutTid) {
 		this.pbId = produktbatchID;
 		this.receptId = receptId;
 		this.status= status;
@@ -54,11 +56,11 @@ public class ProduktBatchDTO implements Serializable {
 		return pbId + "\t" + status + "\t" + receptId;
 	}
 
-	public Timestamp getStartidspunkt() {
+	public String getStartidspunkt() {
 		return startTidspunkt;
 	}
 	
-	public Timestamp getSluttidspunkt(){
+	public String getSluttidspunkt(){
 		return slutTidspunkt;
 	}
 
