@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -439,15 +440,14 @@ public class Recept extends Composite {
 			
 			raavarer = new FlexTable();
 			raavarerIRec = new ArrayList<String>();
-			raavarer.setText(0, 0, "Raavarer i recepten");
+			raavarer.setText(0, 0, "Raavare Navn:");
 			raavarer.setStyleName("FlexTable-Dialog");
 			
 			HorizontalPanel kompPanel = new HorizontalPanel();
 			VerticalPanel verKompPanel = new VerticalPanel();
 		
-		
-			
-			//Label Navn = new Label("Raavarer i recepten     ");
+			Label Navn = new Label("Raavarer i "+  flex.getText(flex.getCellForEvent(event).getRowIndex(), 1));
+			Navn.setStyleName("Dialog-Text");
 			
 			Label netto = new Label("NomNetto");
 			Label tolerance = new Label("Tolerance");
@@ -493,7 +493,7 @@ public class Recept extends Composite {
 
 			});
 			
-			addKomp = new Button("add denne komponent");
+			addKomp = new Button("Tilføj denne komponent");
 			addKomp.setEnabled(false);
 			addKomp.addClickHandler(new ClickHandler() {
 				
@@ -617,8 +617,8 @@ public class Recept extends Composite {
 			
 
 			
-			//kompPanel.add(Navn);
-			
+			kompPanel.add(Navn);
+			kompPanel.setStyleName("Dialog");
 			verKompPanel.add(kompPanel);
 			verKompPanel.add(raavarer);
 			verKompPanel.add(netto);
