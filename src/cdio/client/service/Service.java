@@ -3,6 +3,7 @@ package cdio.client.service;
 import java.sql.ResultSet;
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -40,8 +41,9 @@ public interface Service extends RemoteService {
 	void createReceptKomponent(String token, ReceptKompDTO receptKomp);
 	int getRaavareFromName(String name);
 	void deleteUser(String token,int id);
-	
-
+	public ProduktBatchDTO getSpecificPB(int id, String token);
+	public List<ReceptKompDTO> getReceptKompsFromReceptID(int id, String token);
+	public RaavareDTO getRaavareFromID(int id, String token);
 
 	
 }

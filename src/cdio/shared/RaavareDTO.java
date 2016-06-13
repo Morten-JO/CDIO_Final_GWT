@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @version 1.2
  */
 
-public class RaavareDTO implements Serializable{
+public class RaavareDTO implements Serializable {
 	/**
 	 * 
 	 */
@@ -17,15 +17,16 @@ public class RaavareDTO implements Serializable{
 	/**
 	 * 
 	 */
-	
+
 	/** i omraadet 1-99999999 vaelges af brugerne */
 	int raavareId;
 	/** min. 2 max. 20 karakterer */
 	String raavareNavn;
 	/** min. 2 max. 20 karakterer */
 	String leverandoer;
-	
-	 public RaavareDTO(){}
+
+	public RaavareDTO() {
+	}
 
 	public RaavareDTO(int raavareId, String raavareNavn, String leverandoer) {
 		this.raavareId = raavareId;

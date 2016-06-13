@@ -81,10 +81,15 @@ public class MainViewController extends Composite {
 		
 	}
 	
+	public void showPrintProduktBatch(int number) {
+		this.header.setText("Produktbatch print");
+		this.content.addContent(new PrintProduktBatch(client, number, token));
+	}
+	
 public void showProBa() {
 		
 		this.header.setText("Produktbatch");
-		this.content.addContent(new Produktbatch(client,token));
+		this.content.addContent(new Produktbatch(client,token, this));
 		
 		
 	}

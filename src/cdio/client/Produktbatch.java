@@ -12,10 +12,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -54,15 +56,20 @@ public class Produktbatch extends Composite {
 	boolean receptIdValid = true;
 
 
-
-
+	DialogBox printBox;
+	
+	private int number = 0;
 	
 
 	int eventRowIndex;
 	Anchor ok;
 	Anchor previousCancel = null;
+	MainViewController con;
 
-	public Produktbatch(ServiceClientImpl client, String token) {
+	List<ProduktBatchDTO> listOfPB;
+	
+	public Produktbatch(ServiceClientImpl client, String token, MainViewController con) {
+		this.con = con;
 		flex = new FlexTable();
 		flex.setStyleName("FlexTable");
 		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
@@ -217,7 +224,7 @@ public class Produktbatch extends Composite {
 				flex.setText(0, 2, "status");
 				flex.setText(0, 3, "StartTidspunkt");
 				flex.setText(0, 4, "SlutTidspunkt");
-
+				listOfPB = result;
 				for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getPbId());
@@ -236,6 +243,11 @@ public class Produktbatch extends Composite {
 					flex.setWidget(rowIndex + 1, 5, edit);
 
 					edit.addClickHandler(new EditHandler());
+					Anchor print = new Anchor("print");
+					flex.setWidget(rowIndex + 1, 6, print);
+					number = result.get(rowIndex).getPbId();
+					print.addClickHandler(new PrintHandler());
+					
 				}
 
 				// flex.setStyleName("FlexTable");
@@ -254,6 +266,20 @@ public class Produktbatch extends Composite {
 		statusTxt = new TextBox();
 		statusTxt.setWidth("80px");
 
+	}
+	
+	private class PrintHandler implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			eventRowIndex = flex.getCellForEvent(event).getRowIndex();
+			con.showPrintProduktBatch(listOfPB.get(eventRowIndex-1).getPbId());
+			//Window.print();
+			//new MainViewController(client, token).showPrintProduktBatch(number);
+			//RootPanel.get().clear();
+			//RootPanel.get().add(new PrintProduktBatch(client, number, token));
+		}
+		
 	}
 	
 	private class EditHandler implements ClickHandler {
@@ -423,5 +449,4 @@ public class Produktbatch extends Composite {
 		else create.setEnabled(false);
 			
 		}
-
 }

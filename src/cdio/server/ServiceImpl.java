@@ -2,6 +2,7 @@ package cdio.server;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.Window;
@@ -353,6 +354,49 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 		
+	}
+
+	@Override
+	public ProduktBatchDTO getSpecificPB(int id, String token) {
+		if (getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")) {
+			try {
+				return controller.getPBDAO().getProduktBatch(id);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return null;
+	}
+
+	@Override
+	public List<ReceptKompDTO> getReceptKompsFromReceptID(int id, String token) {
+		if (getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")) {
+			try {
+				return controller.getRecKompDAO().getReceptKompList(id);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public RaavareDTO getRaavareFromID(int id, String token) {
+		if (getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
+				|| getRole(token).equalsIgnoreCase("admin")) {
+			try {
+				return controller.getRaavareDAO().getRaavare(id);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }
