@@ -199,12 +199,42 @@ public class Raavarebatch extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
-							Window.alert("Raavarebatch er nu gemt");
-							AddRbId.setText("");
-							AddMaengde.setText("");
+							Raavarebatch.this.client.service.getRaavareBatches(new AsyncCallback<List<RaavareBatchDTO>>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+
+								}
+
+								@Override
+								public void onSuccess(List<RaavareBatchDTO> result) {
+
+									flex.setText(0, 0, "rbId");
+									flex.setText(0, 1, "raavareId");
+									flex.setText(0, 2, "maengde");
+
+									for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+
+										flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRbId());
+										flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareId());
+										flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getMaengde());
+										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
+										Anchor edit = new Anchor("edit");
+										flex.setWidget(rowIndex + 1, 3, edit);
+
+										edit.addClickHandler(new EditHandler());
+									}
+
+									// flex.setStyleName("FlexTable");
+
+								}
+
+							});
 							checkFormValid();
 							create.setEnabled(false);
-							Window.Location.reload();
+							
 						}
 
 					});

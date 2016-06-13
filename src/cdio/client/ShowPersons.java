@@ -8,14 +8,18 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
@@ -35,6 +39,7 @@ public class ShowPersons extends Composite {
 	TextBox cprTxt;
 	TextBox passTxt;
 	TextBox rolleTxt;
+	SuggestBox suggestionBox;
 
 	boolean oprNavnValid = true;
 	boolean iniValid = true;
@@ -55,6 +60,12 @@ public class ShowPersons extends Composite {
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
+		
+		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle(); 
+		oracle.add("admin");
+	    oracle.add("farmaceut");
+	    oracle.add("vaerkfoerer");
+		oracle.add("operatoer");
 
 		client.service.getPersons(token, new AsyncCallback<List<UserDTO>>() {
 
@@ -65,7 +76,7 @@ public class ShowPersons extends Composite {
 
 			@Override
 			public void onSuccess(List<UserDTO> result) {
-
+				
 				flex.setText(0, 0, "Operator ID");
 				flex.setText(0, 1, "Navn");
 				flex.setText(0, 2, "Initialer");
@@ -115,6 +126,9 @@ public class ShowPersons extends Composite {
 		rolleTxt = new TextBox();
 		rolleTxt.setWidth("80px");
 
+		suggestionBox = new SuggestBox(oracle);
+		suggestionBox.setWidth("80px");
+
 	}
 	
 	private class EditHandler implements ClickHandler {
@@ -130,13 +144,13 @@ public class ShowPersons extends Composite {
 			iniTxt.setText(flex.getText(eventRowIndex, 2));
 			cprTxt.setText(flex.getText(eventRowIndex, 3));
 			passTxt.setText(flex.getText(eventRowIndex, 4));
-			rolleTxt.setText(flex.getText(eventRowIndex, 5));
+			suggestionBox.setText(flex.getText(eventRowIndex, 5));
 
 			flex.setWidget(eventRowIndex, 1, oprNavnTxt);
 			flex.setWidget(eventRowIndex, 2, iniTxt);
 			flex.setWidget(eventRowIndex, 3, cprTxt);
 			flex.setWidget(eventRowIndex, 4, passTxt);
-			flex.setWidget(eventRowIndex, 5, rolleTxt);
+			flex.setWidget(eventRowIndex, 5, suggestionBox);
 			
 			oprNavnTxt.setFocus(true);
 
@@ -147,7 +161,7 @@ public class ShowPersons extends Composite {
 			final String ini = iniTxt.getText();
 			final String cpr = cprTxt.getText();
 			final String pass = passTxt.getText();
-			final String rolle = rolleTxt.getText();
+			final String rolle = suggestionBox.getText();
 
 			ok = new Anchor("ok");
 			ok.addClickHandler(new ClickHandler() {
@@ -159,10 +173,10 @@ public class ShowPersons extends Composite {
 					flex.setText(eventRowIndex, 2, iniTxt.getText());
 					flex.setText(eventRowIndex, 3, cprTxt.getText());
 					flex.setText(eventRowIndex, 4, passTxt.getText());
-					flex.setText(eventRowIndex, 5, rolleTxt.getText());
+					flex.setText(eventRowIndex, 5, suggestionBox.getText());
 
 					UserDTO User = new UserDTO(Integer.parseInt(flex.getText(eventRowIndex, 0)),
-							oprNavnTxt.getText(), iniTxt.getText(), cprTxt.getText(), passTxt.getText(), rolleTxt.getText());
+							oprNavnTxt.getText(), iniTxt.getText(), cprTxt.getText(), passTxt.getText(), suggestionBox.getText());
 
 					client.service.updateUser(ShowPersons.this.token, User, new AsyncCallback<Void>() {
 
@@ -181,7 +195,7 @@ public class ShowPersons extends Composite {
 					});
 					flex.setWidget(eventRowIndex, 6, edit);
 					flex.clearCell(eventRowIndex, 7);
-					if (flex.getCellCount(0)>7){
+					if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 					flex.clearCell(eventRowIndex, 8);
 					previousCancel = null;
 					}
@@ -211,8 +225,8 @@ public class ShowPersons extends Composite {
 					passTxt.fireEvent(new KeyUpEvent() {
 					}); // validation
 
-					rolleTxt.setText(rolle);
-					rolleTxt.fireEvent(new KeyUpEvent() {
+					suggestionBox.setText(rolle);
+					suggestionBox.fireEvent(new KeyUpEvent() {
 					}); // validation
 
 					flex.setText(eventRowIndex, 1, oprNavn);
@@ -223,7 +237,7 @@ public class ShowPersons extends Composite {
 					// restore edit link
 					flex.setWidget(eventRowIndex, 6, edit);
 					flex.clearCell(eventRowIndex, 7);
-					if (flex.getCellCount(0)>7){
+					if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 					flex.clearCell(eventRowIndex, 8);
 					}
 					previousCancel = null;
@@ -247,15 +261,20 @@ public class ShowPersons extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
+							
 							flex.setText(eventRowIndex, 1, oprNavn);
 							flex.setText(eventRowIndex, 2, ini);
 							flex.setText(eventRowIndex, 3, cpr);
 							flex.setText(eventRowIndex, 4, pass);
 							flex.setText(eventRowIndex, 5, rolle);
+							
+							flex.removeRow(eventRowIndex);
+							
 							// restore edit link
 							flex.setWidget(eventRowIndex, 6, edit);
 							flex.clearCell(eventRowIndex, 7);
-							if (flex.getCellCount(0)>7){
+							
+							if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 							flex.clearCell(eventRowIndex, 8);
 							}
 							previousCancel = null;
@@ -313,11 +332,11 @@ public class ShowPersons extends Composite {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
 
-					if (!FieldVerifier.isValidName(oprNavnTxt.getText())) {
+					if (!FieldVerifier.isValidCpr(cprTxt.getText())) {
 						cprTxt.setStyleName("gwt-TextBox-invalidEntry");
 						cprValid = false;
 					} else {
-						oprNavnTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
 						cprValid = true;
 					}
 					checkFormValid();
@@ -330,7 +349,7 @@ public class ShowPersons extends Composite {
 
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
-					if (!FieldVerifier.isValidName(iniTxt.getText())) {
+					if (!FieldVerifier.isVaildPassword(passTxt.getText())) {
 						passTxt.setStyleName("gwt-TextBox-invalidEntry");
 						passValid = false;
 					} else {
@@ -343,15 +362,15 @@ public class ShowPersons extends Composite {
 
 			});
 
-			rolleTxt.addKeyUpHandler(new KeyUpHandler() {
+			suggestionBox.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
-					if (!FieldVerifier.isValidName(rolleTxt.getText())) {
-						rolleTxt.setStyleName("gwt-TextBox-invalidEntry");
+					if (!FieldVerifier.isValidRolleName(suggestionBox.getText())) {
+						suggestionBox.setStyleName("gwt-TextBox-invalidEntry");
 						rolleValid = false;
 					} else {
-						rolleTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						suggestionBox.removeStyleName("gwt-TextBox-invalidEntry");
 						rolleValid = true;
 					}
 					checkFormValid();
@@ -362,8 +381,11 @@ public class ShowPersons extends Composite {
 
 			flex.setWidget(eventRowIndex, 6, ok);
 			flex.setWidget(eventRowIndex, 7, cancel);
-			if (!flex.getText(flex.getCellForEvent(event).getRowIndex(), 5).equals("operatoer")){
-				
+			//final int lort = ;
+			
+			
+			//System.out.println("pleb------"+flex.getText(eventRowIndex, 5));
+			if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 			flex.setWidget(eventRowIndex, 8, delete);
 			}
 		}

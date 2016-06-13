@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -199,12 +201,51 @@ public class Recept extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
+							Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+
+								}
+
+								@Override
+								public void onSuccess(List<ReceptDTO> result) {
+
+									flex.setText(0, 0, "ReceptId");
+									flex.setText(0, 1, "Navn");
+									;
+
+									for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+
+										flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getReceptId());
+										flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptNavn());
+										
+										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
+
+										
+										
+										Anchor edit = new Anchor("edit");
+										Anchor addRecKomp = new Anchor("Tilføj Komponent");
+										flex.setWidget(rowIndex + 1, 4, addRecKomp);
+										flex.setWidget(rowIndex + 1, 2, edit);
+
+										edit.addClickHandler(new EditHandler());
+										addRecKomp.addClickHandler(new KomponentHandler());
+									}
+
+									// flex.setStyleName("FlexTable");
+
+								}
+
+							});
+							
 							Window.alert("Recept er nu gemt");
 							addRecIdTxt.setText("");
 							addRecNameTxt.setText("");
 							checkFormValid();
 							create.setEnabled(false);
-							Window.Location.reload();
+							
 						}
 
 					});
@@ -416,6 +457,7 @@ public class Recept extends Composite {
 			
 		}
 	
+	//Klasse til administration af receptkomponenter
 	private class KomponentHandler implements ClickHandler {
 
 		private ListBox addlist;
@@ -425,26 +467,27 @@ public class Recept extends Composite {
 		private Button addKomp;
 		TextBox nettoTxt;
 		TextBox toleranceTxt;
+		private int recIdSelected;
 		private int column;
-		Iterator<Widget> flexIterator;
+		ArrayList<String> raavarerIRec;
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			column = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			recIdSelected = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			column = flex.getCellForEvent(event).getRowIndex();
 			recKomp = new DialogBox();
-			recKomp.setStyleName("Content");
+			recKomp.center();
 			
 			raavarer = new FlexTable();
-			flexIterator = raavarer.iterator();
-			raavarer.setText(0, 0, "Raavarer i recepten");
+			raavarerIRec = new ArrayList<String>();
+			raavarer.setText(0, 0, "Raavare Navn:");
 			raavarer.setStyleName("FlexTable-Dialog");
 			
 			HorizontalPanel kompPanel = new HorizontalPanel();
 			VerticalPanel verKompPanel = new VerticalPanel();
 		
-		
-			
-			Label Navn = new Label("Raavarer i recepten     ");
+			Label Navn = new Label("Raavarer i "+  flex.getText(flex.getCellForEvent(event).getRowIndex(), 1));
+			Navn.setStyleName("Dialog-Text");
 			
 			Label netto = new Label("NomNetto");
 			Label tolerance = new Label("Tolerance");
@@ -467,7 +510,7 @@ public class Recept extends Composite {
 						validNetto = true;
 					}
 					checkFormValidKomp();
-					;
+					
 				}
 
 			});
@@ -485,24 +528,26 @@ public class Recept extends Composite {
 						validTolerance = true;
 					}
 					checkFormValidKomp();
-					;
+					
 				}
 
 			});
 			
-			addKomp = new Button("Tilføj denne komponent");
+			addKomp = new Button("Tilf\u00F8j denne komponent");
 			addKomp.setEnabled(false);
 			addKomp.addClickHandler(new ClickHandler() {
 				
-				@Override
+//				Tilf�j ny receptkomponent
+				@Override	
 				public void onClick(ClickEvent event) {
-				//	client.service.createReceptKomponent(token, new ReceptKompDTO(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0), raavareId, nomNetto, tolerance), callback);
+					//Window.alert("item selected: " + addlist.getSelectedItemText());
+				
 					client.service.getRaavareFromName(addlist.getSelectedItemText(), new AsyncCallback<Integer>() {
 						
 						@Override
 						public void onSuccess(Integer result) {
-							Window.alert("recid" + result);
-							client.service.createReceptKomponent(token, new ReceptKompDTO(Integer.parseInt(flex.getText(column, 0)), result,
+							
+							client.service.createReceptKomponent(token, new ReceptKompDTO(recIdSelected, result,
 							Double.parseDouble(nettoTxt.getText()),  Double.parseDouble(toleranceTxt.getText())), new AsyncCallback<Void>() {
 
 								@Override
@@ -513,7 +558,9 @@ public class Recept extends Composite {
 
 								@Override
 								public void onSuccess(Void result) {
-									// TODO Auto-generated method stub
+								Window.alert("You have succesfully added " + addlist.getSelectedItemText() + " to your Recept!");
+								recKomp.hide();
+								
 									
 								}
 							});
@@ -526,11 +573,11 @@ public class Recept extends Composite {
 							
 						}
 					});
-					Window.Location.reload();
+					//Window.Location.reload();
 				}
 			});
 			
-			Button close = new Button("close window");
+			Button close = new Button("Luk Vindue	");
 			
 			close.addClickHandler(new ClickHandler() {
 				
@@ -545,8 +592,8 @@ public class Recept extends Composite {
 			addlist = new ListBox();
 
 			
-			//Window.alert("clicked:   " + flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
-			client.service.getRaavIRec(Integer.parseInt(flex.getText(column, 0)), new AsyncCallback<List<String>>() {
+			// Hent data fra database til felxtable/listbxox
+			client.service.getRaavIRec(recIdSelected, new AsyncCallback<List<String>>() {
 				
 				
 				@Override
@@ -554,10 +601,11 @@ public class Recept extends Composite {
 					//Window.alert(result.get(1));
 					try {
 						for (int i = 0; i < result.size(); i++) {
-							raavarer.setText(i, 0, result.get(i));
+							raavarer.setText(i+1, 0, result.get(i));
+							raavarerIRec.add(result.get(i));
 						
 						}
-						Window.alert("raavaize " + raavarer.getText(4, 0));
+						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -575,13 +623,17 @@ public class Recept extends Composite {
 						@Override
 						public void onSuccess(List<RaavareDTO> result) {
 							
+							int count = 0;
 							for (int i = 0; i < result.size(); i++) {
+								
 								boolean addable = true;
-								Window.alert("what is this" +flexIterator.next().getElement() + " and " + flexIterator.hasNext());
-								while (flexIterator.hasNext()) {
-									Window.alert("what is this" +flexIterator.next().getElement() + " and " + flexIterator);
-									if (result.get(i).getRaavareNavn().equals(raavarer.getText(1, 0))){
+								
+								 {
+									for (int j = 0; j < raavarerIRec.size(); j++) {
+										if (result.get(i).getRaavareNavn().equalsIgnoreCase(raavarerIRec.get(j))){
 											addable = false;
+									}
+									
 									}
 								}
 								if (addable)
@@ -601,13 +653,9 @@ public class Recept extends Composite {
 				}
 			});
 			
-
-
-			
-
-			
+	
 			kompPanel.add(Navn);
-			
+			kompPanel.setStyleName("Dialog");
 			verKompPanel.add(kompPanel);
 			verKompPanel.add(raavarer);
 			verKompPanel.add(netto);
@@ -618,7 +666,9 @@ public class Recept extends Composite {
 			verKompPanel.add(addlist);
 			verKompPanel.add(addKomp);
 			
+			
 			verKompPanel.add(close);
+			
 			recKomp.add(verKompPanel);
 			recKomp.show();
 			
