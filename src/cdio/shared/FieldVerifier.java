@@ -28,7 +28,6 @@ public class FieldVerifier {
 	
 	
 	public static boolean isValidName(String name){
-		System.out.println("jensen -----" + name.length());
 		if(!notSpecialChar(name)){
 			return false;
 		}
@@ -41,6 +40,21 @@ public class FieldVerifier {
 
 		return false;
 	}
+	
+	public static boolean isValidRolleName(String name){
+		if(!notSpecialChar(name)){
+			return false;
+		}
+		if (name.length() == 0){
+			return false;
+		}
+		if (name.length()<=20 &&(name.equals("admin") || name.equals("farmaceut")|| name.equals("vaerkfoerer")||name.equals("operatoer"))){
+			return true;
+		}
+
+		return false;
+	}
+	
 	
 	public static boolean isValidRbId(String id){
 		 try { 
