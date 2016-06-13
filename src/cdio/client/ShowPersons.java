@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
@@ -181,7 +183,7 @@ public class ShowPersons extends Composite {
 					});
 					flex.setWidget(eventRowIndex, 6, edit);
 					flex.clearCell(eventRowIndex, 7);
-					if (flex.getCellCount(0)>7){
+					if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 					flex.clearCell(eventRowIndex, 8);
 					previousCancel = null;
 					}
@@ -223,7 +225,7 @@ public class ShowPersons extends Composite {
 					// restore edit link
 					flex.setWidget(eventRowIndex, 6, edit);
 					flex.clearCell(eventRowIndex, 7);
-					if (flex.getCellCount(0)>7){
+					if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 					flex.clearCell(eventRowIndex, 8);
 					}
 					previousCancel = null;
@@ -255,7 +257,8 @@ public class ShowPersons extends Composite {
 							// restore edit link
 							flex.setWidget(eventRowIndex, 6, edit);
 							flex.clearCell(eventRowIndex, 7);
-							if (flex.getCellCount(0)>7){
+							
+							if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 							flex.clearCell(eventRowIndex, 8);
 							}
 							previousCancel = null;
@@ -362,8 +365,11 @@ public class ShowPersons extends Composite {
 
 			flex.setWidget(eventRowIndex, 6, ok);
 			flex.setWidget(eventRowIndex, 7, cancel);
-			if (!flex.getText(flex.getCellForEvent(event).getRowIndex(), 5).equals("operatoer")){
-				
+			//final int lort = ;
+			
+			
+			//System.out.println("pleb------"+flex.getText(eventRowIndex, 5));
+			if (!(rolle.equals("operatoer")|| rolle.equals("admin"))){
 			flex.setWidget(eventRowIndex, 8, delete);
 			}
 		}
