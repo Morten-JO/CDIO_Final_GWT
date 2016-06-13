@@ -418,6 +418,7 @@ public class Recept extends Composite {
 			
 		}
 	
+	//Klasse til administration af receptkomponenter
 	private class KomponentHandler implements ClickHandler {
 
 		private ListBox addlist;
@@ -493,19 +494,20 @@ public class Recept extends Composite {
 
 			});
 			
-			addKomp = new Button("Tilføj denne komponent");
+			addKomp = new Button("Tilf\u00F8j denne komponent");
 			addKomp.setEnabled(false);
 			addKomp.addClickHandler(new ClickHandler() {
 				
+//				Tilføj ny receptkomponent
 				@Override	
 				public void onClick(ClickEvent event) {
-					Window.alert("item selected: " + addlist.getSelectedItemText());
+					//Window.alert("item selected: " + addlist.getSelectedItemText());
 				
 					client.service.getRaavareFromName(addlist.getSelectedItemText(), new AsyncCallback<Integer>() {
 						
 						@Override
 						public void onSuccess(Integer result) {
-							Window.alert("to add " + result);
+							
 							client.service.createReceptKomponent(token, new ReceptKompDTO(recIdSelected, result,
 							Double.parseDouble(nettoTxt.getText()),  Double.parseDouble(toleranceTxt.getText())), new AsyncCallback<Void>() {
 
@@ -536,7 +538,7 @@ public class Recept extends Composite {
 				}
 			});
 			
-			Button close = new Button("close window");
+			Button close = new Button("Luk Vindue	");
 			
 			close.addClickHandler(new ClickHandler() {
 				
@@ -551,7 +553,7 @@ public class Recept extends Composite {
 			addlist = new ListBox();
 
 			
-			//Window.alert("clicked:   " + flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			// Hent data fra database til felxtable/listbxox
 			client.service.getRaavIRec(recIdSelected, new AsyncCallback<List<String>>() {
 				
 				
@@ -612,11 +614,7 @@ public class Recept extends Composite {
 				}
 			});
 			
-
-
-			
-
-			
+	
 			kompPanel.add(Navn);
 			kompPanel.setStyleName("Dialog");
 			verKompPanel.add(kompPanel);
@@ -628,6 +626,7 @@ public class Recept extends Composite {
 			
 			verKompPanel.add(addlist);
 			verKompPanel.add(addKomp);
+			
 			
 			verKompPanel.add(close);
 			
