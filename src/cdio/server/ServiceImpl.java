@@ -418,4 +418,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		return name;
 	}
 
+	@Override
+	public void createRA(String token, RaavareDTO raavare) {
+		if (getRole(token).equalsIgnoreCase("farmaceut")|| getRole(token).equalsIgnoreCase("admin")) {
+
+			try {
+				controller.getRaavareDAO().createRaavare(raavare);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
 }
+

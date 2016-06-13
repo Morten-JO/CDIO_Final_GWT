@@ -63,4 +63,6 @@ public interface ServiceAsync {
 	void getRaavareFromID(int id, String token, AsyncCallback<RaavareDTO> callback);
 
 	void getUserName(String token, AsyncCallback<String> callback);
+
+	void createRA(String token, RaavareDTO raavare, AsyncCallback<Void> callback);
 }

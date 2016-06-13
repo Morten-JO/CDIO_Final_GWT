@@ -261,8 +261,7 @@ body {
 	margin-left: 4mm;
 	margin-right: 4mm;
 	font-size: 12px;
-	height: 25px;
-	width: 185px;
+	
 }
 
 .TextBox-style{
@@ -270,6 +269,25 @@ body {
 	margin-left: 4mm;
 	margin-right: 4mm;
 	font-size: 12px;
+	
+}
+
+.TextBox-style1{
+	
+	margin-left: 4mm;
+	margin-right: 4mm;
+	font-size: 12px;
+	width: 3cm;
+}
+
+.TextBox-fail{
+	
+	margin-left: 4mm;
+	margin-right: 4mm;
+	font-size: 12px;
+	width: 3cm;
+	border-color: red;
+	border: 2px;
 	
 }
 
