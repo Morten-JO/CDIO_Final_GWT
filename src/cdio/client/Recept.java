@@ -435,7 +435,7 @@ public class Recept extends Composite {
 			recIdSelected = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
 			column = flex.getCellForEvent(event).getRowIndex();
 			recKomp = new DialogBox();
-			recKomp.setStyleName("Content");
+			recKomp.center();
 			
 			raavarer = new FlexTable();
 			raavarerIRec = new ArrayList<String>();
@@ -447,7 +447,7 @@ public class Recept extends Composite {
 		
 		
 			
-			Label Navn = new Label("Raavarer i recepten     ");
+			//Label Navn = new Label("Raavarer i recepten     ");
 			
 			Label netto = new Label("NomNetto");
 			Label tolerance = new Label("Tolerance");
@@ -470,7 +470,7 @@ public class Recept extends Composite {
 						validNetto = true;
 					}
 					checkFormValidKomp();
-					;
+					
 				}
 
 			});
@@ -488,7 +488,7 @@ public class Recept extends Composite {
 						validTolerance = true;
 					}
 					checkFormValidKomp();
-					;
+					
 				}
 
 			});
@@ -617,7 +617,7 @@ public class Recept extends Composite {
 			
 
 			
-			kompPanel.add(Navn);
+			//kompPanel.add(Navn);
 			
 			verKompPanel.add(kompPanel);
 			verKompPanel.add(raavarer);
@@ -630,6 +630,7 @@ public class Recept extends Composite {
 			verKompPanel.add(addKomp);
 			
 			verKompPanel.add(close);
+			
 			recKomp.add(verKompPanel);
 			recKomp.show();
 			

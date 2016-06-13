@@ -209,6 +209,17 @@ body {
 	
 }
 
+.DialogBox{
+	width: 864px;
+	padding: 10px;
+	horizontal-alignment: center;
+	background-color: white;
+	min-height: 400px;
+	border-right: solid 2px #000000;
+	
+	
+}
+
 .ScrollPanel{
 	min-width: 700px;
 	padding: 10px;
