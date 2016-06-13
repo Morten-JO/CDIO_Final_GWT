@@ -3,6 +3,9 @@ import java.sql.ResultSet;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -23,6 +26,7 @@ public class Login extends Composite{
 	private PasswordTextBox pass;
 	private ServiceClientImpl client;
 	private Label statusLogin;
+	private Button login;
 
 	public Login(ServiceClientImpl service){
 		client = service;
@@ -46,6 +50,18 @@ public class Login extends Composite{
 		pass.setStyleName("LoginTBox");
 		passPanel.add(lock_icon);
 		passPanel.add(pass);
+		this.login = new Button("Log ind");
+		pass.addKeyDownHandler(new KeyDownHandler(){
+
+			@Override
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER){
+				login.click();	
+				}
+				
+			}
+			
+		});
 		
 		statusLogin = new Label(" ");
 	
@@ -53,7 +69,7 @@ public class Login extends Composite{
 		username.setText("4");
 		pass.setText("admin");
 		
-		Button login = new Button("Log ind");
+		
 		login.setPixelSize(100, 30);
 		login.setStyleName("loginbtn");
 		
