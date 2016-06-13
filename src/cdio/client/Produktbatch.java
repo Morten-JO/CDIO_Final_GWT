@@ -202,7 +202,7 @@ public class Produktbatch extends Composite {
 
 								@Override
 								public void onSuccess(List<ProduktBatchDTO> result) {
-
+									listOfPB = result;
 									flex.setText(0, 0, "pbId");
 									flex.setText(0, 1, "receptId");
 									flex.setText(0, 2, "status");
@@ -226,8 +226,7 @@ public class Produktbatch extends Composite {
 										Anchor edit = new Anchor("edit");
 										flex.setWidget(rowIndex + 1, 5, edit);
 										Anchor print = new Anchor("print");
-										flex.setWidget(rowIndex + 1, 6, print);
-										number = result.get(rowIndex).getPbId();
+										flex.setWidget(rowIndex + 1, 7, print);
 										print.addClickHandler(new PrintHandler());
 										
 										edit.addClickHandler(new EditHandler());
@@ -261,7 +260,7 @@ public class Produktbatch extends Composite {
 
 			@Override
 			public void onSuccess(List<ProduktBatchDTO> result) {
-
+				listOfPB = result;
 				flex.setText(0, 0, "pbId");
 				flex.setText(0, 1, "receptId");
 				flex.setText(0, 2, "status");
@@ -287,8 +286,7 @@ public class Produktbatch extends Composite {
 
 					edit.addClickHandler(new EditHandler());
 					Anchor print = new Anchor("print");
-					flex.setWidget(rowIndex + 1, 6, print);
-					number = result.get(rowIndex).getPbId();
+					flex.setWidget(rowIndex + 1, 7, print);
 					print.addClickHandler(new PrintHandler());
 				}
 
@@ -314,8 +312,9 @@ public class Produktbatch extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
 			eventRowIndex = flex.getCellForEvent(event).getRowIndex();
-			con.showPrintProduktBatch(listOfPB.get(eventRowIndex-1).getPbId());
+			Produktbatch.this.con.showPrintProduktBatch(listOfPB.get(eventRowIndex-1).getPbId());
 			//Window.print();
 			//new MainViewController(client, token).showPrintProduktBatch(number);
 			//RootPanel.get().clear();

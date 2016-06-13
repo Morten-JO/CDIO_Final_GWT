@@ -45,6 +45,7 @@ public class PrintProduktBatch extends Composite{
 		this.onClient = client;
 		pbNumber = produktNumber;
 		this.client = client;
+		
 		vPanel = new VerticalPanel();
 		initWidget(vPanel);
 		attributes = new Label("Del     Mængde     Tolerance    Tara        Netto(kg)   Batch    Opr.      Terminal");
@@ -123,6 +124,8 @@ public class PrintProduktBatch extends Composite{
 												vPanel.add(productionStatus);
 												vPanel.add(productionStartedDate);
 												vPanel.add(productionEndDate);
+												Window.alert(vPanel.asWidget().getElement().getInnerHTML());
+												print(vPanel.asWidget().getElement().getInnerHTML());
 											}
 										}
 									});
@@ -135,16 +138,25 @@ public class PrintProduktBatch extends Composite{
 			
 			@Override
 			public void onFailure(Throwable caught) {
+				
 				printedOn = new Label("Udskrevet      FEJL");
 				productBatchNr = new Label("Produkt Batch nr. "+pbNumber);
 				receptNr = new Label("Recept nr. FEJL");
 				productionStatus = new Label("Produktion Status: FEJL");
 				productionStartedDate = new Label("Produktion Startet:       FEJL");
 				productionStartedDate = new Label("Produktion Slut:       FEJL");
+				
 			}
 		});
 		
 		
 	}
 	
+	//pop ups in browser must be allowed
+	public static final native void print(String html) /*-{
+		top.consoleRef=$wnd.open('','_blank',"");
+		top.consoleRef.document.write(html);
+		top.consoleRef.print();
+		top.consoleRef.document.close();
+	}-*/;
 }
