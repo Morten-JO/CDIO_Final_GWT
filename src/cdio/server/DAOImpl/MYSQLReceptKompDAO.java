@@ -119,7 +119,7 @@ public class MYSQLReceptKompDAO implements ReceptKompDAO {
 		int id = 0;
 		ResultSet rs = null;
 		try {
-			rs = Connector.getInstance().doQuery("SELECT raavareId FROM receptkomponent natural join raavare where raavareNavn = '" + name + "';");
+			rs = Connector.getInstance().doQuery("SELECT distinct(raavareId) FROM raavare where raavareNavn = '" + name + "';");
 		if (rs.next()){
 			id = rs.getInt(1);
 			return id;

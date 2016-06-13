@@ -426,12 +426,14 @@ public class Recept extends Composite {
 		private Button addKomp;
 		TextBox nettoTxt;
 		TextBox toleranceTxt;
+		private int recIdSelected;
 		private int column;
 		ArrayList<String> raavarerIRec;
 		
 		@Override
 		public void onClick(ClickEvent event) {
-			column = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			recIdSelected = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
+			column = flex.getCellForEvent(event).getRowIndex();
 			recKomp = new DialogBox();
 			recKomp.setStyleName("Content");
 			
@@ -497,14 +499,14 @@ public class Recept extends Composite {
 				
 				@Override	
 				public void onClick(ClickEvent event) {
-					Window.alert("item selected" + addlist.getSelectedItemText());
-				//	client.service.createReceptKomponent(token, new ReceptKompDTO(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0), raavareId, nomNetto, tolerance), callback);
+					Window.alert("item selected: " + addlist.getSelectedItemText());
+				
 					client.service.getRaavareFromName(addlist.getSelectedItemText(), new AsyncCallback<Integer>() {
 						
 						@Override
 						public void onSuccess(Integer result) {
-							Window.alert("raavidtoadd" + result);
-							client.service.createReceptKomponent(token, new ReceptKompDTO(Integer.parseInt(flex.getText(column, 0)), result,
+							Window.alert("to add " + result);
+							client.service.createReceptKomponent(token, new ReceptKompDTO(recIdSelected, result,
 							Double.parseDouble(nettoTxt.getText()),  Double.parseDouble(toleranceTxt.getText())), new AsyncCallback<Void>() {
 
 								@Override
@@ -515,7 +517,9 @@ public class Recept extends Composite {
 
 								@Override
 								public void onSuccess(Void result) {
-									// TODO Auto-generated method stub
+								Window.alert("You have succesfully added " + addlist.getSelectedItemText() + " to your Recept!");
+								recKomp.hide();
+								
 									
 								}
 							});
@@ -528,7 +532,7 @@ public class Recept extends Composite {
 							
 						}
 					});
-					Window.Location.reload();
+					//Window.Location.reload();
 				}
 			});
 			
@@ -548,7 +552,7 @@ public class Recept extends Composite {
 
 			
 			//Window.alert("clicked:   " + flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
-			client.service.getRaavIRec(Integer.parseInt(flex.getText(column, 0)), new AsyncCallback<List<String>>() {
+			client.service.getRaavIRec(recIdSelected, new AsyncCallback<List<String>>() {
 				
 				
 				@Override
@@ -556,7 +560,7 @@ public class Recept extends Composite {
 					//Window.alert(result.get(1));
 					try {
 						for (int i = 0; i < result.size(); i++) {
-							raavarer.setText(i, 0, result.get(i));
+							raavarer.setText(i+1, 0, result.get(i));
 							raavarerIRec.add(result.get(i));
 						
 						}
@@ -577,7 +581,7 @@ public class Recept extends Composite {
 
 						@Override
 						public void onSuccess(List<RaavareDTO> result) {
-							Window.alert("what is this" + raavarerIRec.size());
+							
 							int count = 0;
 							for (int i = 0; i < result.size(); i++) {
 								
@@ -585,7 +589,7 @@ public class Recept extends Composite {
 								
 								 {
 									for (int j = 0; j < raavarerIRec.size(); j++) {
-										if (result.get(i).getRaavareNavn().equals(raavarerIRec.get(j))){
+										if (result.get(i).getRaavareNavn().equalsIgnoreCase(raavarerIRec.get(j))){
 											addable = false;
 									}
 									
