@@ -261,11 +261,15 @@ public class ShowPersons extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
+							
 							flex.setText(eventRowIndex, 1, oprNavn);
 							flex.setText(eventRowIndex, 2, ini);
 							flex.setText(eventRowIndex, 3, cpr);
 							flex.setText(eventRowIndex, 4, pass);
 							flex.setText(eventRowIndex, 5, rolle);
+							
+							flex.removeRow(eventRowIndex);
+							
 							// restore edit link
 							flex.setWidget(eventRowIndex, 6, edit);
 							flex.clearCell(eventRowIndex, 7);

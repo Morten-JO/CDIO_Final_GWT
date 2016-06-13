@@ -201,12 +201,51 @@ public class Recept extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
+							client.service.getRecept(token, new AsyncCallback<List<ReceptDTO>>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+
+								}
+
+								@Override
+								public void onSuccess(List<ReceptDTO> result) {
+
+									flex.setText(0, 0, "ReceptId");
+									flex.setText(0, 1, "Navn");
+									;
+
+									for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+
+										flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getReceptId());
+										flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptNavn());
+										
+										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
+
+										
+										
+										Anchor edit = new Anchor("edit");
+										Anchor addRecKomp = new Anchor("Tilføj Komponent");
+										flex.setWidget(rowIndex + 1, 4, addRecKomp);
+										flex.setWidget(rowIndex + 1, 2, edit);
+
+										edit.addClickHandler(new EditHandler());
+										addRecKomp.addClickHandler(new KomponentHandler());
+									}
+
+									// flex.setStyleName("FlexTable");
+
+								}
+
+							});
+							
 							Window.alert("Recept er nu gemt");
 							addRecIdTxt.setText("");
 							addRecNameTxt.setText("");
 							checkFormValid();
 							create.setEnabled(false);
-							Window.Location.reload();
+							
 						}
 
 					});

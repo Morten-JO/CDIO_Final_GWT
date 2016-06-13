@@ -190,12 +190,55 @@ public class Produktbatch extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
+							client.service.getPB(token, new AsyncCallback<List<ProduktBatchDTO>>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+
+								}
+
+								@Override
+								public void onSuccess(List<ProduktBatchDTO> result) {
+
+									flex.setText(0, 0, "pbId");
+									flex.setText(0, 1, "receptId");
+									flex.setText(0, 2, "status");
+									flex.setText(0, 3, "StartTidspunkt");
+									flex.setText(0, 4, "SlutTidspunkt");
+
+									for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+
+										flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getPbId());
+										flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptId());
+										flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getStatus());
+										flex.setText(rowIndex + 1, 3, "" + result.get(rowIndex).getStartidspunkt());
+										flex.setText(rowIndex + 1, 4, "" + result.get(rowIndex).getSluttidspunkt());
+										
+										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 3, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 4, "FlexTable-Cell");
+										
+										Anchor edit = new Anchor("edit");
+										flex.setWidget(rowIndex + 1, 5, edit);
+
+										edit.addClickHandler(new EditHandler());
+									}
+
+									// flex.setStyleName("FlexTable");
+
+								}
+
+							});
+							
+							
+							
 							Window.alert("Produktbatchbatch er nu gemt");
 							AddPbId.setText("");
-							
 							checkFormValid();
 							create.setEnabled(false);
-							Window.Location.reload();
+							
 						}
 
 					});
