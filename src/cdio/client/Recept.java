@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -426,7 +427,7 @@ public class Recept extends Composite {
 		TextBox nettoTxt;
 		TextBox toleranceTxt;
 		private int column;
-		Iterator<Widget> flexIterator;
+		ArrayList<String> raavarerIRec;
 		
 		@Override
 		public void onClick(ClickEvent event) {
@@ -436,7 +437,7 @@ public class Recept extends Composite {
 			recKomp.setStyleName("Content");
 			
 			raavarer = new FlexTable();
-			flexIterator = raavarer.iterator();
+			raavarerIRec = new ArrayList<String>();
 			raavarer.setText(0, 0, "Raavarer i recepten");
 			raavarer.setStyleName("FlexTable-Dialog");
 			
@@ -491,18 +492,19 @@ public class Recept extends Composite {
 
 			});
 			
-			addKomp = new Button("Tilføj denne komponent");
+			addKomp = new Button("add denne komponent");
 			addKomp.setEnabled(false);
 			addKomp.addClickHandler(new ClickHandler() {
 				
-				@Override
+				@Override	
 				public void onClick(ClickEvent event) {
+					Window.alert("item selected" + addlist.getSelectedItemText());
 				//	client.service.createReceptKomponent(token, new ReceptKompDTO(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0), raavareId, nomNetto, tolerance), callback);
 					client.service.getRaavareFromName(addlist.getSelectedItemText(), new AsyncCallback<Integer>() {
 						
 						@Override
 						public void onSuccess(Integer result) {
-							Window.alert("recid" + result);
+							Window.alert("raavidtoadd" + result);
 							client.service.createReceptKomponent(token, new ReceptKompDTO(Integer.parseInt(flex.getText(column, 0)), result,
 							Double.parseDouble(nettoTxt.getText()),  Double.parseDouble(toleranceTxt.getText())), new AsyncCallback<Void>() {
 
@@ -556,9 +558,10 @@ public class Recept extends Composite {
 					try {
 						for (int i = 0; i < result.size(); i++) {
 							raavarer.setText(i, 0, result.get(i));
+							raavarerIRec.add(result.get(i));
 						
 						}
-						Window.alert("raavaize " + raavarer.getText(4, 0));
+						
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -575,14 +578,18 @@ public class Recept extends Composite {
 
 						@Override
 						public void onSuccess(List<RaavareDTO> result) {
-							
+							Window.alert("what is this" + raavarerIRec.size());
+							int count = 0;
 							for (int i = 0; i < result.size(); i++) {
+								
 								boolean addable = true;
-								Window.alert("what is this" +flexIterator.next().getElement() + " and " + flexIterator.hasNext());
-								while (flexIterator.hasNext()) {
-									Window.alert("what is this" +flexIterator.next().getElement() + " and " + flexIterator);
-									if (result.get(i).getRaavareNavn().equals(raavarer.getText(1, 0))){
+								
+								 {
+									for (int j = 0; j < raavarerIRec.size(); j++) {
+										if (result.get(i).getRaavareNavn().equals(raavarerIRec.get(j))){
 											addable = false;
+									}
+									
 									}
 								}
 								if (addable)
