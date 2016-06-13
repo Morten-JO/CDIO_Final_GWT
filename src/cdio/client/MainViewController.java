@@ -22,7 +22,7 @@ public class MainViewController extends Composite {
 	private ScrollPanel scroll;
 	private ServiceClientImpl client;
 	public static String token;
-	
+	private String test;
 	
 
 
@@ -34,7 +34,27 @@ public class MainViewController extends Composite {
 		
 		initWidget(vPanel);
 		hPanel = new HorizontalPanel();
-		header = new Header();
+		
+		client.service.getUserName(token, new AsyncCallback<String>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				header = new Header("hjorten er noob");
+				
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				test = result;
+				//Window.alert(result);
+				//System.out.println(result+"morten");
+				header = new Header(test);
+				
+			}
+			
+		});
+		
 		
 		
 		footer = new Footer();

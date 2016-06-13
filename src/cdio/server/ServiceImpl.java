@@ -83,7 +83,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public String getRole(String token) {
 
 		try {
-			String r = tokenHandler.getUserID(token);
+			//String r = tokenHandler.getUserID(token);
 			String role = controller.getOprDAO().getUserRole(tokenHandler.getUserID(token));
 
 			return role;
@@ -397,6 +397,25 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String getUserName(String token) {
+		String name = null;
+	
+		try {
+			name = controller.getOprDAO().getName(Integer.parseInt(tokenHandler.getUserID(token)));
+		
+			
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return name;
 	}
 
 }

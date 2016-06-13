@@ -225,7 +225,11 @@ public class Produktbatch extends Composite {
 										
 										Anchor edit = new Anchor("edit");
 										flex.setWidget(rowIndex + 1, 5, edit);
-
+										Anchor print = new Anchor("print");
+										flex.setWidget(rowIndex + 1, 6, print);
+										number = result.get(rowIndex).getPbId();
+										print.addClickHandler(new PrintHandler());
+										
 										edit.addClickHandler(new EditHandler());
 									}
 

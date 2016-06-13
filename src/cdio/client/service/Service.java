@@ -44,6 +44,6 @@ public interface Service extends RemoteService {
 	public ProduktBatchDTO getSpecificPB(int id, String token);
 	public List<ReceptKompDTO> getReceptKompsFromReceptID(int id, String token);
 	public RaavareDTO getRaavareFromID(int id, String token);
-
+	public String getUserName(String token);
 	
 }

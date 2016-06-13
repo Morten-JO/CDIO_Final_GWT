@@ -61,4 +61,6 @@ public interface ServiceAsync {
 	void getReceptKompsFromReceptID(int id, String token, AsyncCallback<List<ReceptKompDTO>> asyncCallback);
 
 	void getRaavareFromID(int id, String token, AsyncCallback<RaavareDTO> callback);
+
+	void getUserName(String token, AsyncCallback<String> callback);
 }
