@@ -124,8 +124,20 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 		} catch (Exception e) {
 			System.out.println("datafail");
 		}
-		System.out.println("her er vi");
+		
 		return role;
+	}
+
+	@Override
+	public void deleteUser(int id) throws DALException {
+		try {
+			
+			Connector.getInstance().doUpdate("delete from operatoer where oprId="+id+";" );
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 

@@ -181,9 +181,10 @@ public class ShowPersons extends Composite {
 					});
 					flex.setWidget(eventRowIndex, 6, edit);
 					flex.clearCell(eventRowIndex, 7);
-
+					if (flex.getCellCount(0)>7){
+					flex.clearCell(eventRowIndex, 8);
 					previousCancel = null;
-
+					}
 				}
 			});
 
@@ -222,11 +223,54 @@ public class ShowPersons extends Composite {
 					// restore edit link
 					flex.setWidget(eventRowIndex, 6, edit);
 					flex.clearCell(eventRowIndex, 7);
-
+					if (flex.getCellCount(0)>7){
+					flex.clearCell(eventRowIndex, 8);
+					}
 					previousCancel = null;
 				}
 
 			});
+			
+			Anchor delete  = new Anchor("delete ");
+			delete.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+				int opr_id = Integer.parseInt( flex.getText(flex.getCellForEvent(event).getRowIndex(), 0))	;
+					client.service.deleteUser(token, opr_id ,new AsyncCallback<Void>(){
+
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							flex.setText(eventRowIndex, 1, oprNavn);
+							flex.setText(eventRowIndex, 2, ini);
+							flex.setText(eventRowIndex, 3, cpr);
+							flex.setText(eventRowIndex, 4, pass);
+							flex.setText(eventRowIndex, 5, rolle);
+							// restore edit link
+							flex.setWidget(eventRowIndex, 6, edit);
+							flex.clearCell(eventRowIndex, 7);
+							if (flex.getCellCount(0)>7){
+							flex.clearCell(eventRowIndex, 8);
+							}
+							previousCancel = null;
+							
+						}
+						
+					});
+
+					
+				}
+
+			});
+			
+			
+			
 
 			oprNavnTxt.addKeyUpHandler(new KeyUpHandler() {
 
@@ -318,6 +362,10 @@ public class ShowPersons extends Composite {
 
 			flex.setWidget(eventRowIndex, 6, ok);
 			flex.setWidget(eventRowIndex, 7, cancel);
+			if (!flex.getText(flex.getCellForEvent(event).getRowIndex(), 5).equals("operatoer")){
+				
+			flex.setWidget(eventRowIndex, 8, delete);
+			}
 		}
 	}
 	

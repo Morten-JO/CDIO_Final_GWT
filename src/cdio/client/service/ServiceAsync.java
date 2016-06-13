@@ -54,4 +54,6 @@ public interface ServiceAsync {
 
 	void getRaavareFromName(String name, AsyncCallback<Integer> callback);
 
+	void deleteUser(String token, int id, AsyncCallback<Void> callback);
+
 }

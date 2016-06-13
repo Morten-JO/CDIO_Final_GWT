@@ -340,4 +340,19 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		return 0; 
 	}
+
+	@Override
+	public void deleteUser(String token, int id) {
+		if (getRole(token).equalsIgnoreCase("admin")){
+			try {
+				if(!(controller.getOprDAO().getOperatoer(id).getRolle().equals("operatoer")))
+				controller.getOprDAO().deleteUser(id);
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 }
