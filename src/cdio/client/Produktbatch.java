@@ -190,7 +190,7 @@ public class Produktbatch extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
-							client.service.getPB(token, new AsyncCallback<List<ProduktBatchDTO>>() {
+							Produktbatch.this.client.service.getPB(Produktbatch.this.token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
 								@Override
 								public void onFailure(Throwable caught) {

@@ -201,7 +201,7 @@ public class Recept extends Composite {
 
 						@Override
 						public void onSuccess(Void result) {
-							client.service.getRecept(token, new AsyncCallback<List<ReceptDTO>>() {
+							Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>() {
 
 								@Override
 								public void onFailure(Throwable caught) {
