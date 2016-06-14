@@ -55,6 +55,7 @@ public class ProduktBatchKompDTO {
 		this.oprId = oprId;
 	}
 
+	@Override
 	public String toString() {
 		return pbId + "\t" + rbId + "\t" + tara + "\t" + netto + "\t" + oprId;
 	}

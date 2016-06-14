@@ -1,5 +1,6 @@
 package cdio.server;
 //import daoimpl01917.*;
+
 //import daointerfaces01917.*;
 
 import cdio.server.DAOImpl.MYSQLOperatoerDAO;
@@ -17,9 +18,8 @@ import cdio.server.DAOinterfaces.ReceptDAO;
 import cdio.server.DAOinterfaces.ReceptKompDAO;
 import cdio.server.DAOinterfaces.RollerDAO;
 
-
 public class DataController {
-	
+
 	private OperatoerDAO oprDAO;
 	private ProduktBatchDAO PBDAO;
 	private ProduktBatchKompDAO PBKompDAO;
@@ -28,23 +28,19 @@ public class DataController {
 	private RollerDAO RollerDAO;
 	private RaavareBatchDAO RBDAO;
 	private RaavareDAO RaavareDAO;
-	
-	
-	public DataController(){
-			
+
+	public DataController() {
+
 		oprDAO = new MYSQLOperatoerDAO();
 		PBDAO = new MYSQLProduktBatchDAO();
-//PBKompDAO = new MYSQLProduktBatchKompDAO();
+		// PBKompDAO = new MYSQLProduktBatchKompDAO();
 		RecDAO = new MYSQLReceptDAO();
 		RecKompDAO = new MYSQLReceptKompDAO();
-//		RollerDAO = new MYSQLRollerDAO();
+		// RollerDAO = new MYSQLRollerDAO();
 		RBDAO = new MYSQLRaavareBatchDAO();
 		RaavareDAO = new MYSQLRaavareDAO();
-		
-		
-		
-	}
 
+	}
 
 	public OperatoerDAO getOprDAO() {
 		return oprDAO;
@@ -77,6 +73,5 @@ public class DataController {
 	public RaavareDAO getRaavareDAO() {
 		return RaavareDAO;
 	}
-	
 
 }

@@ -21,10 +21,10 @@ public class ReceptDTO implements Serializable {
 
 	/** liste af kompenenter i recepten */
 
-	public ReceptDTO(){
-		
+	public ReceptDTO() {
+
 	}
-	
+
 	public ReceptDTO(int id, String receptNavn) {
 		this.receptId = id;
 		this.receptNavn = receptNavn;
@@ -46,6 +46,7 @@ public class ReceptDTO implements Serializable {
 		this.receptNavn = receptNavn;
 	}
 
+	@Override
 	public String toString() {
 		return receptId + "\t" + receptNavn;
 	}

@@ -14,20 +14,14 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
-import cdio.shared.ProduktBatchDTO;
-import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
-import cdio.shared.ReceptDTO;
 
-public class Raavare extends Composite{
-
+public class Raavare extends Composite {
 
 	private FlexTable flex;
 	private VerticalPanel vPanel;
@@ -41,14 +35,14 @@ public class Raavare extends Composite{
 
 	TextBox addRaavareId;
 	TextBox addRaavNavnTxt;
-	TextBox	addLeverandoerTxt; 
-	
-	Button create ;
-	
+	TextBox addLeverandoerTxt;
+
+	Button create;
+
 	boolean raavIdValid = false;
 	boolean raavNavnValid = false;
 	boolean leverandoerValid = false;
-	
+
 	boolean addRaavareIdValid = false;
 	boolean addRaavNavnTxtValid = false;
 	boolean addLeverandoerValid = false;
@@ -60,7 +54,7 @@ public class Raavare extends Composite{
 	public Raavare(ServiceClientImpl client, String token) {
 		flex = new FlexTable();
 		flex.setStyleName("FlexTable");
-		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
+		flex.getRowFormatter().addStyleName(0, "FlexTable-Header");
 		vPanel = new VerticalPanel();
 		initWidget(vPanel);
 		hPanel = new HorizontalPanel();
@@ -71,14 +65,14 @@ public class Raavare extends Composite{
 		addRaavNavnTxt = new TextBox();
 		addRaavNavnTxt.setStyleName("TextBox-style1");
 		addLeverandoerTxt = new TextBox();
-		//addLeverandoerTxt .setHeight("20px");
-		addLeverandoerTxt .setStyleName("TextBox-style1");
-		
+		// addLeverandoerTxt .setHeight("20px");
+		addLeverandoerTxt.setStyleName("TextBox-style1");
+
 		Label RaavareId = new Label("RaavareID : ");
 		Label RaavareNavn = new Label("RaavareNavn : ");
 		Label Leverandoer = new Label("Leverandoer : ");
 		create = new Button("Create");
-		//create.setStyleName("createbtn");
+		// create.setStyleName("createbtn");
 		create.setEnabled(false);
 		vPanel.add(oprtRec);
 		hPanel.add(RaavareId);
@@ -90,16 +84,16 @@ public class Raavare extends Composite{
 
 		hPanel.add(create);
 		vPanel.add(hPanel);
-		
+
 		this.token = token;
 		this.client = client;
-		
-		addRaavareId.addKeyUpHandler(new KeyUpHandler(){
+
+		addRaavareId.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				
-				Raavare.this.client.service.getRaavare(Raavare.this.token, new AsyncCallback<List<RaavareDTO>>(){
+
+				Raavare.this.client.service.getRaavare(Raavare.this.token, new AsyncCallback<List<RaavareDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
 					}
@@ -107,32 +101,31 @@ public class Raavare extends Composite{
 					@Override
 					public void onSuccess(List<RaavareDTO> result) {
 						boolean idExists = false;
-						try{
+						try {
 							Integer.parseInt(addRaavareId.getText());
-							for(int i = 0; i < result.size(); i++){
-								if(result.get(i).getRaavareId() == Integer.parseInt(addRaavareId.getText())){
+							for (int i = 0; i < result.size(); i++) {
+								if (result.get(i).getRaavareId() == Integer.parseInt(addRaavareId.getText())) {
 									idExists = true;
-									
+
 								}
 							}
-							if(!idExists){
+							if (!idExists) {
 								addRaavareId.removeStyleName("gwt-TextBox-invalidEntry");
 								addRaavareIdValid = true;
-								//failOprIDLbl.setText("");
-							}
-							else{
+								// failOprIDLbl.setText("");
+							} else {
 								addRaavareId.setStyleName("gwt-TextBox-invalidEntry");
 								addRaavareIdValid = false;
-								//failOprIDLbl.setText("Optaget id!");
+								// failOprIDLbl.setText("Optaget id!");
 							}
-						} catch(NumberFormatException e){
+						} catch (NumberFormatException e) {
 							addRaavareId.setStyleName("gwt-TextBox-invalidEntry");
 							addRaavareIdValid = false;
-							//failOprIDLbl.setText("Optaget id!");
+							// failOprIDLbl.setText("Optaget id!");
 						}
-						
+
 					}
-					
+
 				});
 				if (!FieldVerifier.isValidRbId(addRaavareId.getText())) {
 					addRaavareId.setStyleName("gwt-TextBox-invalidEntry");
@@ -146,60 +139,57 @@ public class Raavare extends Composite{
 
 		});
 
-		
 		addRaavNavnTxt.addKeyUpHandler(new KeyUpHandler() {
-			
+
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if(!FieldVerifier.isValidName(addRaavNavnTxt.getText())){	
+				if (!FieldVerifier.isValidName(addRaavNavnTxt.getText())) {
 					addRaavNavnTxt.setStyleName("gwt-TextBox-invalidEntry");
-				
-				addRaavNavnTxtValid = false;
-			} else {
-				addRaavNavnTxt.removeStyleName("gwt-TextBox-invalidEntry");
-				addRaavNavnTxtValid = true;
 
-				checkFormValid_Create();
-				
-				
+					addRaavNavnTxtValid = false;
+				} else {
+					addRaavNavnTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					addRaavNavnTxtValid = true;
+
+					checkFormValid_Create();
+
+				}
 			}
-			}
-			});
-		
+		});
+
 		addLeverandoerTxt.addKeyUpHandler(new KeyUpHandler() {
-			
+
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				if(!FieldVerifier.isValidName(addLeverandoerTxt.getText())){	
+				if (!FieldVerifier.isValidName(addLeverandoerTxt.getText())) {
 					addLeverandoerTxt.setStyleName("gwt-TextBox-invalidEntry");
-				
-					addLeverandoerValid = false;
-			} else {
-				addLeverandoerTxt.removeStyleName("gwt-TextBox-invalidEntry");
-				addLeverandoerValid = true;
 
-				checkFormValid_Create();
-				
-				
+					addLeverandoerValid = false;
+				} else {
+					addLeverandoerTxt.removeStyleName("gwt-TextBox-invalidEntry");
+					addLeverandoerValid = true;
+
+					checkFormValid_Create();
+
+				}
 			}
-			}
-			});
-		
-		create.addClickHandler(new ClickHandler(){
+		});
+
+		create.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				int raId = Integer.parseInt(addRaavareId.getText());
 				String raNavn = addRaavNavnTxt.getText();
-				String lever = addLeverandoerTxt.getText();	
-				
+				String lever = addLeverandoerTxt.getText();
+
 				RaavareDTO RA = new RaavareDTO(raId, raNavn, lever);
-				Raavare.this.client.service.createRA(Raavare.this.token, RA, new AsyncCallback<Void>(){
+				Raavare.this.client.service.createRA(Raavare.this.token, RA, new AsyncCallback<Void>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert("Server fejl!" + caught.getMessage());
-						
+
 					}
 
 					@Override
@@ -207,52 +197,50 @@ public class Raavare extends Composite{
 						addRaavareId.setText("");
 						addRaavNavnTxt.setText("");
 						addLeverandoerTxt.setText("");
-						Raavare.this.client.service.getRaavare(Raavare.this.token, new AsyncCallback<List<RaavareDTO>>() {
+						Raavare.this.client.service.getRaavare(Raavare.this.token,
+								new AsyncCallback<List<RaavareDTO>>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
+									@Override
+									public void onFailure(Throwable caught) {
 
-							}
+									}
 
-							@Override
-							public void onSuccess(List<RaavareDTO> result) {
+									@Override
+									public void onSuccess(List<RaavareDTO> result) {
 
-								flex.setText(0, 0, "RaavareId");
-								flex.setText(0, 1, "Raavare_Navn");
-								flex.setText(0, 2, "Leverandoer");
+										flex.setText(0, 0, "RaavareId");
+										flex.setText(0, 1, "Raavare_Navn");
+										flex.setText(0, 2, "Leverandoer");
 
-								for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+										for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 
-									flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRaavareId());
-									flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareNavn());
-									flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getLeverandoer());
-									
-									flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
-									flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
-									flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
-									
-									
-									Anchor edit = new Anchor("edit");
-									flex.setWidget(rowIndex + 1, 3, edit);
+											flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRaavareId());
+											flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareNavn());
+											flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getLeverandoer());
 
-									edit.addClickHandler(new EditHandler());
-								}
+											flex.getCellFormatter().addStyleName(rowIndex + 1, 0, "FlexTable-Cell");
+											flex.getCellFormatter().addStyleName(rowIndex + 1, 1, "FlexTable-Cell");
+											flex.getCellFormatter().addStyleName(rowIndex + 1, 2, "FlexTable-Cell");
 
-								// flex.setStyleName("FlexTable");
+											Anchor edit = new Anchor("edit");
+											flex.setWidget(rowIndex + 1, 3, edit);
 
-							}
+											edit.addClickHandler(new EditHandler());
+										}
 
-						});
-						
+										// flex.setStyleName("FlexTable");
+
+									}
+
+								});
+
 					}
-					
-				
-				
-			});
-			
+
+				});
+
 			}
-			});
-		
+		});
+
 		client.service.getRaavare(token, new AsyncCallback<List<RaavareDTO>>() {
 
 			@Override
@@ -272,12 +260,11 @@ public class Raavare extends Composite{
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRaavareId());
 					flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareNavn());
 					flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getLeverandoer());
-					
-					flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
-					flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
-					flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
-					
-					
+
+					flex.getCellFormatter().addStyleName(rowIndex + 1, 0, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex + 1, 1, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex + 1, 2, "FlexTable-Cell");
+
 					Anchor edit = new Anchor("edit");
 					flex.setWidget(rowIndex + 1, 3, edit);
 
@@ -301,6 +288,7 @@ public class Raavare extends Composite{
 	}
 
 	private class EditHandler implements ClickHandler {
+		@Override
 		public void onClick(ClickEvent event) {
 
 			if (previousCancel != null)
@@ -335,8 +323,8 @@ public class Raavare extends Composite{
 					flex.setText(eventRowIndex, 1, raavNavnTxt.getText());
 					flex.setText(eventRowIndex, 2, leverandoerTxt.getText());
 
-					RaavareDTO Raavare = new RaavareDTO(Integer.parseInt(raavIdTxt.getText()),
-							raavNavnTxt.getText(), leverandoerTxt.getText());
+					RaavareDTO Raavare = new RaavareDTO(Integer.parseInt(raavIdTxt.getText()), raavNavnTxt.getText(),
+							leverandoerTxt.getText());
 
 					client.service.updateRaavare(Raavare.this.token, Raavare, new AsyncCallback<Void>() {
 
@@ -392,8 +380,6 @@ public class Raavare extends Composite{
 
 			});
 
-
-
 			raavNavnTxt.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override
@@ -439,17 +425,16 @@ public class Raavare extends Composite{
 			flex.setWidget(eventRowIndex, 3, ok);
 
 		else
-			  
+
 			flex.setText(eventRowIndex, 3, "ok");
-		
 
 	}
-	
+
 	private void checkFormValid_Create() {
-		if (addRaavareIdValid && addRaavNavnTxtValid && addLeverandoerValid ){
-			create.setEnabled(true);			
-		}
-		else create.setEnabled(false);
-			
-		}
+		if (addRaavareIdValid && addRaavNavnTxtValid && addLeverandoerValid) {
+			create.setEnabled(true);
+		} else
+			create.setEnabled(false);
+
+	}
 }

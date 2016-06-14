@@ -1,9 +1,6 @@
 package cdio.shared;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 
 public class ProduktBatchDTO implements Serializable {
 	/**
@@ -15,15 +12,15 @@ public class ProduktBatchDTO implements Serializable {
 	int receptId;
 	String startTidspunkt;
 	String slutTidspunkt;
-	
-	public ProduktBatchDTO(){
-		
+
+	public ProduktBatchDTO() {
+
 	}
 
 	public ProduktBatchDTO(int produktbatchID, int receptId, int status, String startTid, String slutTid) {
 		this.pbId = produktbatchID;
 		this.receptId = receptId;
-		this.status= status;
+		this.status = status;
 		this.startTidspunkt = startTid;
 		this.slutTidspunkt = slutTid;
 	}
@@ -52,6 +49,7 @@ public class ProduktBatchDTO implements Serializable {
 		this.receptId = receptId;
 	}
 
+	@Override
 	public String toString() {
 		return pbId + "\t" + status + "\t" + receptId;
 	}
@@ -59,10 +57,9 @@ public class ProduktBatchDTO implements Serializable {
 	public String getStartidspunkt() {
 		return startTidspunkt;
 	}
-	
-	public String getSluttidspunkt(){
+
+	public String getSluttidspunkt() {
 		return slutTidspunkt;
 	}
 
-	
 }

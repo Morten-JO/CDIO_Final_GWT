@@ -10,12 +10,13 @@ import cdio.server.Connector;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.server.DAOinterfaces.ReceptKompDAO;
 import cdio.shared.ReceptKompDTO;
+
 public class MYSQLReceptKompDAO implements ReceptKompDAO {
 
 	@Override
 	public ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws DALException {
 		try {
-			CallableStatement getReceptKomponent = (CallableStatement) Connector.getInstance().getConnection()
+			CallableStatement getReceptKomponent = Connector.getInstance().getConnection()
 					.prepareCall("call get_receptkomponent(?,?)");
 			getReceptKomponent.setInt(1, receptId);
 			getReceptKomponent.setInt(2, raavareId);
@@ -71,64 +72,66 @@ public class MYSQLReceptKompDAO implements ReceptKompDAO {
 	@Override
 	public void createReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
 		try {
-		    CallableStatement createRecept = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_receptkomponent(?,?,?,?,?)");
-		    createRecept.setInt(1, receptkomponent.getReceptId());
-		    createRecept.setInt(2, receptkomponent.getRaavareId());
-		    createRecept.setDouble(3, receptkomponent.getNomNetto());
-		    createRecept.setDouble(4, receptkomponent.getTolerance());
-		    createRecept.setInt(5, 0);
-		    createRecept.execute();
-		   
-		   } catch (Exception e) {
-			   e.printStackTrace();
-			   System.err.println("Could not create receptkomponent, check if the database is running!");
-		  }
+			CallableStatement createRecept = Connector.getInstance().getConnection()
+					.prepareCall("call add_receptkomponent(?,?,?,?,?)");
+			createRecept.setInt(1, receptkomponent.getReceptId());
+			createRecept.setInt(2, receptkomponent.getRaavareId());
+			createRecept.setDouble(3, receptkomponent.getNomNetto());
+			createRecept.setDouble(4, receptkomponent.getTolerance());
+			createRecept.setInt(5, 0);
+			createRecept.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Could not create receptkomponent, check if the database is running!");
+		}
 	}
 
 	@Override
 	public void updateReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
 		try {
-			Connector.getInstance().doUpdate(
-					"UPDATE receptkomponent SET nomNetto =  " + receptkomponent.getNomNetto()
-					+ ", tolerance = " + receptkomponent.getTolerance()+ " WHERE receptId = " +
-					receptkomponent.getReceptId() +" and raavareId = "+receptkomponent.getRaavareId());
-			
+			Connector.getInstance()
+					.doUpdate("UPDATE receptkomponent SET nomNetto =  " + receptkomponent.getNomNetto()
+							+ ", tolerance = " + receptkomponent.getTolerance() + " WHERE receptId = "
+							+ receptkomponent.getReceptId() + " and raavareId = " + receptkomponent.getRaavareId());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	@Override
-	public List<String> getReceptRaavarer(int id){
+	public List<String> getReceptRaavarer(int id) {
 		List<String> list = new ArrayList<>();
 		ResultSet rs = null;
 		try {
-			rs = Connector.getInstance().doQuery("SELECT raavareNavn FROM receptkomponent natural join raavare where receptId = " + id + ";");
-			while (rs.next()){
-				
+			rs = Connector.getInstance().doQuery(
+					"SELECT raavareNavn FROM receptkomponent natural join raavare where receptId = " + id + ";");
+			while (rs.next()) {
+
 				list.add(rs.getString(1));
 			}
 		} catch (SQLException e) {
-		
+
 		}
 		return list;
 	}
-	
+
 	@Override
-	public int getRaavareIdFromName(String name){
+	public int getRaavareIdFromName(String name) {
 		int id = 0;
 		ResultSet rs = null;
 		try {
-			rs = Connector.getInstance().doQuery("SELECT distinct(raavareId) FROM raavare where raavareNavn = '" + name + "';");
-		if (rs.next()){
-			id = rs.getInt(1);
-			return id;
-		}
+			rs = Connector.getInstance()
+					.doQuery("SELECT distinct(raavareId) FROM raavare where raavareNavn = '" + name + "';");
+			if (rs.next()) {
+				id = rs.getInt(1);
+				return id;
+			}
 		} catch (SQLException e) {
-		
+
 		}
 		return id;
 	}
-		
-		
-	}
+
+}

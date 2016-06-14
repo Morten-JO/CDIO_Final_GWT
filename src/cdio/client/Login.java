@@ -1,5 +1,4 @@
 package cdio.client;
-import java.sql.ResultSet;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -20,7 +19,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import cdio.client.service.ServiceClientImpl;
 
-public class Login extends Composite{
+public class Login extends Composite {
 	private VerticalPanel vPanel = new VerticalPanel();
 	private TextBox username;
 	private PasswordTextBox pass;
@@ -28,7 +27,7 @@ public class Login extends Composite{
 	private Label statusLogin;
 	private Button login;
 
-	public Login(ServiceClientImpl service){
+	public Login(ServiceClientImpl service) {
 		client = service;
 		initWidget(this.vPanel);
 		vPanel.setStyleName("LoginBox");
@@ -51,70 +50,62 @@ public class Login extends Composite{
 		passPanel.add(lock_icon);
 		passPanel.add(pass);
 		this.login = new Button("Log ind");
-		pass.addKeyDownHandler(new KeyDownHandler(){
+		pass.addKeyDownHandler(new KeyDownHandler() {
 
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER){
-				login.click();	
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					login.click();
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		statusLogin = new Label(" ");
-	
-		//predetermined
+
+		// predetermined
 		username.setText("4");
 		pass.setText("admin");
-		
-		
+
 		login.setPixelSize(100, 30);
 		login.setStyleName("loginbtn");
-		
+
 		vPanel.add(hPanel);
 		vPanel.add(passPanel);
 		vPanel.add(statusLogin);
 		vPanel.add(login);
 		login.addClickHandler(new ClickHandler() {
-			
-		
 
 			@Override
 			public void onClick(ClickEvent event) {
-				
-				client.service.checkLogin(Integer.parseInt(username.getText()), pass.getText(), new AsyncCallback<String>() {
-					
-					@Override
-					public void onSuccess(String result) {
-						if(result.equals("Login not authorized!"))
-							statusLogin.setText(result);
-						else{
-							RootPanel.get().clear();
-							RootPanel.get().add(new MainViewController(client, result));
-						}
-						
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						statusLogin.setText("connection failure");
-						
-					}
-				});
-				
-			;
-				
-				
-			
+
+				client.service.checkLogin(Integer.parseInt(username.getText()), pass.getText(),
+						new AsyncCallback<String>() {
+
+							@Override
+							public void onSuccess(String result) {
+								if (result.equals("Login not authorized!"))
+									statusLogin.setText(result);
+								else {
+									RootPanel.get().clear();
+									RootPanel.get().add(new MainViewController(client, result));
+								}
+
+							}
+
+							@Override
+							public void onFailure(Throwable caught) {
+								statusLogin.setText("connection failure");
+
+							}
+						});
+
+				;
+
 			}
 		});
-			
-		
-	
+
 	}
-	
-	
 
 }

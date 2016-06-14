@@ -1,11 +1,11 @@
 package cdio.client.service;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -57,7 +57,7 @@ public interface ServiceAsync {
 	void deleteUser(String token, int id, AsyncCallback<Void> callback);
 
 	void getSpecificPB(int id, String token, AsyncCallback<ProduktBatchDTO> callback);
-	
+
 	void getReceptKompsFromReceptID(int id, String token, AsyncCallback<List<ReceptKompDTO>> asyncCallback);
 
 	void getRaavareFromID(int id, String token, AsyncCallback<RaavareDTO> callback);
@@ -65,4 +65,6 @@ public interface ServiceAsync {
 	void getUserName(String token, AsyncCallback<String> callback);
 
 	void createRA(String token, RaavareDTO raavare, AsyncCallback<Void> callback);
+
+	void createPBKomp(ProduktBatchKompDTO pbKomp, AsyncCallback<Void> callback);
 }
