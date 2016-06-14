@@ -70,7 +70,11 @@ public class MainViewController extends Composite {
 			public void onSuccess(String result) {
 				
 				menuView = new Menu(MainViewController.this, result);
-				vPanel.add(header);
+				if(header != null){
+					vPanel.add(header);
+				} else{
+					vPanel.add(new Header("."));
+				}
 				hPanel.add(menuView);
 				hPanel.add(scroll);
 				vPanel.add(hPanel);
