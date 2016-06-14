@@ -54,6 +54,7 @@ public class Raavarebatch extends Composite {
 	Anchor previousCancel = null;
 
 	List<RaavareDTO> rbList;
+	
 
 	public Raavarebatch(ServiceClientImpl client, String token) {
 		flex = new FlexTable();
@@ -184,9 +185,13 @@ public class Raavarebatch extends Composite {
 				int rbId = Integer.parseInt(AddRbId.getText());
 				int raavareId = Integer.parseInt(AddRaavareId.getSelectedItemText());
 				double maengde = Double.parseDouble(AddMaengde.getText());
-
+				if(Window.confirm("Du er i gang med at lave en RaavareBatch med RbId :"+rbId+", RaavareId :" +raavareId+", Maengde :"+maengde)){
+					
+				
 				RaavareBatchDTO RB = new RaavareBatchDTO(rbId, raavareId, maengde, null);
+				
 				Raavarebatch.this.client.service.createRB(Raavarebatch.this.token, RB, new AsyncCallback<Void>() {
+				
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert("Server fejl!" + caught.getMessage());
@@ -204,7 +209,7 @@ public class Raavarebatch extends Composite {
 
 							@Override
 							public void onSuccess(List<RaavareBatchDTO> result) {
-
+								
 								flex.setText(0, 0, "Råvarebatch");
 								flex.setText(0, 1, "Råvare id");
 								flex.setText(0, 2, "Mængde");
@@ -238,8 +243,9 @@ public class Raavarebatch extends Composite {
 
 				});
 			}
-		});
-
+			}
+			});
+			
 		client.service.getRaavareBatches(new AsyncCallback<List<RaavareBatchDTO>>() {
 
 			@Override

@@ -101,6 +101,10 @@ public class OpretBruger extends Composite {
 					if (radioButton[i].getValue())
 						rolle = roller[i];
 				}
+				if(Window.confirm("Du er i gang med at lave en User med Id : "+txtbox[0].getText()+", Navn : "+txtbox[1].getText()+
+						", Initial : "+txtbox[2].getText()+", CPR : "+txtbox[3].getText()+
+						", Password : "+txtbox[4].getText()+", Rolle : "+rolle)){
+
 
 				UserDTO newUser = new UserDTO(Integer.parseInt(txtbox[0].getText()), txtbox[1].getText(),
 						txtbox[2].getText(), txtbox[3].getText(), txtbox[4].getText(), rolle);
@@ -128,6 +132,7 @@ public class OpretBruger extends Composite {
 					}
 
 				});
+			}
 			}
 		});
 

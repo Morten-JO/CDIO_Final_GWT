@@ -182,6 +182,7 @@ public class Raavare extends Composite {
 				int raId = Integer.parseInt(addRaavareId.getText());
 				String raNavn = addRaavNavnTxt.getText();
 				String lever = addLeverandoerTxt.getText();
+				if(Window.confirm("Du er i gang med at lave en Raavare med RaavareId : "+raId+", Leverandoer : "+lever)){
 
 				RaavareDTO RA = new RaavareDTO(raId, raNavn, lever);
 				Raavare.this.client.service.createRA(Raavare.this.token, RA, new AsyncCallback<Void>() {
@@ -238,6 +239,7 @@ public class Raavare extends Composite {
 
 				});
 
+			}
 			}
 		});
 

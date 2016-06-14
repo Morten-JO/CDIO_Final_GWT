@@ -173,7 +173,7 @@ public class Produktbatch extends Composite {
 			public void onClick(ClickEvent event) {
 				int pbId = Integer.parseInt(AddPbId.getText());
 				int receptId = Integer.parseInt(AddReceptId.getSelectedItemText());
-
+				if(Window.confirm("Du er i gang med at lave en Produktbatch med pbId :"+pbId+", ReceptId :" +receptId)){
 				ProduktBatchDTO RB = new ProduktBatchDTO(pbId, receptId, 0, null, null);
 				Produktbatch.this.client.service.createPB(Produktbatch.this.token, RB, new AsyncCallback<Void>() {
 					@Override
@@ -240,7 +240,7 @@ public class Produktbatch extends Composite {
 
 				});
 			}
-			
+			}
 			
 		});
 

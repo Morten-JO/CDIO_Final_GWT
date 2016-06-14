@@ -172,7 +172,7 @@ public class Recept extends Composite {
 			public void onClick(ClickEvent event) {
 				int recId = Integer.parseInt(addRecIdTxt.getText());
 				String recName = addRecNameTxt.getText();
-
+				if(Window.confirm("Du er i gang med at lave en Recept med ReceptId : "+recId+", ReceptNavn : "+recName)){
 				ReceptDTO RB = new ReceptDTO(recId, recName);
 				Recept.this.client.service.createRecept(Recept.this.token, RB, new AsyncCallback<Void>() {
 					@Override
@@ -229,6 +229,7 @@ public class Recept extends Composite {
 					}
 
 				});
+			}
 			}
 		});
 
