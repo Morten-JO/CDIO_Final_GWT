@@ -66,7 +66,6 @@ public interface ServiceAsync {
 
 	void createRA(String token, RaavareDTO raavare, AsyncCallback<Void> callback);
 
-	void createPBKomp(ProduktBatchKompDTO pbKomp, AsyncCallback<Void> callback);
 
 	
 }

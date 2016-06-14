@@ -428,15 +428,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 	}
 
-	@Override
-	public void createPBKomp(ProduktBatchKompDTO pbKomp) {
-		try {
-			controller.getPBKompDAO().createProduktBatchKomp(pbKomp);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
 
-	}
 
 
 }

@@ -1,6 +1,7 @@
 package cdio.shared;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class RaavareBatchDTO implements Serializable {
 	/**
@@ -11,12 +12,14 @@ public class RaavareBatchDTO implements Serializable {
 	int rbId; // i omraadet 1-99999999
 	int raavareId; // i omraadet 1-99999999
 	double maengde; // kan vaere negativ
+	Date leveringsDato;
 
 	public RaavareBatchDTO() {
 
 	}
 
-	public RaavareBatchDTO(int rbId, int raavareId, double maengde) {
+	public RaavareBatchDTO(int rbId, int raavareId, double maengde, Date levering) {
+		this.leveringsDato = levering;
 		this.rbId = rbId;
 		this.raavareId = raavareId;
 		this.maengde = maengde;
@@ -40,6 +43,10 @@ public class RaavareBatchDTO implements Serializable {
 
 	public double getMaengde() {
 		return maengde;
+	}
+	
+	public Date getLeveringsDato() {
+		return leveringsDato;
 	}
 
 	public void setMaengde(double maengde) {

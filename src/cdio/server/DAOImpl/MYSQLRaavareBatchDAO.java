@@ -23,7 +23,7 @@ public class MYSQLRaavareBatchDAO implements RaavareBatchDAO {
 			if (rs.first()) {
 				int raavare_id = rs.getInt(2);
 				double maengde = rs.getDouble(3);
-				RaavareBatchDTO newpb = new RaavareBatchDTO(rbId, raavare_id, maengde);
+				RaavareBatchDTO newpb = new RaavareBatchDTO(rbId, raavare_id, maengde, rs.getDate(4));
 				return newpb;
 			}
 		} catch (SQLException e) {
@@ -38,7 +38,7 @@ public class MYSQLRaavareBatchDAO implements RaavareBatchDAO {
 		try {
 			ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM raavarebatch");
 			while (rs.next()) {
-				RaavareBatchDTO current = new RaavareBatchDTO(rs.getInt(1), rs.getInt(2), rs.getDouble(3));
+				RaavareBatchDTO current = new RaavareBatchDTO(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDate(4));
 				list.add(current);
 			}
 		} catch (SQLException e) {
@@ -54,7 +54,7 @@ public class MYSQLRaavareBatchDAO implements RaavareBatchDAO {
 			ResultSet rs = Connector.getInstance()
 					.doQuery("SELECT * FROM view_raavarebatch where raavareId = " + raavareId);
 			while (rs.next()) {
-				RaavareBatchDTO current = new RaavareBatchDTO(rs.getInt(1), rs.getInt(2), rs.getDouble(3));
+				RaavareBatchDTO current = new RaavareBatchDTO(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getDate(4));
 				list.add(current);
 			}
 		} catch (SQLException e) {

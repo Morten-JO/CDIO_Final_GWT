@@ -68,7 +68,6 @@ public interface Service extends RemoteService {
 
 	void createRA(String token, RaavareDTO raavare);
 
-	void createPBKomp(ProduktBatchKompDTO pbKomp);
 
 
 

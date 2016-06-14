@@ -185,7 +185,7 @@ public class Raavarebatch extends Composite {
 				int raavareId = Integer.parseInt(AddRaavareId.getSelectedItemText());
 				double maengde = Double.parseDouble(AddMaengde.getText());
 
-				RaavareBatchDTO RB = new RaavareBatchDTO(rbId, raavareId, maengde);
+				RaavareBatchDTO RB = new RaavareBatchDTO(rbId, raavareId, maengde, null);
 				Raavarebatch.this.client.service.createRB(Raavarebatch.this.token, RB, new AsyncCallback<Void>() {
 					@Override
 					public void onFailure(Throwable caught) {
@@ -208,17 +208,20 @@ public class Raavarebatch extends Composite {
 								flex.setText(0, 0, "Råvarebatch");
 								flex.setText(0, 1, "Råvare id");
 								flex.setText(0, 2, "Mængde");
+								flex.setText(0, 3, "Leveringsdato");
 
 								for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 
 									flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRbId());
 									flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareId());
 									flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getMaengde());
+									flex.setText(rowIndex + 1, 3, "" + result.get(rowIndex).getLeveringsDato());
 									flex.getCellFormatter().addStyleName(rowIndex + 1, 0, "TextBox-style");
 									flex.getCellFormatter().addStyleName(rowIndex + 1, 1, "TextBox-style");
 									flex.getCellFormatter().addStyleName(rowIndex + 1, 2, "TextBox-style");
+									flex.getCellFormatter().addStyleName(rowIndex + 1, 3, "TextBox-style");
 									Anchor edit = new Anchor("edit");
-									flex.setWidget(rowIndex + 1, 3, edit);
+									flex.setWidget(rowIndex + 1, 4, edit);
 
 									edit.addClickHandler(new EditHandler());
 								}
@@ -250,17 +253,20 @@ public class Raavarebatch extends Composite {
 				flex.setText(0, 0, "Råvarebatch ID");
 				flex.setText(0, 1, "Råvare ID");
 				flex.setText(0, 2, "Mængde");
+				flex.setText(0, 3, "Leveringsdato");
 
 				for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRbId());
 					flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareId());
 					flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getMaengde());
+					flex.setText(rowIndex + 1, 3, "" + result.get(rowIndex).getLeveringsDato());
 					flex.getCellFormatter().addStyleName(rowIndex + 1, 0, "TextBox-style");
 					flex.getCellFormatter().addStyleName(rowIndex + 1, 1, "TextBox-style");
 					flex.getCellFormatter().addStyleName(rowIndex + 1, 2, "TextBox-style");
+					flex.getCellFormatter().addStyleName(rowIndex + 1, 3, "TextBox-style");
 					Anchor edit = new Anchor("edit");
-					flex.setWidget(rowIndex + 1, 3, edit);
+					flex.setWidget(rowIndex + 1, 4, edit);
 
 					edit.addClickHandler(new EditHandler());
 				}
@@ -321,7 +327,7 @@ public class Raavarebatch extends Composite {
 					flex.setText(eventRowIndex, 2, maengdeTxt.getText());
 
 					RaavareBatchDTO RB = new RaavareBatchDTO(Integer.parseInt(rbIdTxt.getText()),
-							Integer.parseInt(raavareIdTxt.getText()), Double.parseDouble(maengdeTxt.getText()));
+							Integer.parseInt(raavareIdTxt.getText()), Double.parseDouble(maengdeTxt.getText()), null);
 
 					client.service.updateRB(Raavarebatch.this.token, RB, new AsyncCallback<Void>() {
 
@@ -338,8 +344,8 @@ public class Raavarebatch extends Composite {
 						}
 
 					});
-					flex.setWidget(eventRowIndex, 3, edit);
-					flex.clearCell(eventRowIndex, 4);
+					flex.setWidget(eventRowIndex, 4, edit);
+					flex.clearCell(eventRowIndex, 5);
 
 					previousCancel = null;
 
@@ -369,8 +375,8 @@ public class Raavarebatch extends Composite {
 					flex.setText(eventRowIndex, 1, raavareId);
 					flex.setText(eventRowIndex, 2, maengde);
 					// restore edit link
-					flex.setWidget(eventRowIndex, 3, edit);
-					flex.clearCell(eventRowIndex, 4);
+					flex.setWidget(eventRowIndex, 4, edit);
+					flex.clearCell(eventRowIndex, 5);
 
 					previousCancel = null;
 				}
@@ -431,8 +437,8 @@ public class Raavarebatch extends Composite {
 
 			});
 
-			flex.setWidget(eventRowIndex, 3, ok);
-			flex.setWidget(eventRowIndex, 4, cancel);
+			flex.setWidget(eventRowIndex, 4, ok);
+			flex.setWidget(eventRowIndex, 5, cancel);
 		}
 
 	}
@@ -448,10 +454,10 @@ public class Raavarebatch extends Composite {
 	private void checkFormValid() {
 		if (rbIdValid && raavareIdValid && maengdeValid)
 
-			flex.setWidget(eventRowIndex, 3, ok);
+			flex.setWidget(eventRowIndex, 4, ok);
 
 		else if (!(eventRowIndex == 0)) {
-			flex.setText(eventRowIndex, 3, "ok");
+			flex.setText(eventRowIndex, 4, "ok");
 		}
 
 	}
