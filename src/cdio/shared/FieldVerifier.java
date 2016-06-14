@@ -1,7 +1,10 @@
 package cdio.shared;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import cdio.server.Connector;
 
 public class FieldVerifier {
 	
@@ -88,6 +91,16 @@ public class FieldVerifier {
 				return true;
 		}
 		else return false;
+	}
+	
+	
+	public static boolean isValidRaavareID(String raavareID){
+		try{
+			int id = Integer.parseInt(raavareID);
+		}catch (NumberFormatException e){
+			return false;
+		}
+		return true;
 	}
 	
 	

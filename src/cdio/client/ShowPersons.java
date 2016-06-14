@@ -1,29 +1,21 @@
 package cdio.client;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.sun.java.swing.plaf.windows.resources.windows;
-
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
-import cdio.shared.ProduktBatchDTO;
 import cdio.shared.UserDTO;
 
 public class ShowPersons extends Composite {
@@ -33,7 +25,7 @@ public class ShowPersons extends Composite {
 	private String token;
 	private ServiceClientImpl client;
 
-	TextBox oprId;
+	
 	TextBox oprNavnTxt;
 	TextBox iniTxt;
 	TextBox cprTxt;
@@ -114,17 +106,24 @@ public class ShowPersons extends Composite {
 		vPanel.add(flex);
 		// create textboxs
 		oprNavnTxt = new TextBox();
-		oprNavnTxt.setWidth("40px");
+		oprNavnTxt.setWidth("80px");
+		oprNavnTxt.setStyleName("TextBox-style");
+		
 		iniTxt = new TextBox();
-		iniTxt.setWidth("60px");
+		iniTxt.setWidth("40px");
+		iniTxt.setStyleName("TextBox-style");
+		
 		cprTxt = new TextBox();
 		cprTxt.setWidth("80px");
+		cprTxt.setStyleName("TextBox-style");
 		
 		passTxt = new TextBox();
 		passTxt.setWidth("80px");
+		passTxt.setStyleName("TextBox-style");
 		
 		rolleTxt = new TextBox();
 		rolleTxt.setWidth("80px");
+		rolleTxt.setStyleName("TextBox-style");
 
 		suggestionBox = new SuggestBox(oracle);
 		suggestionBox.setWidth("80px");
@@ -245,7 +244,7 @@ public class ShowPersons extends Composite {
 
 			});
 			
-			Anchor delete  = new Anchor("delete ");
+			Anchor delete  = new Anchor("delete");
 			delete.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -300,7 +299,7 @@ public class ShowPersons extends Composite {
 						oprNavnTxt.setStyleName("gwt-TextBox-invalidEntry");
 						oprNavnValid = false;
 					} else {
-						oprNavnTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						oprNavnTxt.setStyleName("TextBox-style");
 						oprNavnValid = true;
 					}
 					checkFormValid();
@@ -318,7 +317,7 @@ public class ShowPersons extends Composite {
 						iniTxt.setStyleName("gwt-TextBox-invalidEntry");
 						iniValid = false;
 					} else {
-						oprNavnTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						iniTxt.setStyleName("TextBox-style");
 						iniValid = true;
 					}
 					checkFormValid();
@@ -336,7 +335,7 @@ public class ShowPersons extends Composite {
 						cprTxt.setStyleName("gwt-TextBox-invalidEntry");
 						cprValid = false;
 					} else {
-						cprTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						cprTxt.setStyleName("TextBox-style");
 						cprValid = true;
 					}
 					checkFormValid();
@@ -353,7 +352,7 @@ public class ShowPersons extends Composite {
 						passTxt.setStyleName("gwt-TextBox-invalidEntry");
 						passValid = false;
 					} else {
-						passTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						passTxt.setStyleName("TextBox-style");
 						passValid = true;
 					}
 					checkFormValid();
@@ -370,7 +369,7 @@ public class ShowPersons extends Composite {
 						suggestionBox.setStyleName("gwt-TextBox-invalidEntry");
 						rolleValid = false;
 					} else {
-						suggestionBox.removeStyleName("gwt-TextBox-invalidEntry");
+						suggestionBox.setStyleName("TextBox-style");
 						rolleValid = true;
 					}
 					checkFormValid();

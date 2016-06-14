@@ -1,5 +1,6 @@
 package cdio.client;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -53,6 +54,8 @@ public class Raavarebatch extends Composite {
 	int eventRowIndex;
 	Anchor ok;
 	Anchor previousCancel = null;
+	
+	List<RaavareDTO> rbList;
 
 	public Raavarebatch(ServiceClientImpl client, String token) {
 		flex = new FlexTable();
@@ -209,18 +212,18 @@ public class Raavarebatch extends Composite {
 								@Override
 								public void onSuccess(List<RaavareBatchDTO> result) {
 
-									flex.setText(0, 0, "rbId");
-									flex.setText(0, 1, "raavareId");
-									flex.setText(0, 2, "maengde");
+									flex.setText(0, 0, "Råvarebatch");
+									flex.setText(0, 1, "Råvare id");
+									flex.setText(0, 2, "Mængde");
 
 									for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 
 										flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRbId());
 										flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareId());
 										flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getMaengde());
-										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
-										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
-										flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "TextBox-style");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "TextBox-style");
+										flex.getCellFormatter().addStyleName(rowIndex+1, 2, "TextBox-style");
 										Anchor edit = new Anchor("edit");
 										flex.setWidget(rowIndex + 1, 3, edit);
 
@@ -254,18 +257,18 @@ public class Raavarebatch extends Composite {
 			@Override
 			public void onSuccess(List<RaavareBatchDTO> result) {
 
-				flex.setText(0, 0, "rbId");
-				flex.setText(0, 1, "raavareId");
-				flex.setText(0, 2, "maengde");
+				flex.setText(0, 0, "Råvarebatch ID");
+				flex.setText(0, 1, "Råvare ID");
+				flex.setText(0, 2, "Mængde");
 
 				for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
 
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getRbId());
 					flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getRaavareId());
 					flex.setText(rowIndex + 1, 2, "" + result.get(rowIndex).getMaengde());
-					flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
-					flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
-					flex.getCellFormatter().addStyleName(rowIndex+1, 2, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex+1, 0, "TextBox-style");
+					flex.getCellFormatter().addStyleName(rowIndex+1, 1, "TextBox-style");
+					flex.getCellFormatter().addStyleName(rowIndex+1, 2, "TextBox-style");
 					Anchor edit = new Anchor("edit");
 					flex.setWidget(rowIndex + 1, 3, edit);
 
@@ -280,11 +283,14 @@ public class Raavarebatch extends Composite {
 		vPanel.add(flex);
 		// create textboxs
 		rbIdTxt = new TextBox();
-		rbIdTxt.setWidth("20px");
+		rbIdTxt.setWidth("40px");
+		rbIdTxt.setStyleName("TextBox-style");
 		raavareIdTxt = new TextBox();
 		raavareIdTxt.setWidth("60px");
+		raavareIdTxt.setStyleName("TextBox-style");
 		maengdeTxt = new TextBox();
 		maengdeTxt.setWidth("80px");
+		maengdeTxt.setStyleName("TextBox-style");
 
 	}
 
@@ -388,7 +394,7 @@ public class Raavarebatch extends Composite {
 						raavareIdTxt.setStyleName("gwt-TextBox-invalidEntry");
 						raavareIdValid = false;
 					} else {
-						raavareIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						raavareIdTxt.setStyleName("TextBox-style");
 						raavareIdValid = true;
 					}
 					checkFormValid_Create();
@@ -401,14 +407,16 @@ public class Raavarebatch extends Composite {
 
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
-					if (!FieldVerifier.isValidRbId(raavareIdTxt.getText())) {
+					
+					if (!FieldVerifier.isValidRaavareID(raavareIdTxt.getText())) {
 						raavareIdTxt.setStyleName("gwt-TextBox-invalidEntry");
 						raavareIdValid = false;
 					} else {
-						raavareIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						raavareIdTxt.setStyleName("TextBox-style");
 						raavareIdValid = true;
 					}
-						checkFormValid();
+				
+					checkFormValid();
 					
 				}
 
@@ -422,7 +430,7 @@ public class Raavarebatch extends Composite {
 						maengdeTxt.setStyleName("gwt-TextBox-invalidEntry");
 						maengdeValid = false;
 					} else {
-						maengdeTxt.removeStyleName("gwt-TextBox-invalidEntry");
+						maengdeTxt.setStyleName("TextBox-style");
 						maengdeValid = true;
 					}
 					checkFormValid_Create();
