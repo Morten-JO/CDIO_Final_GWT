@@ -39,7 +39,7 @@ public class MainViewController extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				header = new Header("hjorten er noob");
+				header = new Header("");
 				
 			}
 

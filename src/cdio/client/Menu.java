@@ -21,7 +21,7 @@ public class Menu extends Composite {
 		initWidget(vPanel);
 
 		vPanel.setStyleName("Menu");
-		showRaavBa = new Anchor("Raavarerbatches");
+		showRaavBa = new Anchor("Raavarebatches");
 		showProBa = new Anchor("Produktbatches");
 		showRecepter = new Anchor("Recepter");
 		showRaavarer = new Anchor("Raavarer");

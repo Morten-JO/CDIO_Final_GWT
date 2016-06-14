@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import cdio.client.service.ServiceClientImpl;
@@ -37,9 +39,8 @@ public class PrintProduktBatch extends Composite{
 	private String onToken;
 	private ServiceClientImpl onClient;
 	private Date d = new Date();
-	@SuppressWarnings("deprecation")
 	private String date = d.getDate()+"-"+(1+d.getMonth())+"-"+(1900+d.getYear());
-	
+
 	
 	
 	public PrintProduktBatch(ServiceClientImpl client, int produktNumber, String token){
@@ -47,6 +48,7 @@ public class PrintProduktBatch extends Composite{
 		this.onClient = client;
 		pbNumber = produktNumber;
 		this.client = client;
+	
 		
 		vPanel = new VerticalPanel();
 		initWidget(vPanel);
@@ -79,6 +81,7 @@ public class PrintProduktBatch extends Composite{
 				}
 				vPanel.add(printedOn);
 				vPanel.add(productBatchNr);
+				receptNr.setStyleName("Print_LineHeight");
 				vPanel.add(receptNr);
 				
 				if(PBResult != null){
@@ -100,17 +103,45 @@ public class PrintProduktBatch extends Composite{
 
 										@Override
 										public void onSuccess(RaavareDTO result) {
-											vPanel.add(new Label("************************************************"));
-											raavareNumber = new Label("Råvare nr.        "+receptList.get(incrementer).getRaavareId());
+											vPanel.add(new HTML("<br><br>"));
+											raavareNumber = new Label("Råvare id.        "+receptList.get(incrementer).getRaavareId());
 											vPanel.add(raavareNumber);
 											raavareName = new Label("Råvare navn:        "+result.getRaavareNavn());
 											vPanel.add(raavareName);
-											vPanel.add(new Label("-------------------------------------------------------"));
-											vPanel.add(new Label("Del     Mængde     Tolerance    Tara        Netto(kg)   Batch    Opr.      Terminal"));
-											values = new Label("1____"+receptList.get(incrementer).getNomNetto()+"_____±"+receptList.get(incrementer).getTolerance()+"%____b____b______b____u_____1");
-											vPanel.add(values);
+											vPanel.add(new Label("-------------------------------------------------------------------------"));
+											FlexTable flex = new FlexTable();
+											flex.setText(0, 0, "Del");
+											flex.setText(0, 1, "Mængde");
+											flex.setText(0, 2, "Tolerance");
+											flex.setText(0, 3, "Tara");
+											flex.setText(0, 4, "Netto(kg)");
+											flex.setText(0, 5, "Batch");
+											flex.setText(0, 6, "Opr.");
+											flex.setText(0, 7, "Terminal");
+											
+											
+											flex.setText(1, 0, "1");
+											flex.setText(1, 1, "" + receptList.get(incrementer).getNomNetto());
+											flex.setText(1, 2, "" + receptList.get(incrementer).getTolerance());
+											if(PBResult.getStatus() == 0){
+												flex.setText(1, 3, "" );
+												flex.setText(1, 4, "");
+												flex.setText(1, 5, "");
+												flex.setText(1, 6, "");
+												flex.setText(1, 7, "");
+											} else {
+												flex.setText(1, 3, "B" );
+												flex.setText(1, 4, "B");
+												flex.setText(1, 5, "B");
+												flex.setText(1, 6, "U");
+												flex.setText(1, 7, "1");
+											}
+											
+											
+											vPanel.add(flex);
 											incrementer++;
 											if(incrementer == receptList.size()){
+												vPanel.add(new HTML("<br><br>"));
 												sumTara = new Label("Sum Tara: ");
 												sumNetto = new Label("Sum Netto: ");
 												vPanel.add(sumTara);
