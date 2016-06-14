@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import cdio.shared.DALException;
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -46,5 +47,6 @@ public interface Service extends RemoteService {
 	public RaavareDTO getRaavareFromID(int id, String token);
 	public String getUserName(String token);
 	void createRA(String token,RaavareDTO raavare);
+	void createPBKomp(ProduktBatchKompDTO pbKomp);
 	
 }
