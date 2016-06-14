@@ -3,6 +3,7 @@ package cdio.client;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -49,8 +50,6 @@ public class PrintProduktBatch extends Composite{
 		
 		vPanel = new VerticalPanel();
 		initWidget(vPanel);
-		attributes = new Label("Del     Mængde     Tolerance    Tara        Netto(kg)   Batch    Opr.      Terminal");
-		dashes = new Label("-------------------------------------------------------");
 		client.service.getSpecificPB(produktNumber, token, new AsyncCallback<ProduktBatchDTO>() {
 			
 			@Override
@@ -81,8 +80,6 @@ public class PrintProduktBatch extends Composite{
 				vPanel.add(printedOn);
 				vPanel.add(productBatchNr);
 				vPanel.add(receptNr);
-				vPanel.add(new Label(""));
-				vPanel.add(new Label(""));
 				
 				if(PBResult != null){
 					onClient.service.getReceptKompsFromReceptID(PBResult.getReceptId(), onToken, new AsyncCallback<List<ReceptKompDTO>>() {
@@ -94,28 +91,26 @@ public class PrintProduktBatch extends Composite{
 						@Override
 						public void onSuccess(List<ReceptKompDTO> result) {
 							receptList = result;
-							
 							if(receptList != null){
 								for (int i = 0; i < receptList.size(); i++) {
-									onClient.service.getRaavareFromID(receptList.get(incrementer).getRaavareId(), onToken, new AsyncCallback<RaavareDTO>(){
+									onClient.service.getRaavareFromID(receptList.get(i).getRaavareId(), onToken, new AsyncCallback<RaavareDTO>(){
 										@Override
 										public void onFailure(Throwable caught) {
 										}
 
 										@Override
 										public void onSuccess(RaavareDTO result) {
+											vPanel.add(new Label("************************************************"));
 											raavareNumber = new Label("Råvare nr.        "+receptList.get(incrementer).getRaavareId());
 											vPanel.add(raavareNumber);
 											raavareName = new Label("Råvare navn:        "+result.getRaavareNavn());
 											vPanel.add(raavareName);
-											vPanel.add(dashes);
-											vPanel.add(attributes);
-											values = new Label("1     "+receptList.get(incrementer).getNomNetto()+"      ±"+receptList.get(incrementer).getTolerance()+"%      bla        bla       bla      user     1");
+											vPanel.add(new Label("-------------------------------------------------------"));
+											vPanel.add(new Label("Del     Mængde     Tolerance    Tara        Netto(kg)   Batch    Opr.      Terminal"));
+											values = new Label("1____"+receptList.get(incrementer).getNomNetto()+"_____±"+receptList.get(incrementer).getTolerance()+"%____b____b______b____u_____1");
 											vPanel.add(values);
-											vPanel.add(new Label(""));
-											vPanel.add(new Label(""));
 											incrementer++;
-											if(incrementer == receptList.size() - 1){
+											if(incrementer == receptList.size()){
 												sumTara = new Label("Sum Tara: ");
 												sumNetto = new Label("Sum Netto: ");
 												vPanel.add(sumTara);
