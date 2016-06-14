@@ -93,10 +93,10 @@ public class Raavarebatch extends Composite {
 		
 		AddMaengde = new TextBox();
 		AddMaengde.setStyleName("TextBox-style");
-		Label RbId = new Label("RbId : ");
-		Label Raavare = new Label("RaavareId : ");
-		Label Maengde = new Label("Maengde : ");
-		create = new Button("Create");
+		Label RbId = new Label("Råvarebatch ID : ");
+		Label Raavare = new Label("Råvare ID : ");
+		Label Maengde = new Label("Mængde : ");
+		create = new Button("OPRET");
 		//create.setStyleName("createbtn");
 		create.setEnabled(false);
 		vPanel.add(oprtRB);

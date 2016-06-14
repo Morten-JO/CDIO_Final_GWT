@@ -58,10 +58,10 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO{
 	@Override
 	public void createProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
 		try {
-		    CallableStatement createOP = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_produktbatch(?,?)");
-		    createOP.setInt(1, produktbatch.getStatus());
-		    createOP.setInt(2, produktbatch.getReceptId());
-		    createOP.execute();
+		    CallableStatement createPB = (CallableStatement) Connector.getInstance().getConnection().prepareCall("call add_produktbatch(?,?)");
+		    createPB.setInt(1, produktbatch.getStatus());
+		    createPB.setInt(2, produktbatch.getReceptId());
+		    createPB.execute();
 		    
 		} catch (SQLException e) {
 		    System.err.println("Could not create produktbatch, check if the database is running!");

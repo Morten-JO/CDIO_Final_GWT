@@ -108,4 +108,23 @@ public class MYSQLReceptDAO implements ReceptDAO{
 		}
 		return null;
 	}
+	/**
+	 * This method checks if a recept_id is already stored in the database. 
+	 * In case of it exists in database, the method will return true, and false in other case;
+	 * @param receptID
+	 * @return true or false
+	 */
+	public boolean receptIdExists(int recept_ID){
+		try{
+			ResultSet rs = Connector.getInstance().doQuery("Select tjek_receptID("+recept_ID+")");
+			int result = rs.getInt(1);
+			if (result == 1)
+				return true;
+		} catch( SQLException e){
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 }

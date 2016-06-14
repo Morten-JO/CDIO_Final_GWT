@@ -25,13 +25,13 @@ public class OpretBruger extends Composite {
 	VerticalPanel addPanel;
 	
 	String[] content = {"ID","Navn","Initial","CPR","Password","Rolle"};
-	String[] rolle = {"Admin", "Farmaceut" , "Værkfører", "Operatør"}; // denne bruges til visning på hjemmesiden 
-	String[] roller = {"admin", "farmaceut", "vaerkfoerer", "operatoer"}; // denne bruges til sql statement
+	String[] rolle = {"Admin", "Farmaceut" , "Værkfører", "Operatør"}; // dette bruges til visning på hjemmesiden 
+	String[] roller = {"admin", "farmaceut", "vaerkfoerer", "operatoer"}; // dette bruges til sql statement
 	
 	HorizontalPanel[] hPanel = new HorizontalPanel[content.length];
 	Label[] labels = new Label[content.length];
 	Label[] fejlLabels = new Label[content.length];
-	TextBox[] txtbox = new TextBox[content.length-1];  //denne liste er én mindre end resten
+	TextBox[] txtbox = new TextBox[content.length-1];  //dette liste er én mindre end resten
 	RadioButton[] radioButton = new RadioButton[roller.length];  //på grund af det her :D
 	
 	Button save ;
@@ -52,7 +52,7 @@ public class OpretBruger extends Composite {
 		addPanel.setHeight("120px");	
 		initWidget(this.addPanel);
 		
-		// opretter vandret paneler til og tilføjer indhold i dem
+		// opretter vandret paneler og tilføjer indhold i dem
 		for(int i = 0; i < content.length ; i++){
 			hPanel[i] = new HorizontalPanel();
 			hPanel[i].setStyleName("StyleLabel");
@@ -63,7 +63,8 @@ public class OpretBruger extends Composite {
 			
 			if(i < content.length-1){
 				txtbox[i] = new TextBox();
-				txtbox[i].setPixelSize(176, 13);
+				txtbox[i].setPixelSize(176, 20);
+				txtbox[i].setStyleName("TextBox-style1");
 				hPanel[i].add(txtbox[i]);
 			}
 			
@@ -128,7 +129,8 @@ public class OpretBruger extends Composite {
 		});
 		
 		txtbox[0].addKeyUpHandler(new KeyUpHandler(){
-
+			
+			
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
 				OpretBruger.this.client.service.getPersons(OpretBruger.this.token,new AsyncCallback<List<UserDTO>>(){
@@ -147,19 +149,19 @@ public class OpretBruger extends Composite {
 								}
 							}
 							if(!idExists){
-								txtbox[0].removeStyleName("gwt-TextBox-invalidEntry");
+								txtbox[0].setStyleName("TextBox-style");
 								oprIDVaild = true;
 								fejlLabels[0].setText("");
 							}
 							else{
-								txtbox[0].setStyleName("gwt-TextBox-invalidEntry");
+								txtbox[0].setStyleName("gwt-TextBox-invalidEntry ");
 								oprIDVaild = false;
-								fejlLabels[0].setText("\tOptaget id!");
+								fejlLabels[0].setText("ID er optaget");
 							}
 						} catch(NumberFormatException e){
-							txtbox[0].setStyleName("gwt-TextBox-invalidEntry");
+							txtbox[0].setStyleName("gwt-TextBox-invalidEntry ");
 							oprIDVaild = false;
-							fejlLabels[0].setText("\tOptaget id!");
+							fejlLabels[0].setText("feltet må kun indholde tal!");
 						}
 						
 					}
@@ -187,10 +189,10 @@ public class OpretBruger extends Composite {
 							if (!FieldVerifier.isValidName(txtbox[1].getText())) {
 								txtbox[1].setStyleName("gwt-TextBox-invalidEntry");
 								nameValid = false;
-								fejlLabels[1].setText("\tDårligt navn!");
+								fejlLabels[1].setText("feltet må indholde op til 20 bogstaver");
 							}
 							else{
-								txtbox[1].removeStyleName("gwt-TextBox-invalidEntry");
+								txtbox[1].setStyleName("TextBox-style");
 								nameValid = true;
 								fejlLabels[1].setText("");
 							}
@@ -215,10 +217,10 @@ public class OpretBruger extends Composite {
 				if (!FieldVerifier.isValidIni(txtbox[2].getText())) {
 					txtbox[2].setStyleName("gwt-TextBox-invalidEntry");
 					iniVaild = false;
-					fejlLabels[2].setText("\tFejl, Initialer skal være mellem 2 og 4 bogstaver!");
+					fejlLabels[2].setText("Initialer skal være mellem 2 og 4 bogstaver!");
 				}
 				else {
-					txtbox[2].removeStyleName("gwt-TextBox-invalidEntry");
+					txtbox[2].setStyleName("TextBox-style");
 					iniVaild = true;
 					fejlLabels[2].setText("");
 				}
@@ -234,10 +236,10 @@ public class OpretBruger extends Composite {
 				if (!FieldVerifier.isValidCpr(txtbox[3].getText())) {
 					txtbox[3].setStyleName("gwt-TextBox-invalidEntry");
 					cprVaild = false;
-					fejlLabels[3].setText("\tFejl! CPR skal være i formen ddmmyyxxxx!");
+					fejlLabels[3].setText("CPR skal være i formen ddmmyyxxxx");
 				}
 				else {
-					txtbox[3].removeStyleName("gwt-TextBox-invalidEntry");
+					txtbox[3].setStyleName("TextBox-style");
 					cprVaild = true;
 					fejlLabels[3].setText("");
 				}
@@ -254,10 +256,10 @@ public class OpretBruger extends Composite {
 				if (!FieldVerifier.isVaildPassword(txtbox[4].getText())) {
 					txtbox[4].setStyleName("gwt-TextBox-invalidEntry");
 					passwordVaild = false;
-					fejlLabels[4].setText("\tPassword længden skal være mellem 5 og 8 tegn!");
+					fejlLabels[4].setText("password skal være mellem 5 og 8 tegn!");
 				}
 				else {
-					txtbox[4].removeStyleName("gwt-TextBox-invalidEntry");
+					txtbox[4].setStyleName("TextBox-style");
 					passwordVaild = true;
 					fejlLabels[4].setText("");
 				}
