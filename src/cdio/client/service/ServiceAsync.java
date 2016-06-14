@@ -68,5 +68,5 @@ public interface ServiceAsync {
 
 	void createPBKomp(ProduktBatchKompDTO pbKomp, AsyncCallback<Void> callback);
 
-	void getRBinPB(int pbId, AsyncCallback<List<Integer>> callback);
+	
 }

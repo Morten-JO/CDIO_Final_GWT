@@ -104,18 +104,5 @@ public class MYSQLProduktBatchKompDAO implements ProduktBatchKompDAO {
 		}
 	}
 
-	@Override
-	public List<Integer> getRbInPb(int pbID) throws DALException {
-		List<Integer> list = new ArrayList<Integer>();
-		try {
-			ResultSet rs = Connector.getInstance().doQuery("Select rbID from produktbatchkomponent where pbId = " + pbID + ";");
-			while (rs.next()){
-				list.add(rs.getInt(1));
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
+
 }

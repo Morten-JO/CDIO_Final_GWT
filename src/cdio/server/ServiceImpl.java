@@ -438,15 +438,5 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	}
 
-	@Override
-	public List<Integer> getRBinPB(int pbId){
-		
-		try {
-			List<Integer> list = controller.getPBKompDAO().getRbInPb(pbId);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		
-	}
+
 }

@@ -219,9 +219,7 @@ public class Produktbatch extends Composite {
 											flex.setWidget(rowIndex + 1, 5, edit);
 											Anchor print = new Anchor("print");
 											flex.setWidget(rowIndex + 1, 7, print);
-											Anchor addKomponent = new Anchor("Tilf\u00F8j Komponent");
-											flex.setWidget(rowIndex + 1, 8, addKomponent);
-											addKomponent.addClickHandler(new KomponentHandler());
+											
 											print.addClickHandler(new PrintHandler());
 
 											edit.addClickHandler(new EditHandler());
@@ -242,6 +240,8 @@ public class Produktbatch extends Composite {
 
 				});
 			}
+			
+			
 		});
 
 		client.service.getPB(token, new AsyncCallback<List<ProduktBatchDTO>>() {
@@ -485,216 +485,6 @@ public class Produktbatch extends Composite {
 
 	}
 
-	// Klasse til administration af Produktbatchkomponenter
-	private class KomponentHandler implements ClickHandler {
 
-		private ListBox produktBatchlist;
-		private ListBox raavareBatchlist;
-		private FlexTable raavareBatches;
-		private boolean validRaavareBatch = false;
-		private boolean validProduktBatch = false;
-		private Button addKomp;
-		TextBox raavareBatchTxt;
-		TextBox produktBatchTxt;
-		private int produktBatchSelected;
-		private int column;
-		ArrayList<String> raavareBatchesIRec;
-
-		@Override
-		public void onClick(ClickEvent event) {
-			produktBatchSelected = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
-			column = flex.getCellForEvent(event).getRowIndex();
-			produktBatchKomp = new DialogBox();
-			produktBatchKomp.center();
-
-			raavareBatches = new FlexTable();
-			// raavareBatchesIRec = new ArrayList<String>();
-			raavareBatches.setText(0, 0, "Raavarebatch Id:");
-			raavareBatches.setStyleName("FlexTable-Dialog");
-
-			HorizontalPanel kompPanel = new HorizontalPanel();
-			VerticalPanel verKompPanel = new VerticalPanel();
-
-			Label Navn = new Label("raavareBatches i " + flex.getText(flex.getCellForEvent(event).getRowIndex(), 1));
-			Navn.setStyleName("Dialog-Text");
-
-			Label netto = new Label("Raavarebatch");
-			Label tolerance = new Label("Produktbatch");
-
-			// produktBatchTxt = new TextBox();
-			// raavareBatchTxt = new TextBox();
-			// produktBatchTxt.setStyleName("TextBox-style");
-			// raavareBatchTxt.setStyleName("TextBox-style");
-			//
-			// raavareBatchTxt.addKeyUpHandler(new KeyUpHandler() {
-			//
-			// @Override
-			// public void onKeyUp(KeyUpEvent event) {
-			//
-			// if (!FieldVerifier.isValidRbId(raavareBatchTxt.getText())) {
-			// raavareBatchTxt.setStyleName("gwt-TextBox-invalidEntry");
-			// validRaavareBatch = false;
-			// } else {
-			// raavareBatchTxt.removeStyleName("gwt-TextBox-invalidEntry");
-			// validRaavareBatch = true;
-			// }
-			// checkFormValidKomp();
-			//
-			// }
-			//
-			// });
-			//
-			// produktBatchTxt.addKeyUpHandler(new KeyUpHandler() {
-			//
-			// @Override
-			// public void onKeyUp(KeyUpEvent event) {
-			//
-			// if (!FieldVerifier.isValidRbId(produktBatchTxt.getText())) {
-			// produktBatchTxt.setStyleName("gwt-TextBox-invalidEntry");
-			// validProduktBatch = false;
-			// } else {
-			// produktBatchTxt.removeStyleName("gwt-TextBox-invalidEntry");
-			// validProduktBatch= true;
-			// }
-			// checkFormValidKomp();
-			//
-			// }
-			//
-			// });
-
-			addKomp = new Button("Tilf\u00F8j denne komponent");
-			addKomp.setEnabled(false);
-			addKomp.addClickHandler(new ClickHandler() {
-
-				// Tilf�j ny receptkomponent
-				@Override
-				public void onClick(ClickEvent event) {
-					// Window.alert("item selected: " +
-					// addlist.getSelectedItemText());
-
-					client.service.createPBKomp(new ProduktBatchKompDTO(
-							Integer.parseInt(KomponentHandler.this.produktBatchlist.getSelectedItemText()),
-							Integer.parseInt(KomponentHandler.this.raavareBatchlist.getSelectedItemText()), 0, 0, 0),
-							new AsyncCallback<Void>() {
-
-								@Override
-								public void onSuccess(Void result) {
-									// TODO Auto-generated method stub
-
-								}
-
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
-
-								}
-							});
-
-				}
-			});
-
-			Button close = new Button("Luk Vindue	");
-
-			close.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					recKomp.hide();
-
-				}
-			});
-
-			addlist = new ListBox();
-
-			// Hent data fra database til felxtable/listbxox
-			client.service.getRaavIRec(recIdSelected, new AsyncCallback<List<String>>() {
-
-				@Override
-				public void onSuccess(List<String> result) {
-					// Window.alert(result.get(1));
-					try {
-						for (int i = 0; i < result.size(); i++) {
-							raavareBatches.setText(i + 1, 0, result.get(i));
-							raavareBatchesIRec.add(result.get(i));
-
-						}
-
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					// Add elements to list
-					client.service.getRaavare(token, new AsyncCallback<List<RaavareDTO>>() {
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Fejl raav");
-
-						}
-
-						@Override
-						public void onSuccess(List<RaavareDTO> result) {
-
-							int count = 0;
-							for (int i = 0; i < result.size(); i++) {
-
-								boolean addable = true;
-
-								{
-									for (int j = 0; j < raavareBatchesIRec.size(); j++) {
-										if (result.get(i).getRaavareNavn()
-												.equalsIgnoreCase(raavareBatchesIRec.get(j))) {
-											addable = false;
-										}
-
-									}
-								}
-								if (addable)
-									addlist.addItem(result.get(i).getRaavareNavn());
-
-							}
-						}
-
-					});
-
-				}
-
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert("Fejl raavirec");
-
-				}
-			});
-
-			kompPanel.add(Navn);
-			kompPanel.setStyleName("Dialog");
-			verKompPanel.add(kompPanel);
-			verKompPanel.add(raavareBatches);
-			verKompPanel.add(netto);
-			verKompPanel.add(nettoTxt);
-			verKompPanel.add(tolerance);
-			verKompPanel.add(toleranceTxt);
-
-			verKompPanel.add(addlist);
-			verKompPanel.add(addKomp);
-
-			verKompPanel.add(close);
-
-			recKomp.add(verKompPanel);
-			recKomp.show();
-
-		}
-
-		private void checkFormValidKomp() {
-			if (validNetto && validTolerance)
-
-				addKomp.setEnabled(true);
-
-			else
-				addKomp.setEnabled(false);
-
-		}
-	}
 
 }
