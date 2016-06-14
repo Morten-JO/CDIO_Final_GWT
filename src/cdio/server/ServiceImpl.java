@@ -84,7 +84,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public String getRole(String token) {
 
 		try {
-			//String r = tokenHandler.getUserID(token);
+			// String r = tokenHandler.getUserID(token);
 			String role = controller.getOprDAO().getUserRole(tokenHandler.getUserID(token));
 
 			return role;
@@ -300,21 +300,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		return exists;
 	}
 
-
-
 	@Override
-	public List<String> getRaavIRec (int recId){
+	public List<String> getRaavIRec(int recId) {
 		try {
 			List<String> raavarer = controller.getRecKompDAO().getReceptRaavarer(recId);
 			return raavarer;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
-		return null; 
+
+		return null;
 	}
-	
+
 	@Override
 	public void createReceptKomponent(String token, ReceptKompDTO receptKomp) {
 		if (getRole(token).equalsIgnoreCase("vaerkfoerer") || getRole(token).equalsIgnoreCase("farmaceut")
@@ -329,32 +326,31 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 		}
 	}
-	
+
 	@Override
-	public int getRaavareFromName (String name){
+	public int getRaavareFromName(String name) {
 		try {
 			int id = controller.getRecKompDAO().getRaavareIdFromName(name);
 			return id;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
-		return 0; 
+
+		return 0;
 	}
 
 	@Override
 	public void deleteUser(String token, int id) {
-		if (getRole(token).equalsIgnoreCase("admin")){
+		if (getRole(token).equalsIgnoreCase("admin")) {
 			try {
-				if(!(controller.getOprDAO().getOperatoer(id).getRolle().equals("operatoer")))
-				controller.getOprDAO().deleteUser(id);
+				if (!(controller.getOprDAO().getOperatoer(id).getRolle().equals("operatoer")))
+					controller.getOprDAO().deleteUser(id);
 			} catch (DALException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -403,11 +399,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public String getUserName(String token) {
 		String name = null;
-	
+
 		try {
 			name = controller.getOprDAO().getName(Integer.parseInt(tokenHandler.getUserID(token)));
-		
-			
+
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -415,13 +410,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return name;
 	}
 
 	@Override
 	public void createRA(String token, RaavareDTO raavare) {
-		if (getRole(token).equalsIgnoreCase("farmaceut")|| getRole(token).equalsIgnoreCase("admin")) {
+		if (getRole(token).equalsIgnoreCase("farmaceut") || getRole(token).equalsIgnoreCase("admin")) {
 
 			try {
 				controller.getRaavareDAO().createRaavare(raavare);
@@ -432,18 +427,17 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 		}
 	}
-	
+
 	@Override
-	public void createPBKomp(ProduktBatchKompDTO pbKomp){
+	public void createPBKomp(ProduktBatchKompDTO pbKomp) {
 		try {
 			controller.getPBKompDAO().createProduktBatchKomp(pbKomp);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
+
 	}
-	
+
 	@Override
 	public List<Integer> getRBinPB(int pbId){
 		try {
@@ -455,4 +449,3 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 	}
 }
-

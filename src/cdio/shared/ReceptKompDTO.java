@@ -11,9 +11,10 @@ public class ReceptKompDTO implements Serializable {
 	int raavareId; // i omraadet 1-99999999
 	double nomNetto; // skal vaere positiv og passende stor
 	double tolerance; // skal vaere positiv og passende stor
-	
-	//Empty for the sake of serialization
-	public ReceptKompDTO() {}
+
+	// Empty for the sake of serialization
+	public ReceptKompDTO() {
+	}
 
 	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance) {
 		this.receptId = receptId;
@@ -54,6 +55,7 @@ public class ReceptKompDTO implements Serializable {
 		this.tolerance = tolerance;
 	}
 
+	@Override
 	public String toString() {
 		return receptId + "\t" + raavareId + "\t" + nomNetto + "\t" + tolerance;
 	}

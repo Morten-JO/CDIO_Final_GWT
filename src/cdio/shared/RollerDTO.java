@@ -4,13 +4,13 @@ public class RollerDTO {
 
 	private int opr_id;
 	private String rolle;
-	
-	public RollerDTO(int opr_id, String rolle){
+
+	public RollerDTO(int opr_id, String rolle) {
 		this.opr_id = opr_id;
 		this.rolle = rolle;
 	}
-	
-	public RollerDTO(RollerDTO rolle){
+
+	public RollerDTO(RollerDTO rolle) {
 		this.opr_id = rolle.getOpr_id();
 		this.rolle = rolle.getRolle();
 	}
@@ -26,9 +26,9 @@ public class RollerDTO {
 	public String getRolle() {
 		return rolle;
 	}
-	
-	public void setRolle(String rolle){
+
+	public void setRolle(String rolle) {
 		this.rolle = rolle;
-	}	
-	
+	}
+
 }

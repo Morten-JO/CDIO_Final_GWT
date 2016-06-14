@@ -58,6 +58,7 @@ public class RaavareDTO implements Serializable {
 		this.leverandoer = leverandoer;
 	}
 
+	@Override
 	public String toString() {
 		return raavareId + "\t" + raavareNavn + "\t" + leverandoer;
 	}

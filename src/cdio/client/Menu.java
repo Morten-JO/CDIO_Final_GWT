@@ -16,7 +16,7 @@ public class Menu extends Composite {
 	private Anchor redigerBruger;
 	private Anchor logUd;
 
-	public Menu (final MainViewController mvc, String role) {
+	public Menu(final MainViewController mvc, String role) {
 		VerticalPanel vPanel = new VerticalPanel();
 		initWidget(vPanel);
 
@@ -29,8 +29,7 @@ public class Menu extends Composite {
 		redigerBruger = new Anchor("Vis/Ret/Slet Bruger");
 		logUd = new Anchor("Log Ud");
 		determineUserMenu(role);
-	
-		
+
 		showRaavBa.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -38,9 +37,9 @@ public class Menu extends Composite {
 				mvc.showRaavBa();
 
 			}
-			
+
 		});
-		
+
 		showProBa.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -48,9 +47,9 @@ public class Menu extends Composite {
 				mvc.showProBa();
 
 			}
-			
+
 		});
-		
+
 		showRecepter.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -58,10 +57,9 @@ public class Menu extends Composite {
 				mvc.showRecepter();
 
 			}
-			
+
 		});
-		
-		
+
 		showRaavarer.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -69,10 +67,9 @@ public class Menu extends Composite {
 				mvc.showRaavarer();
 
 			}
-			
+
 		});
-		
-		
+
 		opretBruger.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -80,9 +77,9 @@ public class Menu extends Composite {
 				mvc.opretBruger();
 
 			}
-			
+
 		});
-		
+
 		redigerBruger.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -90,9 +87,9 @@ public class Menu extends Composite {
 				mvc.visBruger();
 
 			}
-			
+
 		});
-		
+
 		logUd.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -100,7 +97,7 @@ public class Menu extends Composite {
 				mvc.logUd();
 
 			}
-			
+
 		});
 		vPanel.add(showRaavBa);
 		vPanel.add(showProBa);
@@ -110,13 +107,11 @@ public class Menu extends Composite {
 		vPanel.add(redigerBruger);
 		vPanel.add(logUd);
 
-
 	}
 
-	private void determineUserMenu(String token){
-		
-		switch (token){
+	private void determineUserMenu(String token) {
 
+		switch (token) {
 
 		case "farmaceut":
 			opretBruger.setVisible(false);
@@ -142,7 +137,6 @@ public class Menu extends Composite {
 		default:
 			break;
 		}
-
 
 	}
 

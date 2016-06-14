@@ -1,11 +1,7 @@
 package cdio.client;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,24 +14,16 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HasAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import com.sun.java.swing.plaf.windows.resources.windows;
-
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
-import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.ReceptKompDTO;
-import sun.print.resources.serviceui;
-import cdio.shared.ReceptDTO;
 
 public class Recept extends Composite {
 
@@ -49,19 +37,16 @@ public class Recept extends Composite {
 	TextBox recNameTxt;
 	TextBox addRecIdTxt;
 	TextBox addRecNameTxt;
-	
-	
+
 	DialogBox recKomp;
-	
-	
+
 	boolean addRecIdValid = false;
 	boolean addRecNavnValid = false;
-	
+
 	boolean recIdValid = false;
 	boolean recNavnValid = false;
-	
 
-	Button create ;
+	Button create;
 
 	int eventRowIndex;
 	Anchor ok;
@@ -76,17 +61,17 @@ public class Recept extends Composite {
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
-		
+
 		addRecIdTxt = new TextBox();
 		addRecIdTxt.setStyleName("TextBox-style");
 		addRecNameTxt = new TextBox();
 		addRecNameTxt.setHeight("20px");
 		addRecNameTxt.setStyleName("TextBox-style");
-		
+
 		Label RecId = new Label("ReceptID : ");
 		Label Recept = new Label("ReceptNavn : ");
 		create = new Button("Create");
-		//create.setStyleName("createbtn");
+		// create.setStyleName("createbtn");
 		create.setEnabled(false);
 		vPanel.add(oprtRec);
 		hPanel.add(RecId);
@@ -96,12 +81,12 @@ public class Recept extends Composite {
 
 		hPanel.add(create);
 		vPanel.add(hPanel);
-		
-		addRecIdTxt.addKeyUpHandler(new KeyUpHandler(){
+
+		addRecIdTxt.addKeyUpHandler(new KeyUpHandler() {
 
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>(){
+				Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
 					}
@@ -109,32 +94,31 @@ public class Recept extends Composite {
 					@Override
 					public void onSuccess(List<ReceptDTO> result) {
 						boolean idExists = false;
-						try{
+						try {
 							Integer.parseInt(addRecIdTxt.getText());
-							for(int i = 0; i < result.size(); i++){
-								if(result.get(i).getReceptId() == Integer.parseInt(addRecIdTxt.getText())){
+							for (int i = 0; i < result.size(); i++) {
+								if (result.get(i).getReceptId() == Integer.parseInt(addRecIdTxt.getText())) {
 									idExists = true;
-									
+
 								}
 							}
-							if(!idExists){
+							if (!idExists) {
 								addRecIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
 								addRecIdValid = true;
-								//failOprIDLbl.setText("");
-							}
-							else{
+								// failOprIDLbl.setText("");
+							} else {
 								addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
 								addRecIdValid = false;
-								//failOprIDLbl.setText("Optaget id!");
+								// failOprIDLbl.setText("Optaget id!");
 							}
-						} catch(NumberFormatException e){
+						} catch (NumberFormatException e) {
 							addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
 							addRecIdValid = false;
-							//failOprIDLbl.setText("Optaget id!");
+							// failOprIDLbl.setText("Optaget id!");
 						}
-						
+
 					}
-					
+
 				});
 				if (!FieldVerifier.isValidRbId(addRecIdTxt.getText())) {
 					addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
@@ -147,114 +131,110 @@ public class Recept extends Composite {
 			}
 
 		});
-		
+
 		addRecNameTxt.addKeyUpHandler(new KeyUpHandler() {
-			
+
 			@Override
 			public void onKeyUp(KeyUpEvent event) {
-				Recept.this.client.service.checkRecept(Recept.this.token, addRecNameTxt.getText(), new AsyncCallback<Boolean>() {
-					
-					@Override
-					public void onSuccess(Boolean result) {
-							boolean recExists = result;
-						
-						if (!FieldVerifier.isValidName(addRecNameTxt.getText()) || recExists) {
-							addRecNameTxt.setStyleName("gwt-TextBox-invalidEntry");
-							addRecNavnValid = false;
-						} else {
-							addRecNameTxt.removeStyleName("gwt-TextBox-invalidEntry");
-							addRecNavnValid = true;
-						}
-						
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
+				Recept.this.client.service.checkRecept(Recept.this.token, addRecNameTxt.getText(),
+						new AsyncCallback<Boolean>() {
+
+							@Override
+							public void onSuccess(Boolean result) {
+								boolean recExists = result;
+
+								if (!FieldVerifier.isValidName(addRecNameTxt.getText()) || recExists) {
+									addRecNameTxt.setStyleName("gwt-TextBox-invalidEntry");
+									addRecNavnValid = false;
+								} else {
+									addRecNameTxt.removeStyleName("gwt-TextBox-invalidEntry");
+									addRecNavnValid = true;
+								}
+
+							}
+
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+
+							}
+						});
 
 				checkFormValid_Create();
-				
-				
+
 			}
 
 		});
-		
+
 		create.addClickHandler(new ClickHandler() {
-				
+
 			@Override
 			public void onClick(ClickEvent event) {
 				int recId = Integer.parseInt(addRecIdTxt.getText());
 				String recName = addRecNameTxt.getText();
-				
-				
-				
+
 				ReceptDTO RB = new ReceptDTO(recId, recName);
-				Recept.this.client.service.createRecept(Recept.this.token, RB, new AsyncCallback<Void>(){
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Server fejl!" + caught.getMessage());
-							
-						}
+				Recept.this.client.service.createRecept(Recept.this.token, RB, new AsyncCallback<Void>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("Server fejl!" + caught.getMessage());
 
-						@Override
-						public void onSuccess(Void result) {
-							Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>() {
+					}
 
-								@Override
-								public void onFailure(Throwable caught) {
+					@Override
+					public void onSuccess(Void result) {
+						Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>() {
 
+							@Override
+							public void onFailure(Throwable caught) {
+
+							}
+
+							@Override
+							public void onSuccess(List<ReceptDTO> result) {
+
+								flex.setText(0, 0, "ReceptId");
+								flex.setText(0, 1, "Navn");
+								;
+
+								for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+
+									flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getReceptId());
+									flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptNavn());
+
+									flex.getCellFormatter().addStyleName(rowIndex + 1, 0, "FlexTable-Cell");
+									flex.getCellFormatter().addStyleName(rowIndex + 1, 1, "FlexTable-Cell");
+
+									Anchor edit = new Anchor("edit");
+									Anchor addRecKomp = new Anchor("Tilf\u00F8j Komponent");
+									flex.setWidget(rowIndex + 1, 4, addRecKomp);
+									flex.setWidget(rowIndex + 1, 2, edit);
+
+									edit.addClickHandler(new EditHandler());
+									addRecKomp.addClickHandler(new KomponentHandler());
 								}
 
-								@Override
-								public void onSuccess(List<ReceptDTO> result) {
+								// flex.setStyleName("FlexTable");
 
-									flex.setText(0, 0, "ReceptId");
-									flex.setText(0, 1, "Navn");
-									;
+							}
 
-									for (int rowIndex = 0; rowIndex < result.size(); rowIndex++) {
+						});
 
-										flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getReceptId());
-										flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptNavn());
-										
-										flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
-										flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
+						Window.alert("Recept er nu gemt");
+						addRecIdTxt.setText("");
+						addRecNameTxt.setText("");
+						checkFormValid();
+						create.setEnabled(false);
 
-										
-										
-										Anchor edit = new Anchor("edit");
-										Anchor addRecKomp = new Anchor("Tilf\u00F8j Komponent");
-										flex.setWidget(rowIndex + 1, 4, addRecKomp);
-										flex.setWidget(rowIndex + 1, 2, edit);
+					}
 
-										edit.addClickHandler(new EditHandler());
-										addRecKomp.addClickHandler(new KomponentHandler());
-									}
+				});
+			}
+		});
 
-									// flex.setStyleName("FlexTable");
-
-								}
-
-							});
-							
-							Window.alert("Recept er nu gemt");
-							addRecIdTxt.setText("");
-							addRecNameTxt.setText("");
-							checkFormValid();
-							create.setEnabled(false);
-							
-						}
-
-					});
-				}
-			});
-		
 		flex.addStyleName("FlexTable");
-		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
-		
+		flex.getRowFormatter().addStyleName(0, "FlexTable-Header");
+
 		client.service.getRecept(token, new AsyncCallback<List<ReceptDTO>>() {
 
 			@Override
@@ -273,12 +253,10 @@ public class Recept extends Composite {
 
 					flex.setText(rowIndex + 1, 0, "" + result.get(rowIndex).getReceptId());
 					flex.setText(rowIndex + 1, 1, "" + result.get(rowIndex).getReceptNavn());
-					
-					flex.getCellFormatter().addStyleName(rowIndex+1, 0, "FlexTable-Cell");
-					flex.getCellFormatter().addStyleName(rowIndex+1, 1, "FlexTable-Cell");
 
-					
-					
+					flex.getCellFormatter().addStyleName(rowIndex + 1, 0, "FlexTable-Cell");
+					flex.getCellFormatter().addStyleName(rowIndex + 1, 1, "FlexTable-Cell");
+
 					Anchor edit = new Anchor("edit");
 					Anchor addRecKomp = new Anchor("TilfÃ¸j Komponent");
 					flex.setWidget(rowIndex + 1, 4, addRecKomp);
@@ -293,8 +271,6 @@ public class Recept extends Composite {
 			}
 
 		});
-		
-
 
 		vPanel.add(flex);
 		// create textboxs
@@ -303,10 +279,10 @@ public class Recept extends Composite {
 		recNameTxt = new TextBox();
 		recNameTxt.setWidth("60px");
 
-
 	}
 
 	private class EditHandler implements ClickHandler {
+		@Override
 		public void onClick(ClickEvent event) {
 
 			if (previousCancel != null)
@@ -317,11 +293,9 @@ public class Recept extends Composite {
 
 			recIdTxt.setText(flex.getText(eventRowIndex, 0));
 			recNameTxt.setText(flex.getText(eventRowIndex, 1));
-			
 
 			// flex.setWidget(eventRowIndex, 0, recIdTxt);
 			flex.setWidget(eventRowIndex, 1, recNameTxt);
-			
 
 			recIdTxt.setFocus(true);
 
@@ -329,7 +303,6 @@ public class Recept extends Composite {
 
 			final String rbId = recIdTxt.getText();
 			final String raavareId = recNameTxt.getText();
-			
 
 			ok = new Anchor("ok");
 			ok.addClickHandler(new ClickHandler() {
@@ -339,10 +312,8 @@ public class Recept extends Composite {
 
 					flex.setText(eventRowIndex, 0, recIdTxt.getText());
 					flex.setText(eventRowIndex, 1, recNameTxt.getText());
-					
 
-					ReceptDTO RB = new ReceptDTO(Integer.parseInt(recIdTxt.getText()),
-							recNameTxt.getText());
+					ReceptDTO RB = new ReceptDTO(Integer.parseInt(recIdTxt.getText()), recNameTxt.getText());
 
 					client.service.updateRecept(Recept.this.token, RB, new AsyncCallback<Void>() {
 
@@ -381,8 +352,6 @@ public class Recept extends Composite {
 					recNameTxt.setText(raavareId);
 					recNameTxt.fireEvent(new KeyUpEvent() {
 					}); // validation
-
-
 
 					flex.setText(eventRowIndex, 0, rbId);
 					flex.setText(eventRowIndex, 1, raavareId);
@@ -431,8 +400,6 @@ public class Recept extends Composite {
 
 			});
 
-
-
 			flex.setWidget(eventRowIndex, 2, ok);
 			flex.setWidget(eventRowIndex, 3, cancel);
 		}
@@ -447,17 +414,16 @@ public class Recept extends Composite {
 			flex.setText(eventRowIndex, 2, "ok");
 
 	}
-	
-	
+
 	private void checkFormValid_Create() {
-		if (addRecIdValid && addRecNavnValid){
+		if (addRecIdValid && addRecNavnValid) {
 			create.setEnabled(true);
-		}
-		else create.setEnabled(false);
-			
-		}
-	
-	//Klasse til administration af receptkomponenter
+		} else
+			create.setEnabled(false);
+
+	}
+
+	// Klasse til administration af receptkomponenter
 	private class KomponentHandler implements ClickHandler {
 
 		private ListBox addlist;
@@ -470,33 +436,33 @@ public class Recept extends Composite {
 		private int recIdSelected;
 		private int column;
 		ArrayList<String> raavarerIRec;
-		
+
 		@Override
 		public void onClick(ClickEvent event) {
 			recIdSelected = Integer.parseInt(flex.getText(flex.getCellForEvent(event).getRowIndex(), 0));
 			column = flex.getCellForEvent(event).getRowIndex();
 			recKomp = new DialogBox();
 			recKomp.center();
-			
+
 			raavarer = new FlexTable();
 			raavarerIRec = new ArrayList<String>();
 			raavarer.setText(0, 0, "Raavare Navn:");
 			raavarer.setStyleName("FlexTable-Dialog");
-			
+
 			HorizontalPanel kompPanel = new HorizontalPanel();
 			VerticalPanel verKompPanel = new VerticalPanel();
-		
-			Label Navn = new Label("Raavarer i "+  flex.getText(flex.getCellForEvent(event).getRowIndex(), 1));
+
+			Label Navn = new Label("Raavarer i " + flex.getText(flex.getCellForEvent(event).getRowIndex(), 1));
 			Navn.setStyleName("Dialog-Text");
-			
+
 			Label netto = new Label("NomNetto");
 			Label tolerance = new Label("Tolerance");
-			
+
 			nettoTxt = new TextBox();
 			toleranceTxt = new TextBox();
 			nettoTxt.setStyleName("TextBox-style");
 			toleranceTxt.setStyleName("TextBox-style");
-			
+
 			nettoTxt.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override
@@ -510,11 +476,11 @@ public class Recept extends Composite {
 						validNetto = true;
 					}
 					checkFormValidKomp();
-					
+
 				}
 
 			});
-			
+
 			toleranceTxt.addKeyUpHandler(new KeyUpHandler() {
 
 				@Override
@@ -528,132 +494,130 @@ public class Recept extends Composite {
 						validTolerance = true;
 					}
 					checkFormValidKomp();
-					
+
 				}
 
 			});
-			
+
 			addKomp = new Button("Tilf\u00F8j denne komponent");
 			addKomp.setEnabled(false);
 			addKomp.addClickHandler(new ClickHandler() {
-				
-//				Tilføj ny receptkomponent
-				@Override	
+
+				// Tilfï¿½j ny receptkomponent
+				@Override
 				public void onClick(ClickEvent event) {
-					//Window.alert("item selected: " + addlist.getSelectedItemText());
-				
+					// Window.alert("item selected: " +
+					// addlist.getSelectedItemText());
+
 					client.service.getRaavareFromName(addlist.getSelectedItemText(), new AsyncCallback<Integer>() {
-						
+
 						@Override
 						public void onSuccess(Integer result) {
-							
+
 							client.service.createReceptKomponent(token, new ReceptKompDTO(recIdSelected, result,
-							Double.parseDouble(nettoTxt.getText()),  Double.parseDouble(toleranceTxt.getText())), new AsyncCallback<Void>() {
+									Double.parseDouble(nettoTxt.getText()), Double.parseDouble(toleranceTxt.getText())),
+									new AsyncCallback<Void>() {
 
-								@Override
-								public void onFailure(Throwable caught) {
-									// TODO Auto-generated method stub
-									
-								}
+										@Override
+										public void onFailure(Throwable caught) {
+											// TODO Auto-generated method stub
 
-								@Override
-								public void onSuccess(Void result) {
-								Window.alert("You have succesfully added " + addlist.getSelectedItemText() + " to your Recept!");
-								recKomp.hide();
-								
-									
-								}
-							});
-							
+										}
+
+										@Override
+										public void onSuccess(Void result) {
+											Window.alert("You have succesfully added " + addlist.getSelectedItemText()
+													+ " to your Recept!");
+											recKomp.hide();
+
+										}
+									});
+
 						}
-						
+
 						@Override
 						public void onFailure(Throwable caught) {
 							Window.alert("nope");
-							
+
 						}
 					});
-					//Window.Location.reload();
+					// Window.Location.reload();
 				}
 			});
-			
+
 			Button close = new Button("Luk Vindue	");
-			
+
 			close.addClickHandler(new ClickHandler() {
-				
+
 				@Override
 				public void onClick(ClickEvent event) {
 					recKomp.hide();
-					
+
 				}
 			});
-			
-			
+
 			addlist = new ListBox();
 
-			
 			// Hent data fra database til felxtable/listbxox
 			client.service.getRaavIRec(recIdSelected, new AsyncCallback<List<String>>() {
-				
-				
+
 				@Override
 				public void onSuccess(List<String> result) {
-					//Window.alert(result.get(1));
+					// Window.alert(result.get(1));
 					try {
 						for (int i = 0; i < result.size(); i++) {
-							raavarer.setText(i+1, 0, result.get(i));
+							raavarer.setText(i + 1, 0, result.get(i));
 							raavarerIRec.add(result.get(i));
-						
+
 						}
-						
+
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-//					Add elements to list
-					client.service.getRaavare(token, new AsyncCallback<List<RaavareDTO>>(){
+
+					// Add elements to list
+					client.service.getRaavare(token, new AsyncCallback<List<RaavareDTO>>() {
 
 						@Override
 						public void onFailure(Throwable caught) {
 							Window.alert("Fejl raav");
-							
+
 						}
 
 						@Override
 						public void onSuccess(List<RaavareDTO> result) {
-							
+
 							int count = 0;
 							for (int i = 0; i < result.size(); i++) {
-								
+
 								boolean addable = true;
-								
-								 {
+
+								{
 									for (int j = 0; j < raavarerIRec.size(); j++) {
-										if (result.get(i).getRaavareNavn().equalsIgnoreCase(raavarerIRec.get(j))){
+										if (result.get(i).getRaavareNavn().equalsIgnoreCase(raavarerIRec.get(j))) {
 											addable = false;
-									}
-									
+										}
+
 									}
 								}
 								if (addable)
-								addlist.addItem(result.get(i).getRaavareNavn());
-								
+									addlist.addItem(result.get(i).getRaavareNavn());
+
 							}
 						}
 
 					});
-					
+
 				}
-				
+
 				@Override
 				public void onFailure(Throwable caught) {
 					Window.alert("Fejl raavirec");
-					
+
 				}
 			});
-			
-	
+
 			kompPanel.add(Navn);
 			kompPanel.setStyleName("Dialog");
 			verKompPanel.add(kompPanel);
@@ -662,18 +626,17 @@ public class Recept extends Composite {
 			verKompPanel.add(nettoTxt);
 			verKompPanel.add(tolerance);
 			verKompPanel.add(toleranceTxt);
-			
+
 			verKompPanel.add(addlist);
 			verKompPanel.add(addKomp);
-			
-			
+
 			verKompPanel.add(close);
-			
+
 			recKomp.add(verKompPanel);
 			recKomp.show();
-			
-			
+
 		}
+
 		private void checkFormValidKomp() {
 			if (validNetto && validTolerance)
 
