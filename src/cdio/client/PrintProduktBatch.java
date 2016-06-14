@@ -1,16 +1,12 @@
 package cdio.client;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.CalendarUtil;
-
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.RaavareDTO;
@@ -39,6 +35,11 @@ public class PrintProduktBatch extends Composite{
 	private int pbNumber = 0;
 	private String onToken;
 	private ServiceClientImpl onClient;
+	private Date d = new Date();
+	@SuppressWarnings("deprecation")
+	private String date = d.getDate()+"-"+(1+d.getMonth())+"-"+(1900+d.getYear());
+	
+	
 	
 	public PrintProduktBatch(ServiceClientImpl client, int produktNumber, String token){
 		this.onToken = token;
@@ -55,7 +56,7 @@ public class PrintProduktBatch extends Composite{
 			@Override
 			public void onSuccess(ProduktBatchDTO result) {
 				PBResult = result;
-				printedOn = new Label("Udskrevet      "+new CalendarUtil());
+				printedOn = new Label("Udskrevet      "+ date);
 				productBatchNr = new Label("Produkt Batch nr. "+pbNumber);
 				receptNr = new Label("Recept nr. "+result.getReceptId());
 				String status = "";
