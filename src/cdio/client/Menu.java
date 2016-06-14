@@ -129,6 +129,10 @@ public class Menu extends Composite {
 
 		switch (token) {
 
+		case "admin":			
+			visBruger.setVisible(false);
+			break;
+		
 		case "farmaceut":
 			opretBruger.setVisible(false);
 			redigerBruger.setVisible(false);

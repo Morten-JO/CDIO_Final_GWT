@@ -49,7 +49,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public List<UserDTO> getPersons(String token) {
 
-		if (getRole(token).equalsIgnoreCase("farmaceut") || getRole(token).equalsIgnoreCase("admin")) {
+		if (getRole(token).equalsIgnoreCase("farmaceut") || getRole(token).equalsIgnoreCase("admin") || getRole(token).equalsIgnoreCase("vaerkfoerer")) {
 			try {
 				return this.controller.getOprDAO().getUserList(getRole(token));
 			} catch (cdio.server.DAOinterfaces.DALException e) {
