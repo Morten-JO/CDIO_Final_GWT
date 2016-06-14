@@ -502,7 +502,7 @@ public class Recept extends Composite {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
 
-					if (!FieldVerifier.isValidRbId(nettoTxt.getText())) {
+					if (!FieldVerifier.isValidMaengde(nettoTxt.getText())) {
 						nettoTxt.setStyleName("gwt-TextBox-invalidEntry");
 						validNetto = false;
 					} else {
@@ -520,7 +520,7 @@ public class Recept extends Composite {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
 
-					if (!FieldVerifier.isValidRbId(toleranceTxt.getText())) {
+					if (!FieldVerifier.isValidMaengde(toleranceTxt.getText())) {
 						toleranceTxt.setStyleName("gwt-TextBox-invalidEntry");
 						validTolerance = false;
 					} else {
