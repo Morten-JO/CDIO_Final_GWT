@@ -2,6 +2,7 @@ package cdio.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.thirdparty.javascript.rhino.Token;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -15,6 +16,8 @@ public class Menu extends Composite {
 	private Anchor opretBruger;
 	private Anchor redigerBruger;
 	private Anchor logUd;
+	private Anchor visBruger;
+	
 
 	public Menu(final MainViewController mvc, String role) {
 		VerticalPanel vPanel = new VerticalPanel();
@@ -26,7 +29,9 @@ public class Menu extends Composite {
 		showRecepter = new Anchor("Recepter");
 		showRaavarer = new Anchor("Raavarer");
 		opretBruger = new Anchor("Opret Bruger");
-		redigerBruger = new Anchor("Vis/Ret/Slet Bruger");
+		redigerBruger = new Anchor("Bruger liste");
+		visBruger = new Anchor("Bruger liste");
+		
 		logUd = new Anchor("Log Ud");
 		determineUserMenu(role);
 
@@ -90,6 +95,16 @@ public class Menu extends Composite {
 
 		});
 
+		visBruger.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				mvc.viewBruger();
+
+			}
+			
+		});
+
 		logUd.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -105,6 +120,7 @@ public class Menu extends Composite {
 		vPanel.add(showRaavarer);
 		vPanel.add(opretBruger);
 		vPanel.add(redigerBruger);
+		vPanel.add(visBruger);
 		vPanel.add(logUd);
 
 	}

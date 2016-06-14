@@ -134,6 +134,12 @@ public class MainViewController extends Composite {
 		this.content.addContent(new ShowPersons(client, token));
 
 	}
+	
+	public void viewBruger(){
+		this.header.setText("Brugerliste");
+		this.content.addContent(new UserView(client, token));
+
+	}
 
 	public void logUd() {
 		RootPanel.get().clear();
