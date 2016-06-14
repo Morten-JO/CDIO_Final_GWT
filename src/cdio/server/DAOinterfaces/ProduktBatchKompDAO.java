@@ -14,4 +14,6 @@ public interface ProduktBatchKompDAO {
 	void createProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException;
 
 	void updateProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException;
+
+	List<Integer> getRbInPb(int pbID) throws DALException;
 }

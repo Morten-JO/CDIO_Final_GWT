@@ -105,16 +105,17 @@ public class MYSQLProduktBatchKompDAO implements ProduktBatchKompDAO {
 	}
 
 	@Override
-	public void getRbInPb(int pbID) throws DALException {
+	public List<Integer> getRbInPb(int pbID) throws DALException {
+		List<Integer> list = new ArrayList<Integer>();
 		try {
-			Connector.getInstance()
-					.doUpdate("UPDATE produktbatchkomponent SET  tara= " + produktbatchkomponent.getTara()
-							+ ", netto =  " + produktbatchkomponent.getNetto() + ", oprId = "
-							+ produktbatchkomponent.getOprId() + " WHERE pbId = " + produktbatchkomponent.getPbId()
-							+ " and rbId  = " + produktbatchkomponent.getRbId() + ";");
-
+			ResultSet rs = Connector.getInstance().doQuery("Select rbID from produktbatchkomponent where pbId = " + pbID + ";");
+			while (rs.next()){
+				list.add(rs.getInt(1));
+				
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return list;
 	}
 }

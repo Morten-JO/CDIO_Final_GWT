@@ -70,4 +70,6 @@ public interface Service extends RemoteService {
 
 	void createPBKomp(ProduktBatchKompDTO pbKomp);
 
+	List<Integer> getRBinPB(int pbId);
+
 }

@@ -67,4 +67,6 @@ public interface ServiceAsync {
 	void createRA(String token, RaavareDTO raavare, AsyncCallback<Void> callback);
 
 	void createPBKomp(ProduktBatchKompDTO pbKomp, AsyncCallback<Void> callback);
+
+	void getRBinPB(int pbId, AsyncCallback<List<Integer>> callback);
 }
