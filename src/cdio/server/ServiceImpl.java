@@ -11,6 +11,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import cdio.client.service.Service;
 import cdio.server.DAOinterfaces.DALException;
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -430,6 +431,28 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 
 		}
+	}
+	
+	@Override
+	public void createPBKomp(ProduktBatchKompDTO pbKomp){
+		try {
+			controller.getPBKompDAO().createProduktBatchKomp(pbKomp);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+	}
+	
+	@Override
+	public List<Integer> getRBinPB(int pbId){
+		try {
+			controller.getPBKompDAO().);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 	}
 }
 

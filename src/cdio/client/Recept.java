@@ -226,7 +226,7 @@ public class Recept extends Composite {
 										
 										
 										Anchor edit = new Anchor("edit");
-										Anchor addRecKomp = new Anchor("Tilføj Komponent");
+										Anchor addRecKomp = new Anchor("Tilf\u00F8j Komponent");
 										flex.setWidget(rowIndex + 1, 4, addRecKomp);
 										flex.setWidget(rowIndex + 1, 2, edit);
 

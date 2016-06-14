@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -65,4 +66,6 @@ public interface ServiceAsync {
 	void getUserName(String token, AsyncCallback<String> callback);
 
 	void createRA(String token, RaavareDTO raavare, AsyncCallback<Void> callback);
+
+	void createPBKomp(ProduktBatchKompDTO pbKomp, AsyncCallback<Void> callback);
 }
