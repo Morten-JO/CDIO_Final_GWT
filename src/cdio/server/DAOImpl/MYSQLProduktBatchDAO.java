@@ -58,7 +58,7 @@ public class MYSQLProduktBatchDAO implements ProduktBatchDAO {
 		try {
 			CallableStatement createPB = Connector.getInstance().getConnection()
 					.prepareCall("call add_produktbatch(?,?)");
-			createPB.setInt(1, produktbatch.getStatus());
+			createPB.setInt(1, produktbatch.getPbId());
 			createPB.setInt(2, produktbatch.getReceptId());
 			createPB.execute();
 
