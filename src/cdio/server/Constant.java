@@ -10,4 +10,4 @@ public abstract class Constant {
 			password = "a"; // Password for the database
 
 	public static final int port = 3306; // Port to acces database
-}
+}																								

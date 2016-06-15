@@ -72,12 +72,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		// System.out.println(current);
 		if (current != null && current.getPassword().equals(password)) {
 			if (current.getRolle().equals("admin") || current.getRolle().equals("vaerkfoerer")
-					|| current.getRolle().equals("farmaceut"))
+					|| current.getRolle().equals("farmaceut")){
 				token = tokenHandler.createToken(Integer.toString(id));
 			return token;
+			}
 		} else {
 			return "Login not authorized!";
 		}
+		return "Login not authorized!";
 	}
 
 	@Override
