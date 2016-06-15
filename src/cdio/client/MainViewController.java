@@ -20,7 +20,7 @@ public class MainViewController extends Composite {
 	private ScrollPanel scroll;
 	private ServiceClientImpl client;
 	public static String token;
-	private String test;
+	private String nameOfUser;
 
 	public MainViewController(ServiceClientImpl service, String token) {
 
@@ -42,10 +42,10 @@ public class MainViewController extends Composite {
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
-				test = result;
+				nameOfUser = result;
 				// Window.alert(result);
 				// System.out.println(result+"morten");
-				header = new Header(test);
+				header = new Header(nameOfUser);
 
 			}
 
@@ -62,7 +62,7 @@ public class MainViewController extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
-
+				header.setRolleText(result);
 				menuView = new Menu(MainViewController.this, result);
 				if (header != null) {
 					vPanel.add(header);

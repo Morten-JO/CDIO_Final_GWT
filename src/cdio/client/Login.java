@@ -28,28 +28,49 @@ public class Login extends Composite {
 	private Button login;
 
 	public Login(ServiceClientImpl service) {
+		
 		client = service;
 		initWidget(this.vPanel);
-		vPanel.setStyleName("LoginBox");
-		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		
+		// Opretter de forskellige moduler
 		Label myLbl = new Label(" Login");
-		myLbl.setStyleName("LoginFont");
-		vPanel.add(myLbl);
 		HorizontalPanel hPanel = new HorizontalPanel();
 		Image user_icon = new Image("/images/icon-profile.png");
-		hPanel.add(user_icon);
 		this.username = new TextBox();
-		username.getElement().setPropertyString("placeholder", "ENTER YOUR ID");
-		username.setStyleName("LoginTBox");
-		hPanel.add(username);
 		Image lock_icon = new Image("/images/icon lock.png");
 		this.pass = new PasswordTextBox();
 		HorizontalPanel passPanel = new HorizontalPanel();
+		this.login = new Button("Log ind");
+		statusLogin = new Label(" ");
+		
+		// Giver dem CSS-styles 
+		vPanel.setStyleName("LoginBox");
+		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		myLbl.setStyleName("LoginFont");
+		username.getElement().setPropertyString("placeholder", "ENTER YOUR ID");
+		username.setStyleName("LoginTBox");
 		pass.getElement().setPropertyString("placeholder", "ENTER YOUR PASSWORD");
 		pass.setStyleName("LoginTBox");
+		username.setText("4");
+		pass.setText("admin");
+		login.setPixelSize(100, 30);
+		login.setStyleName("loginbtn");
+		
+		
+		
+		//add de forksellige elementer til deres panels 
+		vPanel.add(myLbl);
+		hPanel.add(user_icon);
+		hPanel.add(username);
 		passPanel.add(lock_icon);
 		passPanel.add(pass);
-		this.login = new Button("Log ind");
+		vPanel.add(hPanel);
+		vPanel.add(passPanel);
+		vPanel.add(statusLogin);
+		vPanel.add(login);
+		
+		
+		// Metode til at klikke enter, for at logge ind
 		pass.addKeyDownHandler(new KeyDownHandler() {
 
 			@Override
@@ -62,19 +83,8 @@ public class Login extends Composite {
 
 		});
 
-		statusLogin = new Label(" ");
-
-		// predetermined
-		username.setText("4");
-		pass.setText("admin");
-
-		login.setPixelSize(100, 30);
-		login.setStyleName("loginbtn");
-
-		vPanel.add(hPanel);
-		vPanel.add(passPanel);
-		vPanel.add(statusLogin);
-		vPanel.add(login);
+		// Når der klikkes på login kanppen, sender den et RPC kald til serveren 
+		//og tjekker om password og username passer		
 		login.addClickHandler(new ClickHandler() {
 
 			@Override
