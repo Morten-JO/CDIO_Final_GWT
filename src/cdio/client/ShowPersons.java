@@ -50,7 +50,7 @@ public class ShowPersons extends Composite {
 		initWidget(vPanel);
 		this.token = token;
 		this.client = client;
-
+		// suggest box to add rolle in flextabel
 		MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 		oracle.add("admin");
 		oracle.add("farmaceut");

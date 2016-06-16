@@ -52,28 +52,34 @@ public class Raavare extends Composite {
 	Anchor previousCancel = null;
 
 	public Raavare(ServiceClientImpl client, String token) {
+		//
+		this.token = token;
+		this.client = client;
+		//
 		flex = new FlexTable();
-		flex.setStyleName("FlexTable");
-		flex.getRowFormatter().addStyleName(0, "FlexTable-Header");
 		vPanel = new VerticalPanel();
-		initWidget(vPanel);
 		hPanel = new HorizontalPanel();
 		Label oprtRec = new Label("Opret Ravarer: ");
-		oprtRec.setStyleName("Font-RB");
 		addRaavareId = new TextBox();
-		addRaavareId.setStyleName("TextBox-style1");
 		addRaavNavnTxt = new TextBox();
-		addRaavNavnTxt.setStyleName("TextBox-style1");
 		addLeverandoerTxt = new TextBox();
-		// addLeverandoerTxt .setHeight("20px");
-		addLeverandoerTxt.setStyleName("TextBox-style1");
-
 		Label RaavareId = new Label("RaavareID : ");
 		Label RaavareNavn = new Label("RaavareNavn : ");
 		Label Leverandoer = new Label("Leverandoer : ");
 		create = new Button("Create");
-		// create.setStyleName("createbtn");
+		
+		initWidget(vPanel);
+		
+		//add styels 
+		flex.setStyleName("FlexTable");
+		flex.getRowFormatter().addStyleName(0, "FlexTable-Header");		
+		oprtRec.setStyleName("Font-RB");		
+		addRaavareId.setStyleName("TextBox-style1");		
+		addRaavNavnTxt.setStyleName("TextBox-style1");		
+		addLeverandoerTxt.setStyleName("TextBox-style1");	
 		create.setEnabled(false);
+		
+		// Add to panels 
 		vPanel.add(oprtRec);
 		hPanel.add(RaavareId);
 		hPanel.add(addRaavareId);
@@ -81,12 +87,10 @@ public class Raavare extends Composite {
 		hPanel.add(addRaavNavnTxt);
 		hPanel.add(Leverandoer);
 		hPanel.add(addLeverandoerTxt);
-
 		hPanel.add(create);
 		vPanel.add(hPanel);
 
-		this.token = token;
-		this.client = client;
+		
 
 		addRaavareId.addKeyUpHandler(new KeyUpHandler() {
 
@@ -278,6 +282,8 @@ public class Raavare extends Composite {
 			}
 
 		});
+		
+		// need to be here cause the time aspect.
 		vPanel.add(flex);
 		// create textboxs
 		raavIdTxt = new TextBox();

@@ -29,7 +29,7 @@ public class UserView extends Composite {
 		flex.getRowFormatter().addStyleName(0,"FlexTable-Header");
 		vPanel = new VerticalPanel();
 		initWidget(vPanel);
-		this.token = "admin";
+		
 		this.client = client;
 		
 

@@ -1,7 +1,5 @@
 package cdio.client;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,11 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import cdio.client.service.ServiceClientImpl;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ProduktBatchDTO;
-import cdio.shared.ProduktBatchKompDTO;
-import cdio.shared.RaavareBatchDTO;
-import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
-import cdio.shared.ReceptKompDTO;
 
 public class Produktbatch extends Composite {
 
@@ -55,7 +49,7 @@ public class Produktbatch extends Composite {
 	boolean receptIdValid = true;
 
 	private List<ProduktBatchDTO> listOfPB;
-	private int number;
+
 
 	int eventRowIndex;
 	Anchor ok;

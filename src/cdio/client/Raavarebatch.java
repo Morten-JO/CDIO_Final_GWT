@@ -61,6 +61,7 @@ public class Raavarebatch extends Composite {
 		vPanel = new VerticalPanel();
 		hPanel = new HorizontalPanel();
 		Label oprtRB = new Label("Opret Raavarebatch :");
+		
 		oprtRB.setStyleName("Font-RB");
 		flex.setStyleName("FlexTable");
 		flex.getRowFormatter().addStyleName(0, "FlexTable-Header");

@@ -589,7 +589,7 @@ public class Recept extends Composite {
 						@Override
 						public void onSuccess(List<RaavareDTO> result) {
 
-							int count = 0;
+							
 							for (int i = 0; i < result.size(); i++) {
 
 								boolean addable = true;

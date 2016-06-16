@@ -82,10 +82,7 @@ public class MainViewController extends Composite {
 
 			}
 		});
-		// menuView = new Menu(this, token);
-
-		// scroll.setStyleName("ScrollPanel");
-
+		
 	}
 
 	public void showRaavBa() {
