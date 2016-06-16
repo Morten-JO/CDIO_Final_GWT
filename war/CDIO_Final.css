@@ -93,7 +93,7 @@ width: 1024px;
 	border-top: solid 7px #204568;
 	border-bottom : solid 7px #204568;
 	padding: 10px;
-	border-radius: 10px;
+	border-radius: 10px;												
 	background:white;
 	margin-top: 75px;
 	
@@ -133,7 +133,7 @@ width: 1024px;
 
 body { 
   
-    background-image: url("images/bg.jpg")!important ;
+    background-image: url("images/bg1.jpg")!important ;
     
 	
 }
@@ -246,7 +246,7 @@ body {
 }
 
 .gwt-Anchor:link {color:#000000;font-weight: bold; }
-.gwt-Anchor:visited {color:#ff0000;}
+.gwt-Anchor:visited {color:#000000;}
 .gwt-Anchor:hover {color:#ff0000;}
 .gwt-Anchor:active {color:#FF0000;}
 
