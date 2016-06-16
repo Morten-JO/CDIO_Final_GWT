@@ -66,17 +66,6 @@ public class FieldVerifier {
 		}
 		return false;
 	}
-	// String regex = "^[a-zA-Z]+$";
-	// if(id.matches(regex)){
-	// return false;
-	// }
-	// int i = Integer.parseInt(id);
-	// if (i<=0 || i>2147483647){ // nr. 2147483647 = max value of integer
-	// return false;
-	// }
-	//
-	// else return true;
-	// }
 
 	public static boolean isValidIni(String Ini) {
 		if (Ini.length() > 1 && Ini.length() < 5 && Ini.matches("[a-zA-Z]+")) {
@@ -87,7 +76,7 @@ public class FieldVerifier {
 
 	public static boolean isValidRaavareID(String raavareID) {
 		try {
-			int id = Integer.parseInt(raavareID);
+			Integer.parseInt(raavareID);
 		} catch (NumberFormatException e) {
 			return false;
 		}

@@ -43,8 +43,6 @@ public class MainViewController extends Composite {
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
 				nameOfUser = result;
-				// Window.alert(result);
-				// System.out.println(result+"morten");
 				header = new Header(nameOfUser);
 
 			}

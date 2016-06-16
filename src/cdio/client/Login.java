@@ -89,10 +89,10 @@ public class Login extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-
+				//tjekker om usernamer og password er gyldigt
 				client.service.checkLogin(Integer.parseInt(username.getText()), pass.getText(),
 						new AsyncCallback<String>() {
-
+						// metode hvis kaldet gå godt
 							@Override
 							public void onSuccess(String result) {
 								if (result.equals("Login not authorized!"))
@@ -103,7 +103,7 @@ public class Login extends Composite {
 								}
 
 							}
-
+							// metode hvis kaldet gå dårligt 
 							@Override
 							public void onFailure(Throwable caught) {
 								statusLogin.setText("connection failure");

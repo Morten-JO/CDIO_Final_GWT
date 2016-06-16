@@ -34,6 +34,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<RaavareDTO> getRaavare(String token) {
+		// skal have rollen farmaceut eller admin for at gøre følgende :
 		if (getRole(token).equalsIgnoreCase("farmaceut") || getRole(token).equalsIgnoreCase("admin")) {
 			try {
 				return this.controller.getRaavareDAO().getRaavareList();
@@ -48,7 +49,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<UserDTO> getPersons(String token) {
-
+		// skal have rollen farmaceut eller admin for at gøre følgende :
 		if (getRole(token).equalsIgnoreCase("farmaceut") || getRole(token).equalsIgnoreCase("admin") || getRole(token).equalsIgnoreCase("vaerkfoerer")) {
 			try {
 				return this.controller.getOprDAO().getUserList(getRole(token));
@@ -69,7 +70,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(current);
+		;
 		if (current != null && current.getPassword().equals(password)) {
 			if (current.getRolle().equals("admin") || current.getRolle().equals("vaerkfoerer")
 					|| current.getRolle().equals("farmaceut")){
@@ -86,7 +87,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public String getRole(String token) {
 
 		try {
-			// String r = tokenHandler.getUserID(token);
 			String role = controller.getOprDAO().getUserRole(tokenHandler.getUserID(token));
 
 			return role;

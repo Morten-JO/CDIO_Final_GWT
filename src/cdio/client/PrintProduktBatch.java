@@ -3,6 +3,7 @@ package cdio.client;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -166,7 +167,7 @@ public class PrintProduktBatch extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				Window.alert(""+caught);
 				printedOn = new Label("Udskrevet      FEJL");
 				productBatchNr = new Label("Produkt Batch nr. " + pbNumber);
 				receptNr = new Label("Recept nr. FEJL");

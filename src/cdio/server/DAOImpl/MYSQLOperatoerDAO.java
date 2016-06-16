@@ -51,13 +51,6 @@ public class MYSQLOperatoerDAO implements OperatoerDAO {
 			createOP.setString(6, opr.getRolle());
 			createOP.execute();
 
-			// int id = 0;
-			// ResultSet rs = Connector.getInstance().doQuery("select
-			// max(opr_id) from operatoer;");
-			// if (rs.first()){
-			// id = rs.getInt(1);
-			// opr.setOprId(id);
-			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Could not create operatoer! The operator ID is proably taken!");

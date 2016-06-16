@@ -301,12 +301,7 @@ public class Produktbatch extends Composite {
 
 			eventRowIndex = flex.getCellForEvent(event).getRowIndex();
 			Produktbatch.this.con.showPrintProduktBatch(listOfPB.get(eventRowIndex - 1).getPbId());
-			// Window.print();
-			// new MainViewController(client,
-			// token).showPrintProduktBatch(number);
-			// RootPanel.get().clear();
-			// RootPanel.get().add(new PrintProduktBatch(client, number,
-			// token));
+			
 		}
 
 	}
