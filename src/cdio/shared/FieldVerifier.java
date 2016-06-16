@@ -1,4 +1,5 @@
 package cdio.shared;
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class FieldVerifier {
 
@@ -98,16 +99,17 @@ public class FieldVerifier {
 	}
 
 	public static boolean isValidCpr(String cpr) {
-
-		if (cpr.length() > 10) {
+		try {
+			DateTimeFormat myDateTimeFormat = DateTimeFormat.getFormat("ddMMyyyy");
+			myDateTimeFormat.parseStrict(cpr);
+			
+		} catch (IllegalArgumentException e) {
 			return false;
 		}
-		if (!cpr.matches("\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")) {
-			return false;
-		}
-
 		return true;
-	}
+		}
+		
+		
 
 	public static boolean isVaildPassword(String password) {
 		if (password.length() > 4 && password.length() < 9) {
