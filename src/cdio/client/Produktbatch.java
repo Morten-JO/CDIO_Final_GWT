@@ -47,6 +47,7 @@ public class Produktbatch extends Composite {
 	boolean statusValid = false;
 	boolean rbIdValid = true;
 	boolean receptIdValid = true;
+	boolean addPBExists = false;
 
 	private List<ProduktBatchDTO> listOfPB;
 
@@ -134,8 +135,8 @@ public class Produktbatch extends Composite {
 										}
 									}
 									if (!idExists) {
-										AddPbId.removeStyleName("gwt-TextBox-invalidEntry");
-										addPbValid = true;
+										//AddPbId.removeStyleName("gwt-TextBox-invalidEntry");
+										addPBExists = true;
 										// failOprIDLbl.setText("");
 									} else {
 										AddPbId.setStyleName("gwt-TextBox-invalidEntry");
@@ -469,7 +470,7 @@ public class Produktbatch extends Composite {
 	}
 
 	private void checkFormValid_Create() {
-		if (addPbValid && receptIdValid) {
+		if (addPbValid && receptIdValid && addPBExists) {
 			create.setEnabled(true);
 		} else
 			create.setEnabled(false);

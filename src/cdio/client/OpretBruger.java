@@ -44,7 +44,7 @@ public class OpretBruger extends Composite {
 																// det her :D
 
 	Button save;
-
+	boolean oprIDExists = false;
 	boolean nameValid = false;
 	boolean oprIDVaild = false;
 	boolean iniVaild = false;
@@ -157,8 +157,8 @@ public class OpretBruger extends Composite {
 								}
 							}
 							if (!idExists) {
-								txtbox[0].setStyleName("TextBox-style");
-								oprIDVaild = true;
+								//txtbox[0].setStyleName("TextBox-style");
+								oprIDExists = true;
 								fejlLabels[0].setText("");
 							} else {
 								txtbox[0].setStyleName("gwt-TextBox-invalidEntry ");
@@ -278,7 +278,7 @@ public class OpretBruger extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (nameValid && oprIDVaild && iniVaild && cprVaild && passwordVaild && radioButtonPressed)
+		if (nameValid && oprIDExists && oprIDVaild && iniVaild && cprVaild && passwordVaild && radioButtonPressed)
 			save.setEnabled(true);
 		else
 			save.setEnabled(false);

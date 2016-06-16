@@ -45,9 +45,10 @@ public class Raavarebatch extends Composite {
 	// boolean raavareId = false;
 	boolean maengde = false;
 
-	boolean rbIdValid = true;
-	boolean raavareIdValid = true;
-	boolean maengdeValid = true;
+	boolean rbIdValid = false;
+	boolean raavareIdValid = false;
+	boolean maengdeValid = false;
+	boolean rbIdExists = false;
 
 	int eventRowIndex;
 	Anchor ok;
@@ -133,8 +134,8 @@ public class Raavarebatch extends Composite {
 								}
 							}
 							if (!idExists) {
-								AddRbId.removeStyleName("gwt-TextBox-invalidEntry");
-								rbIdValid = true;
+								//AddRbId.removeStyleName("gwt-TextBox-invalidEntry");
+								rbIdExists = true;
 								// failOprIDLbl.setText("");
 							} else {
 								AddRbId.setStyleName("gwt-TextBox-invalidEntry");
@@ -452,7 +453,7 @@ public class Raavarebatch extends Composite {
 	}
 
 	private void checkFormValid_Create() {
-		if (RbIdVaild && maengde) {
+		if (RbIdVaild && maengde && rbIdExists) {
 			create.setEnabled(true);
 		} else
 			create.setEnabled(false);

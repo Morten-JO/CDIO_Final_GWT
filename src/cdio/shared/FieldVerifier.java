@@ -53,6 +53,9 @@ public class FieldVerifier {
 	}
 
 	public static boolean isValidRbId(String id) {
+		if(id.startsWith("-")){
+			return false;
+		}
 		try {
 			Integer.parseInt(id);
 		} catch (NumberFormatException e) {

@@ -46,6 +46,7 @@ public class Raavare extends Composite {
 	boolean addRaavareIdValid = false;
 	boolean addRaavNavnTxtValid = false;
 	boolean addLeverandoerValid = false;
+	boolean RaavareIdExists  = false;
 
 	int eventRowIndex;
 	Anchor ok;
@@ -115,8 +116,8 @@ public class Raavare extends Composite {
 								}
 							}
 							if (!idExists) {
-								addRaavareId.removeStyleName("gwt-TextBox-invalidEntry");
-								addRaavareIdValid = true;
+								//addRaavareId.removeStyleName("gwt-TextBox-invalidEntry");
+								RaavareIdExists = true;
 								// failOprIDLbl.setText("");
 							} else {
 								addRaavareId.setStyleName("gwt-TextBox-invalidEntry");
@@ -440,7 +441,7 @@ public class Raavare extends Composite {
 	}
 
 	private void checkFormValid_Create() {
-		if (addRaavareIdValid && addRaavNavnTxtValid && addLeverandoerValid) {
+		if (addRaavareIdValid && addRaavNavnTxtValid && addLeverandoerValid&&RaavareIdExists ) {
 			create.setEnabled(true);
 		} else
 			create.setEnabled(false);

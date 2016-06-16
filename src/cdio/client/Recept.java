@@ -45,6 +45,7 @@ public class Recept extends Composite {
 
 	boolean recIdValid = false;
 	boolean recNavnValid = false;
+	boolean addRecIdExists = false;
 
 	Button create;
 
@@ -104,8 +105,8 @@ public class Recept extends Composite {
 								}
 							}
 							if (!idExists) {
-								addRecIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
-								addRecIdValid = true;
+								//addRecIdTxt.removeStyleName("gwt-TextBox-invalidEntry");
+								addRecIdExists = true;
 								// failOprIDLbl.setText("");
 							} else {
 								addRecIdTxt.setStyleName("gwt-TextBox-invalidEntry");
@@ -418,7 +419,7 @@ public class Recept extends Composite {
 	}
 
 	private void checkFormValid_Create() {
-		if (addRecIdValid && addRecNavnValid) {
+		if (addRecIdValid && addRecNavnValid && addRecIdExists) {
 			create.setEnabled(true);
 		} else
 			create.setEnabled(false);
