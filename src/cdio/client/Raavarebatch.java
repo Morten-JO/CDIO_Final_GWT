@@ -79,7 +79,7 @@ public class Raavarebatch extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+				Window.alert(""+caught.getMessage());
 
 			}
 
@@ -118,6 +118,7 @@ public class Raavarebatch extends Composite {
 				Raavarebatch.this.client.service.getRaavareBatches(new AsyncCallback<List<RaavareBatchDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
+						Window.alert(""+caught.getMessage());
 					}
 
 					@Override
@@ -205,7 +206,7 @@ public class Raavarebatch extends Composite {
 
 							@Override
 							public void onFailure(Throwable caught) {
-
+								Window.alert(""+caught.getMessage());
 							}
 
 							@Override
@@ -251,7 +252,7 @@ public class Raavarebatch extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				Window.alert(""+caught.getMessage());
 			}
 
 			@Override
@@ -340,7 +341,7 @@ public class Raavarebatch extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							System.out.println("nusnus");
+							Window.alert(""+caught.getMessage());
 
 						}
 

@@ -87,6 +87,7 @@ public class PrintProduktBatch extends Composite {
 
 								@Override
 								public void onFailure(Throwable caught) {
+									Window.alert(""+ caught.getMessage());
 								}
 
 								@Override
@@ -167,7 +168,7 @@ public class PrintProduktBatch extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(""+caught);
+				Window.alert(""+caught.getMessage());
 				printedOn = new Label("Udskrevet      FEJL");
 				productBatchNr = new Label("Produkt Batch nr. " + pbNumber);
 				receptNr = new Label("Recept nr. FEJL");

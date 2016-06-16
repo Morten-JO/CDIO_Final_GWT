@@ -2,6 +2,7 @@ package cdio.client;
 
 import cdio.client.service.*;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -36,6 +37,7 @@ public class MainViewController extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				header = new Header("");
+				Window.alert(""+caught.getMessage());
 
 			}
 
@@ -76,7 +78,7 @@ public class MainViewController extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+				Window.alert(""+caught.getMessage());
 
 			}
 		});

@@ -89,6 +89,7 @@ public class Produktbatch extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				Window.alert(""+caught.getMessage());
 
 			}
 		});
@@ -118,6 +119,7 @@ public class Produktbatch extends Composite {
 						new AsyncCallback<List<ProduktBatchDTO>>() {
 							@Override
 							public void onFailure(Throwable caught) {
+								Window.alert(""+caught.getMessage());
 							}
 
 							@Override
@@ -183,7 +185,7 @@ public class Produktbatch extends Composite {
 
 									@Override
 									public void onFailure(Throwable caught) {
-
+										Window.alert(""+caught.getMessage());
 									}
 
 									@Override
@@ -242,7 +244,7 @@ public class Produktbatch extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				Window.alert(""+caught.getMessage());
 			}
 
 			@Override
@@ -349,7 +351,7 @@ public class Produktbatch extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							System.out.println("nusnus");
+							Window.alert(""+caught.getMessage());
 
 						}
 

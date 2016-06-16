@@ -100,6 +100,7 @@ public class Raavare extends Composite {
 				Raavare.this.client.service.getRaavare(Raavare.this.token, new AsyncCallback<List<RaavareDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
+						Window.alert(""+caught.getMessage());
 					}
 
 					@Override
@@ -207,7 +208,7 @@ public class Raavare extends Composite {
 
 									@Override
 									public void onFailure(Throwable caught) {
-
+										Window.alert(""+caught.getMessage());
 									}
 
 									@Override
@@ -251,7 +252,7 @@ public class Raavare extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				Window.alert(""+caught.getMessage());
 			}
 
 			@Override
@@ -338,7 +339,7 @@ public class Raavare extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							System.out.println("nusnus");
+							Window.alert(""+caught.getMessage());
 
 						}
 

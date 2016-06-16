@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -61,7 +62,7 @@ public class ShowPersons extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				Window.alert(""+ caught.getMessage());
 			}
 
 			@Override
@@ -179,7 +180,7 @@ public class ShowPersons extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							System.out.println("nusnus");
+							Window.alert(""+caught.getMessage());
 
 						}
 
@@ -252,7 +253,7 @@ public class ShowPersons extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
+							Window.alert(""+caught.getMessage());
 
 						}
 

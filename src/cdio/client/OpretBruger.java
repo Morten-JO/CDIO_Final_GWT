@@ -143,6 +143,7 @@ public class OpretBruger extends Composite {
 				OpretBruger.this.client.service.getPersons(OpretBruger.this.token, new AsyncCallback<List<UserDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
+						Window.alert(""+caught.getMessage());
 					}
 
 					@Override
@@ -186,6 +187,7 @@ public class OpretBruger extends Composite {
 				OpretBruger.this.client.service.getPersons(OpretBruger.this.token, new AsyncCallback<List<UserDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
+						Window.alert(""+caught.getMessage());
 					}
 
 					@Override

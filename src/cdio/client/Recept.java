@@ -89,6 +89,7 @@ public class Recept extends Composite {
 				Recept.this.client.service.getRecept(Recept.this.token, new AsyncCallback<List<ReceptDTO>>() {
 					@Override
 					public void onFailure(Throwable caught) {
+						Window.alert(""+caught.getMessage());
 					}
 					
 					@Override
@@ -155,7 +156,7 @@ public class Recept extends Composite {
 
 							@Override
 							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
+								Window.alert(""+caught.getMessage());
 
 							}
 						});
@@ -187,7 +188,7 @@ public class Recept extends Composite {
 
 							@Override
 							public void onFailure(Throwable caught) {
-
+								Window.alert(""+caught.getMessage());
 							}
 
 							@Override
@@ -240,7 +241,7 @@ public class Recept extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-
+				Window.alert(""+caught.getMessage());
 			}
 
 			@Override
@@ -320,7 +321,7 @@ public class Recept extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							System.out.println("nusnus");
+							Window.alert(""+caught.getMessage());
 
 						}
 
@@ -521,7 +522,7 @@ public class Recept extends Composite {
 
 										@Override
 										public void onFailure(Throwable caught) {
-											// TODO Auto-generated method stub
+											Window.alert(""+caught.getMessage());
 
 										}
 
@@ -538,7 +539,7 @@ public class Recept extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							Window.alert("nope");
+							Window.alert(""+caught.getMessage());
 
 						}
 					});
@@ -582,7 +583,7 @@ public class Recept extends Composite {
 
 						@Override
 						public void onFailure(Throwable caught) {
-							Window.alert("Fejl raav");
+							Window.alert(""+caught.getMessage());
 
 						}
 
@@ -614,7 +615,7 @@ public class Recept extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					Window.alert("Fejl raavirec");
+					Window.alert(""+caught.getMessage());
 
 				}
 			});
