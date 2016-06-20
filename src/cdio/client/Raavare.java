@@ -402,7 +402,7 @@ public class Raavare extends Composite {
 						raavNavnValid = true;
 					}
 					checkFormValid();
-					;
+					
 				}
 
 			});
@@ -419,7 +419,7 @@ public class Raavare extends Composite {
 						leverandoerValid = true;
 					}
 					checkFormValid();
-					;
+					
 				}
 
 			});

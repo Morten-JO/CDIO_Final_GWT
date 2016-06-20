@@ -460,7 +460,7 @@ public class Produktbatch extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (rbIdValid && statusValid && receptIdValid)
+		if (statusValid && receptIdValid)
 
 			flex.setWidget(eventRowIndex, 5, ok);
 

@@ -403,7 +403,7 @@ public class Raavarebatch extends Composite {
 						raavareIdTxt.setStyleName("TextBox-style");
 						raavareIdValid = true;
 					}
-					checkFormValid_Create();
+					//checkFormValid_Create();
 					checkFormValid();
 
 				}
@@ -439,7 +439,7 @@ public class Raavarebatch extends Composite {
 						maengdeTxt.setStyleName("TextBox-style");
 						maengdeValid = true;
 					}
-					checkFormValid_Create();
+				//	checkFormValid_Create();
 					checkFormValid();
 
 				}
@@ -461,7 +461,7 @@ public class Raavarebatch extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (rbIdValid && raavareIdValid && maengdeValid)
+		if (raavareIdValid && maengdeValid)
 
 			flex.setWidget(eventRowIndex, 4, ok);
 
