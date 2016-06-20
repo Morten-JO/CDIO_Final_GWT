@@ -99,14 +99,20 @@ public class FieldVerifier {
 	}
 
 	public static boolean isValidCpr(String cpr) {
+		String sub1 = cpr.substring(0,6);
+		String sub2 = cpr.substring(6,10);
 		try {
-			DateTimeFormat myDateTimeFormat = DateTimeFormat.getFormat("ddMMyyyy");
-			myDateTimeFormat.parseStrict(cpr);
+			if ( cpr.length() == 10 && isValidRbId(sub2) ){
+		
+			DateTimeFormat myDateTimeFormat = DateTimeFormat.getFormat("ddMMyy");
+			myDateTimeFormat.parseStrict(sub1);
 			
+				return true;
+			}
 		} catch (IllegalArgumentException e) {
 			return false;
 		}
-		return true;
+		return false;
 		}
 		
 		
