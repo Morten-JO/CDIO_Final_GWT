@@ -62,9 +62,9 @@ public class MainViewController extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
-				if(result != null){
+				if(result != null && header != null){
 					header.setRolleText(result);
-				} else{
+				} else if (header != null){
 					header.setRolleText("");
 				}
 				menuView = new Menu(MainViewController.this, result);
