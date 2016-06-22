@@ -409,7 +409,7 @@ public class Recept extends Composite {
 	}
 
 	private void checkFormValid() {
-		if (recNavnValid && recIdValid)
+		if (recNavnValid)
 
 			flex.setWidget(eventRowIndex, 2, ok);
 
