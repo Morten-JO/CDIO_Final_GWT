@@ -157,10 +157,9 @@ public class OpretBruger extends Composite {
 								}
 							}
 							if (!idExists) {
-								oprIDExists = false;
+								//txtbox[0].setStyleName("TextBox-style");
+								oprIDExists = true;
 								fejlLabels[0].setText("");
-								oprIDVaild = true;
-								txtbox[0].setStyleName("TextBox-style");
 							} else {
 								txtbox[0].setStyleName("gwt-TextBox-invalidEntry ");
 								oprIDVaild = false;
@@ -168,7 +167,8 @@ public class OpretBruger extends Composite {
 							}
 						} catch (NumberFormatException e) {
 							txtbox[0].setStyleName("gwt-TextBox-invalidEntry ");
-							fejlLabels[0].setText("feltet må kun indholde tal i intervallet 1-99999999!");
+							oprIDVaild = false;
+							fejlLabels[0].setText("feltet må kun indholde tal!");
 						}
 
 					}
